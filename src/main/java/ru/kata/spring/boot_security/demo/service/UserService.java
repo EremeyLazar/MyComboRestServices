@@ -3,11 +3,14 @@ package ru.kata.spring.boot_security.demo.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.kata.spring.boot_security.demo.UsersDAO.UsersDao;
 import ru.kata.spring.boot_security.demo.model.User;
 
-@Repository
+import java.util.List;
+
+@Service
 public class UserService {
     // id, name, password, yob, country, roll
 
@@ -17,8 +20,18 @@ public class UserService {
 
 
     @Transactional
-    public void createUser() {
+    public void createTheUser() {
         User user = new User("Anthonio", "23432", 2000, "Russia");
         usersDao.save(user);
+    }
+
+    public List<User> getAll() {
+        List<User> resultList = usersDao.getAll();
+        return resultList;
+    }
+
+    @Transactional
+    public void createUser(User user) {
+        usersDao.createUser(user);
     }
 }

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>All Users</title>
+
+  <style>
+    hr {
+      border: none;
+      background-color: red;
+      color: red;
+      height: 2px;
+    }
+  </style>
+
+</head>
+<body>
+<hr>
+<h2>All Users:</h2>
+<hr>
+<br/><br/>
+
+<!--LIST OF ALL USERS:-->
+<div th:each="user : ${userlist}">
+  <a th:text="${user.toString()}">userid</a>
+</div>
+<br/><br/>
+<hr>
+<br/><br/>
+
+<!--CREATE A NEW USER:-->
+<input type="button" value="Add new user"
+       onclick="window.location.href = 'newuser'"/>
+<br/><br/><br/>
+
+<!--DELETE A USER FORM:-->
+<p2>Enter user's ID to REMOVE user:</p2>
+<form action="deleteuser" method="get">
+  <input type="int" name="id"
+         placeholder="Enter ID"/>
+  <input type="submit"/>
+</form>
+<br/><br/>
+
+<!--UPDATE USER FORM:-->
+<p2>Enter user's ID to UPDATE user info:</p2>
+<form action="update" method="get">
+  <input type="int" name="id"
+         placeholder="Enter ID"/>
+  <input type="submit"/>
+</form>
+
+
+
+</body>
+</html>

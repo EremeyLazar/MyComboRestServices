@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:form="http://www.w3.org/1999/xhtml">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>NEW USER</title>
+
+    <style>
+        hr {
+            border: none;
+            background-color: red;
+            color: red;
+            height: 2px;
+        }
+    </style>
+
+</head>
+
+
+<body>
+<hr>
+<h2>Create new user here:</h2>
+<hr>
+<br/><br/>
+
+<!--CREATE NEW USER FORM>-->
+<form th:method="POST" th:action="@{/newuser}" th:object="${newuser}">
+    <label for="userame">Enter username</label>
+    <input type="text" th:field="*{userame}" id="userame"/>
+    <div th:if="${#fields.hasErrors('userame')}" th:errors="*{userame}">Name error</div>
+    <br/><br/>
+    <label for="password">Enter your password</label>
+    <input type="password" th:field="*{password}" id="password"/>
+    <div th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Name error</div>
+    <br/><br/>
+    <label for="yob">Year of birth</label>
+    <input type="number" th:field="*{yob}" id="yob"/>
+    <div th:if="${#fields.hasErrors('yob')}" th:errors="*{yob}">Name error</div>
+    <br/><br/>
+    <label for="country">Enter country</label>
+    <input type="text" th:field="*{country}" id="country"/>
+    <div th:if="${#fields.hasErrors('country')}" th:errors="*{country}">Name error</div>
+    <br/><br/>
+    <hr>
+    <br/>
+    <input type="submit" th:value="create">
+</form>
+
+
+</body>
+</html>

@@ -17,7 +17,7 @@ public class User {
     private int id;
     @NotEmpty(message = "name should be visible")
     @Size(min = 2, max = 21, message = "name should be real")
-    @Column(name = "name", nullable = false, length = 21)
+    @Column(name = "username", nullable = false, length = 21)
     private String username;
 
     @NotEmpty(message = "name should be visible")
@@ -34,7 +34,6 @@ public class User {
     @Column(name = "country")
     private String country;
 
-    @NotEmpty(message = "Country should be visible")
     @Column(name = "role")
     private String role;
 
@@ -57,11 +56,11 @@ public class User {
         this.id = id;
     }
 
-    public String getName() {
+    public String getUserame() {
         return username;
     }
 
-    public void setName(String name) {
+    public void setUserame(String username) {
         this.username = username;
     }
 
@@ -100,10 +99,10 @@ public class User {
     @Override
     public String toString() {
         return "User: " + "id= " + id + " | " +
-                " name " + username + " | " +
-                " password " + password + " | " +
-                " year of bith " + yob + " | " +
-                " country " + country + " | " +
-                " access role " + role + " | ";
+                " name: " + username + " | " +
+                " password: " + password + " | " +
+                " year of bith - " + yob + " | " +
+                " country - " + country + " | " +
+                " access - " + role + " | ";
     }
 }

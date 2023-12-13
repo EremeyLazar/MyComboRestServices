@@ -18,7 +18,7 @@ public class User {
     @NotEmpty(message = "name should be visible")
     @Size(min = 2, max = 21, message = "name should be real")
     @Column(name = "name", nullable = false, length = 21)
-    private String name;
+    private String username;
 
     @NotEmpty(message = "name should be visible")
     @Size(min = 2, max = 21, message = "name should be real")
@@ -41,8 +41,8 @@ public class User {
     public User() {
     }
 
-    public User(String name, String password, int yob, String country) {
-        this.name = name;
+    public User(String username, String password, int yob, String country) {
+        this.username = username;
         this.password = password;
         this.yob = yob;
         setRole("ROLE_USER");
@@ -58,11 +58,11 @@ public class User {
     }
 
     public String getName() {
-        return name;
+        return username;
     }
 
     public void setName(String name) {
-        this.name = name;
+        this.username = username;
     }
 
     public String getPassword() {
@@ -100,7 +100,7 @@ public class User {
     @Override
     public String toString() {
         return "User: " + "id= " + id + " | " +
-                " name " + name + " | " +
+                " name " + username + " | " +
                 " password " + password + " | " +
                 " year of bith " + yob + " | " +
                 " country " + country + " | " +

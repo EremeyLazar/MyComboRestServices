@@ -33,10 +33,7 @@ public class HeyController {
         return "user";
     }
 
-    @GetMapping("/index")
-    public String index () {
-        return "index";
-    }
+
 
     @GetMapping("/admin")
     public String admin (Model model) {
@@ -46,20 +43,20 @@ public class HeyController {
     }
 
     //NEW USER Landing Page!!!
-    @GetMapping(value = "/newuser")
+    @GetMapping(value = "/index")
     public String newUser(Model model) {
-        model.addAttribute("newuser", new User());
-        return "usercreation";
+        model.addAttribute("userreg", new User());
+        return "index";
     }
 
-    @PostMapping(value = "/newuser")
-    public String createUser(@ModelAttribute("newuser") @Valid User user,
+    @PostMapping(value = "/index")
+    public String createUser(@ModelAttribute("userreg") @Valid User user,
                              BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
-            return "/newuser";
+            return "/index";
         }
         service.createUser(user);
-        return "redirect:admin";
+        return "redirect:user";
     }
 
 

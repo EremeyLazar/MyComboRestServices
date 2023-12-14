@@ -29,6 +29,10 @@ public class UsersDao {
         user.setRole("ROLE_USER");
         entityManager.persist(user);
     }
+    public void deleteUser(int id) {
+        User user = entityManager.find(User.class, id);
+        entityManager.remove(user);
+    }
 
 }
 

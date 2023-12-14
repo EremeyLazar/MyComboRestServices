@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        hr {
+            border: none; /* Убираем границу */
+            background-color: red; /* Цвет линии */
+            color: red; /* Цвет линии для IE6-7 */
+            height: 2px; /* Толщина линии */
+        }
+    </style>
+</head>
+<body>
+<br/><br/>
+<hr>
+<br/><br/>
+
+<div>
+    <th:block th:each="msg : ${messages}">
+        <h1 th:text="${msg}"></h1>
+    </th:block>
+</div>
+<br/><br/>
+<hr>
+<br/><br/>
+
+<!--BACK TO MAIN:-->
+<input type="button" value="Back to the user's list."
+       onclick="window.location.href = 'http://localhost:8080/admin' "/>
+<br/><br/>
+<br>
+
+</body>
+</html>

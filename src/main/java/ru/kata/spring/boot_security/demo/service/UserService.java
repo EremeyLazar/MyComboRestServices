@@ -34,4 +34,9 @@ public class UserService {
     public void createUser(User user) {
         usersDao.createUser(user);
     }
+
+    @Transactional
+    public void deleteUser(int id) {
+        usersDao.deleteUser(id);
+    }
 }

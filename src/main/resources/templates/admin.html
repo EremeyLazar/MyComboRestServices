@@ -29,11 +29,14 @@
 <hr>
 <br/><br/>
 
-<!--CREATE A NEW USER:-->
-<input type="button" value="Add new user"
-       onclick="window.location.href = 'newuser'"/>
-<br/><br/><br/>
-
+<!--UPDATE USER FORM:-->
+<p2>Enter user's ID to UPDATE user info:</p2>
+<form action="update" method="get">
+  <input type="int" name="id"
+         placeholder="Enter ID"/>
+  <input type="submit"/>
+</form>
+<br/><br/>
 <!--DELETE A USER FORM:-->
 <p2>Enter user's ID to REMOVE user:</p2>
 <form action="deleteuser" method="get">
@@ -43,13 +46,7 @@
 </form>
 <br/><br/>
 
-<!--UPDATE USER FORM:-->
-<p2>Enter user's ID to UPDATE user info:</p2>
-<form action="update" method="get">
-  <input type="int" name="id"
-         placeholder="Enter ID"/>
-  <input type="submit"/>
-</form>
+
 
 
 

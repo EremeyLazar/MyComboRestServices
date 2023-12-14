@@ -34,6 +34,19 @@ public class UsersDao {
         entityManager.remove(user);
     }
 
+    public void update(User updatedUser, int id) {
+        User needsUpdate = entityManager.find(User.class, id);
+        needsUpdate.setUsername(updatedUser.getUsername());
+        needsUpdate.setPassword(updatedUser.getPassword());
+        needsUpdate.setYob(updatedUser.getYob());
+        needsUpdate.setCountry(updatedUser.getCountry());
+        needsUpdate.setRole(updatedUser.getRole());
+        entityManager.persist(needsUpdate);
+    }
+
+    public User getOne(int id) {
+        return entityManager.find(User.class, id);
+    }
 }
 
 

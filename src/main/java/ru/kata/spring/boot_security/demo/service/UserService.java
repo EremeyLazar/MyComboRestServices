@@ -2,7 +2,6 @@ package ru.kata.spring.boot_security.demo.service;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.kata.spring.boot_security.demo.UsersDAO.UsersDao;
@@ -38,5 +37,14 @@ public class UserService {
     @Transactional
     public void deleteUser(int id) {
         usersDao.deleteUser(id);
+    }
+
+    @Transactional
+    public void update(User updatedUser, int id) {
+        usersDao.update(updatedUser, id);
+    }
+
+    public User getOne(int id) {
+        return usersDao.getOne(id);
     }
 }

@@ -80,8 +80,8 @@ public class HeyController {
 
     //    UPDATE USER!!!
     @GetMapping(value = "/update")
-    public String updateUser(ModelMap model, @RequestParam("id") Long id) {
-        model.addAttribute("upuser", userService.getOne(id));
+    public String updateUser(ModelMap model, @RequestParam("id") int id) {
+        model.addAttribute("upuser", service.getOne(id));
         return "update";
     }
 
@@ -90,8 +90,8 @@ public class HeyController {
         if (bindingResult.hasErrors()) {
             return "/update";
         }
-        userService.update(updatedUser, updatedUser.getId());
-        return "redirect:/";
+        service.update(updatedUser, updatedUser.getId());
+        return "redirect:/admin";
     }
 
 }

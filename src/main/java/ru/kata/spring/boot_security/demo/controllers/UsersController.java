@@ -17,7 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Controller
-public class HeyController {
+public class UsersController {
 
     @Autowired
     private UserService service;

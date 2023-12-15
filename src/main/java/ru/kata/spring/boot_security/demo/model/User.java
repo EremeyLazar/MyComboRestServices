@@ -43,7 +43,6 @@ public class User {
         this.username = username;
         this.password = password;
         this.yob = yob;
-        setRole("ROLE_USER");
         this.country = country;
     }
 

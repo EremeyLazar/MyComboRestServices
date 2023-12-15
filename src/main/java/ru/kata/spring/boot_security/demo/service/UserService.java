@@ -41,6 +41,7 @@ public class UserService {
     public void createUser(User user) {
         String passwordCoded = passwordEncoder.encode(user.getPassword());
         user.setPassword(passwordCoded);
+        user.setRole("ROLE_USER");
         usersDao.createUser(user);
     }
 

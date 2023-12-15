@@ -26,7 +26,6 @@ public class UsersDao {
     }
 
     public void createUser(User user) {
-        user.setRole("ROLE_USER");
         entityManager.persist(user);
     }
     public void deleteUser(int id) {

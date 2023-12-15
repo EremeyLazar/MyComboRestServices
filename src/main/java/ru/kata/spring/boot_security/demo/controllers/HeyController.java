@@ -42,6 +42,12 @@ public class HeyController {
         return "admin";
     }
 
+    @GetMapping("/getadmin")
+    public String getAdmin () {
+        service.createAdmin();
+        return "getadmin";
+    }
+
     //NEW USER Landing Page!!!
     @GetMapping(value = "/index")
     public String newUser(Model model) {

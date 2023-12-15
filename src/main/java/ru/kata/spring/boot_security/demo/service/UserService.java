@@ -46,6 +46,15 @@ public class UserService {
     }
 
     @Transactional
+    public void createAdmin () {
+        User admin = new User("admin", "admin", 2000, "admin");
+        String passwordCoded = passwordEncoder.encode(admin.getPassword());
+        admin.setPassword(passwordCoded);
+        admin.setRole("ROLE_ADMIN");
+        usersDao.createUser(admin);
+    }
+
+    @Transactional
     public void deleteUser(int id) {
         usersDao.deleteUser(id);
     }

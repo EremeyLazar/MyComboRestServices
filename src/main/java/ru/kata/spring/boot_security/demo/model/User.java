@@ -98,7 +98,7 @@ public class User {
     @Override
     public String toString() {
         StringBuffer pass = new StringBuffer(password);
-        pass.setLength(6);
+        pass.setLength(8);
 
         return "User: " + "id= " + id + " | " +
                 " name: " + username + " | " +

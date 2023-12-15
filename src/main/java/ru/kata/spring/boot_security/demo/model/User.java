@@ -21,8 +21,7 @@ public class User {
     private String username;
 
     @NotEmpty(message = "name should be visible")
-    @Size(min = 2, max = 21, message = "name should be real")
-    @Column(name = "password", nullable = false, length = 21)
+    @Column(name = "password")
     private String password;
 
     @Min(value = 1938, message = "please manifest real age")
@@ -98,9 +97,12 @@ public class User {
 
     @Override
     public String toString() {
+        StringBuffer pass = new StringBuffer(password);
+        pass.setLength(6);
+
         return "User: " + "id= " + id + " | " +
                 " name: " + username + " | " +
-                " password: " + password + " | " +
+                " password: " + pass + " | " +
                 " year of bith - " + yob + " | " +
                 " country - " + country + " | " +
                 " access - " + role + " | ";

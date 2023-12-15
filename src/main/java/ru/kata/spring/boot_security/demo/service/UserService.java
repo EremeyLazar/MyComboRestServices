@@ -2,6 +2,7 @@ package ru.kata.spring.boot_security.demo.service;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.kata.spring.boot_security.demo.UsersDAO.UsersDao;
@@ -17,6 +18,13 @@ public class UserService {
     @Autowired
     private UsersDao usersDao;
 
+    private final PasswordEncoder passwordEncoder;
+
+    @Autowired
+    public UserService(PasswordEncoder passwordEncoder) {
+        this.passwordEncoder = passwordEncoder;
+    }
+
 
     @Transactional
     public void createTheUser() {
@@ -31,6 +39,8 @@ public class UserService {
 
     @Transactional
     public void createUser(User user) {
+        String passwordCoded = passwordEncoder.encode(user.getPassword());
+        user.setPassword(passwordCoded);
         usersDao.createUser(user);
     }
 

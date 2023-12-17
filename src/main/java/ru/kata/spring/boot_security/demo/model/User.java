@@ -1,10 +1,8 @@
 package ru.kata.spring.boot_security.demo.model;
 
 import javax.persistence.*;
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.Size;
+
+
 
 @Entity
 @Table (name = "users")
@@ -15,26 +13,23 @@ public class User {
     @Column (name = "id")
     @GeneratedValue (strategy = GenerationType.IDENTITY)
     private int id;
-    @NotEmpty(message = "name should be visible")
-    @Size(min = 2, max = 21, message = "name should be real")
+
     @Column(name = "username", nullable = false, length = 21)
     private String username;
 
-    @NotEmpty(message = "name should be visible")
     @Column(name = "password")
     private String password;
 
-    @Min(value = 1938, message = "please manifest real age")
-    @Max(value = 2022, message = "please manifest real age")
     @Column(name = "yob")
     private int yob;
 
-    @NotEmpty(message = "Country should be visible")
     @Column(name = "country")
     private String country;
 
     @Column(name = "role")
     private String role;
+
+
 
     public User() {
     }
@@ -86,14 +81,6 @@ public class User {
         this.country = country;
     }
 
-    public String getRole() {
-        return role;
-    }
-
-    public void setRole(String role) {
-        this.role = role;
-    }
-
     @Override
     public String toString() {
         StringBuffer pass = new StringBuffer(password);
@@ -103,7 +90,14 @@ public class User {
                 " name: " + username + " | " +
                 " password: " + pass + " | " +
                 " year of bith - " + yob + " | " +
-                " country - " + country + " | " +
-                " access - " + role + " | ";
+                " country - " + country + " | " + " role - " + role ;
+    }
+
+    public void setRole(String roles) {
+        this.role = roles;
+    }
+
+    public String getRole() {
+        return role;
     }
 }

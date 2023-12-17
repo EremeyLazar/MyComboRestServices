@@ -33,8 +33,6 @@ public class UsersController {
         return "user";
     }
 
-
-
     @GetMapping("/admin")
     public String admin (Model model) {
         List<User> resultList = service.getAll();

@@ -13,6 +13,7 @@ import ru.kata.spring.boot_security.demo.model.User;
 import ru.kata.spring.boot_security.demo.service.UserService;
 
 import javax.validation.Valid;
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,7 +30,8 @@ public class UsersController {
     }
 
     @GetMapping("/user")
-    public String user () {
+    public String user (Model model, Principal principal) {
+        model.addAttribute("username", principal.getName());
         return "user";
     }
 

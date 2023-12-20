@@ -15,11 +15,10 @@ import ru.kata.spring.boot_security.demo.repositories.UserRepository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import java.util.*;
+import java.util.List;
 
 @Service
 public class UserService implements UserDetailsService {
-    // id, name, password, yob, country, roll
 
     @PersistenceContext
     private EntityManager em;
@@ -42,8 +41,8 @@ public class UserService implements UserDetailsService {
     }
 
     public boolean isUserExists(String username) {
-        User existingUser = userRepository.findByUsername(username);
-        return existingUser != null;
+        User user = userRepository.findByUsername(username);
+        return user != null;
     }
 
     @Transactional

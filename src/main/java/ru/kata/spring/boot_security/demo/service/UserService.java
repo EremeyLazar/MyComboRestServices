@@ -46,14 +46,7 @@ public class UserService implements UserDetailsService {
     public void createTheUser() {
         User user = new User("Ashas", "1qa", 2000, "Russia");
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-
-        Role role = new Role(1L);
-
-        Set<Role> roles = Set.of(new Role(2L));
-
-        user.setRoles(roles);
-
-        user.setRoles(Collections.singleton(new Role(1L, "ROLE_READONLY")));
+        user.setRoles(new Role(1L));
         userRepository.save(user);
     }
 
@@ -64,16 +57,16 @@ public class UserService implements UserDetailsService {
     @Transactional
     public void createUser(User user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        user.setRoles(Collections.singleton(new Role(1L, "ROLE_USER")));
-        user.setRoles(Collections.singleton(new Role(1L, "ROLE_READONLY")));
+        user.setRoles(new Role(1L));
+        user.setRoles(new Role(3L));
         userRepository.save(user);
     }
-
+//Collections.singleton
     @Transactional
     public void createAdmin() {
         User admin = new User("admin", "admin", 2000, "admin");
         admin.setPassword(passwordEncoder.encode(admin.getPassword()));
-        admin.setRoles(Collections.singleton(new Role(2L)));
+        admin.setRoles(new Role(2L));
         userRepository.save(admin);
     }
 
@@ -91,7 +84,7 @@ public class UserService implements UserDetailsService {
         needsUpdate.setPassword(updatedUser.getPassword());
         needsUpdate.setYob(updatedUser.getYob());
         needsUpdate.setCountry(updatedUser.getCountry());
-        needsUpdate.setRoles(updatedUser.getRoles());
+//        needsUpdate.setRoles(updatedUser.getRoles());
         em.persist(needsUpdate);
     }
 

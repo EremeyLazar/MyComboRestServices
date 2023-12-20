@@ -24,26 +24,33 @@ public class UsersController {
     private UserService service;
 
     @GetMapping("/getuser")
-    public String sayHey () {
+    public String sayHey() {
         service.createTheUser();
         return "hey";
     }
 
     @GetMapping("/user")
-    public String user (Model model, Principal principal) {
-        model.addAttribute("username", principal.getName());
+    public String user(Model model, Principal principal) {
+        model.addAttribute("sayname", principal.getName());
         return "user";
     }
 
+    @GetMapping("/readonly")
+    public String readonly(Model model, Principal principal) {
+        model.addAttribute("saynamereadonly", principal.getName());
+        return "readonly";
+    }
+
     @GetMapping("/admin")
-    public String admin (Model model) {
+    public String admin(Model model, Principal principal) {
+        model.addAttribute("sayhitoadmin", principal.getName());
         List<User> resultList = service.getAll();
         model.addAttribute("userlist", resultList);
         return "admin";
     }
 
     @GetMapping("/getadmin")
-    public String getAdmin () {
+    public String getAdmin() {
         service.createAdmin();
         return "getadmin";
     }

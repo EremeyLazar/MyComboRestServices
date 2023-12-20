@@ -14,6 +14,7 @@ public class CustomLoginSuccessHandler implements AuthenticationSuccessHandler {
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
                                         Authentication authentication) throws IOException, ServletException {
+
         Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
 
         if (authorities.stream().anyMatch(role -> role.getAuthority().equals("ROLE_ADMIN"))) {
@@ -21,7 +22,6 @@ public class CustomLoginSuccessHandler implements AuthenticationSuccessHandler {
         } else if (authorities.stream().anyMatch(role -> role.getAuthority().equals("ROLE_USER"))) {
             response.sendRedirect("/user");
         } else {
-            // Handle other roles or scenarios as needed
             response.sendRedirect("/readonly");
         }
     }

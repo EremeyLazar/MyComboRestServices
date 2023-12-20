@@ -62,15 +62,17 @@ public class UsersController {
         return "index";
     }
 
-    @PostMapping(value = "/index")
-    public String createUser(@ModelAttribute("userreg") @Valid User user,
-                             BindingResult bindingResult) {
-        if (bindingResult.hasErrors()) {
-            return "/index";
-        }
-        service.createUser(user);
-        return "redirect:user";
+@PostMapping(value = "/index")
+public String createUser(@ModelAttribute("userreg") @Valid User user, BindingResult bindingResult) {
+    if (service.isUserExists(user.getUsername())) {
+        bindingResult.rejectValue("username", "error.user", "User with this name already exists!");
+        return "index";
+    } else if (bindingResult.hasErrors()) {
+        return "/index";
     }
+    service.createUser(user);
+    return "redirect:user";
+}
 
 
     //    DELETE USER!!!

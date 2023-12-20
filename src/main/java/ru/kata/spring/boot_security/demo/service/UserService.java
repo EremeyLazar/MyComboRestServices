@@ -41,6 +41,10 @@ public class UserService implements UserDetailsService {
         return user;
     }
 
+    public boolean isUserExists(String username) {
+        User existingUser = userRepository.findByUsername(username);
+        return existingUser != null;
+    }
 
     @Transactional
     public void createTheUser() {
@@ -61,7 +65,7 @@ public class UserService implements UserDetailsService {
         user.setRoles(new Role(3L));
         userRepository.save(user);
     }
-//Collections.singleton
+
     @Transactional
     public void createAdmin() {
         User admin = new User("admin", "admin", 2000, "admin");
@@ -74,24 +78,27 @@ public class UserService implements UserDetailsService {
     public void deleteUser(int id) {
         if (userRepository.findById(id).isPresent()) {
             userRepository.deleteById(id);
-        } else {throw new IllegalArgumentException("user with this ID does not exists");}
+        } else {
+            throw new IllegalArgumentException("user with this ID does not exists");
+        }
     }
 
-        @Transactional
-        public void update(User updatedUser, int id) {
+    @Transactional
+    public void update(User updatedUser, int id) {
         User needsUpdate = em.find(User.class, id);
         needsUpdate.setUsername(updatedUser.getUsername());
         needsUpdate.setPassword(updatedUser.getPassword());
         needsUpdate.setYob(updatedUser.getYob());
         needsUpdate.setCountry(updatedUser.getCountry());
-//        needsUpdate.setRoles(updatedUser.getRoles());
         em.persist(needsUpdate);
     }
 
     public User getOne(int id) {
         if (userRepository.findById(id).isPresent()) {
             return em.find(User.class, id);
-        } else {throw new IllegalArgumentException("user with this ID does not exists");}
+        } else {
+            throw new IllegalArgumentException("user with this ID does not exists");
+        }
     }
 
 

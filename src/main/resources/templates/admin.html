@@ -2,30 +2,30 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>All Users</title>
+    <meta charset="UTF-8">
+    <title>All Users</title>
 
-  <style>
-    hr {
-      border: none;
-      background-color: dodgerblue;
-      color: dodgerblue;
-      height: 2px;
-    }
-  </style>
+    <style>
+        hr {
+            border: none;
+            background-color: dodgerblue;
+            color: dodgerblue;
+            height: 2px;
+        }
+    </style>
 
 </head>
 <body>
 <hr>
 <h2><span th:text="${sayhitoadmin}"></span>, welcome!!!</h2>
-<h2>ADMIN PAGE!!!</h2>
+<h2>ADMIN PAGE.</h2>
 <h2>All Users INFO:</h2>
 <hr>
 <br/><br/>
 
 <!--LIST OF ALL USERS:-->
 <div th:each="user : ${userlist}">
-  <a th:text="${user.toString()}">userid</a>
+    <a th:text="${user.toString()}">userid</a>
 </div>
 <br/><br/>
 <hr>
@@ -34,17 +34,17 @@
 <!--UPDATE USER FORM:-->
 <p2>Enter user's ID to UPDATE user info:</p2>
 <form action="update" method="get">
-  <input type="int" name="id"
-         placeholder="Enter ID"/>
-  <input type="submit"/>
+    <input type="int" name="id"
+           placeholder="Enter ID"/>
+    <input type="submit"/>
 </form>
 <br/><br/>
 <!--DELETE A USER FORM:-->
 <p2>Enter user's ID to REMOVE user:</p2>
 <form action="deleteuser" method="get">
-  <input type="int" name="id"
-         placeholder="Enter ID"/>
-  <input type="submit"/>
+    <input type="int" name="id"
+           placeholder="Enter ID"/>
+    <input type="submit"/>
 </form>
 <br/><br/>
 <hr>

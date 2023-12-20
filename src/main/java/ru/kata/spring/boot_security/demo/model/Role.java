@@ -8,13 +8,11 @@ import java.util.HashSet;
 import java.util.Set;
 
 //INSERT INTO role (id, name) VALUES (1, 'ROLE_USER'), (2, 'ROLE_ADMIN'), (3, 'ROLE_READONLY');
-
-
 @Entity
 @Table(name = "role")
 public class Role implements GrantedAuthority {
     @Id
-    @GeneratedValue (strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
     @ManyToMany(mappedBy = "roles")
@@ -60,7 +58,7 @@ public class Role implements GrantedAuthority {
 
     @Override
     public String toString() {
-        return "///Role = " + id + " | " + name ;
+        return "Role = " + id + " | " + name + " ";
     }
 }
 

@@ -15,6 +15,12 @@
         }
     </style>
 
+    <style>
+        .error {
+            color: red;
+        }
+    </style>
+
 </head>
 
 
@@ -44,6 +50,7 @@
     <br/><br/>
     <br/>
     <input type="submit" th:value="create">
+    <div th:if="${#fields.hasErrors('username')}" th:errors="*{username}" class="error"></div>
 </form>
 <br/><br/>
 <hr>

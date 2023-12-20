@@ -1,20 +1,21 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <head>
-  <title>Spring Security Example</title>
+    <title>Spring Security Example</title>
 
-  <style>
-    hr {
-      border: none;
-      background-color: dodgerblue;
-      color: dodgerblue;
-      height: 2px;
-    }
-  </style>
+    <style>
+        hr {
+            border: none;
+            background-color: dodgerblue;
+            color: dodgerblue;
+            height: 2px;
+        }
+    </style>
 
 </head>
 <body>
-<h2><span th:text="${saynamereadonly}"></span>, welcome to user page!!!</h2>
+<h2><span th:text="${saynamereadonly}"></span>, welcome to text page!!!</h2>
 <br/><br/>
 <hr>
 <br/><br/>
@@ -23,24 +24,31 @@
 
 
 <p>1. Nick Stoeberl holds the world record for the longest tongue.
-  Nick Stoeberl aka “The Lick” from Monterey, California holds the Guinness Book Of World Records for having the longest tongue, measuring 10.10 cm since 2012. Woah!</p>
+    Nick Stoeberl aka “The Lick” from Monterey, California holds the Guinness Book Of World Records for having the
+    longest tongue, measuring 10.10 cm since 2012. Woah!</p>
 
 </p>2. Lee Redmond has the longest fingernails in world. She set the world record in 2008.
-Lee Redmond from America took nearly 30 years to grow her nails out. She started growing her nails way back in 1979. And, in case you are wondering, her nails are 28 feet and 4 inches long in total, if you add up the length of all the finger nails.</p>
+Lee Redmond from America took nearly 30 years to grow her nails out. She started growing her nails way back in 1979.
+And, in case you are wondering, her nails are 28 feet and 4 inches long in total, if you add up the length of all the
+finger nails.</p>
 
 <p>
-  3. Berne Barker bagged the title of being the oldest male stripper in 2002.
-  Berne Barker, a former real estate agent got into stripping in the year 2000 when he was 60 years old to get in shape after recovering from prostate cancer. And, with that he bagged the Guinness title for being the oldest male stripper. Though unfortunately, he died in 2007 at the age of 66.
+    3. Berne Barker bagged the title of being the oldest male stripper in 2002.
+    Berne Barker, a former real estate agent got into stripping in the year 2000 when he was 60 years old to get in
+    shape after recovering from prostate cancer. And, with that he bagged the Guinness title for being the oldest male
+    stripper. Though unfortunately, he died in 2007 at the age of 66.
 </p>
 
 <p>
-  4. This parrot set the world record for opening the most number of cans in one minute in 2012.
-  Sounds impossible but, Zac the Macaw surely proves that it’s possible. He set the world record for opening the most number of cans in one minute in San Jose, in 2012. He managed to open 35 cans, which is quite commendable.
+    4. This parrot set the world record for opening the most number of cans in one minute in 2012.
+    Sounds impossible but, Zac the Macaw surely proves that it’s possible. He set the world record for opening the most
+    number of cans in one minute in San Jose, in 2012. He managed to open 35 cans, which is quite commendable.
 </p>
 
 <p>
-  5. Beth John made the largest yo-yo in the world.
-  In 2012, Beth John from Ohio built the world’s largest yo-yo measuring 11 ft 10.75 inches and weighing over 2,095.6 kg. It took Beth over a year and a half to complete the project.
+    5. Beth John made the largest yo-yo in the world.
+    In 2012, Beth John from Ohio built the world’s largest yo-yo measuring 11 ft 10.75 inches and weighing over 2,095.6
+    kg. It took Beth over a year and a half to complete the project.
 </p>
 
 <br/><br/><br/>
@@ -51,8 +59,6 @@ Lee Redmond from America took nearly 30 years to grow her nails out. She started
 
 <br/><br/><br/>
 
-<input type="button" value="Get to Admin page!."
-       onclick="window.location.href = '/admin' "/>
 
 </body>
 </html>

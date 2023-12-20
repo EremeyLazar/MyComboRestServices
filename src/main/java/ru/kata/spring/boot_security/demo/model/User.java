@@ -4,6 +4,9 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotEmpty;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
@@ -12,7 +15,6 @@ import java.util.Set;
 @Entity
 @Table(name = "users")
 public class User implements UserDetails {
-    // id, name, password, yob, country, rolls
 
     @Id
     @Column(name = "id")
@@ -20,15 +22,20 @@ public class User implements UserDetails {
     private int id;
 
     @Column(name = "username", nullable = false, length = 21)
+    @NotEmpty(message = "should not be empty")
     private String username;
 
     @Column(name = "password")
+    @NotEmpty(message = "...you will need password to enter")
     private String password;
 
     @Column(name = "yob")
+    @Min(value = 1923, message = "real age pls...")
+    @Max(value = 2022, message = "real age pls...")
     private int yob;
 
     @Column(name = "country")
+    @NotEmpty(message = "should not be empty")
     private String country;
 
     @ManyToMany(fetch = FetchType.LAZY)
@@ -39,7 +46,7 @@ public class User implements UserDetails {
 
     public void addRole(Role role) {
         roles.add(role);
-        role.getUsers().add(this); // Установка обратного отношения
+        role.getUsers().add(this);
     }
 
 

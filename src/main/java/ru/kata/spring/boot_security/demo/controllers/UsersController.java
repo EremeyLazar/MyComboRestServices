@@ -55,24 +55,24 @@ public class UsersController {
         return "getadmin";
     }
 
-    //NEW USER Landing Page!!!
+    //NEW USER, Landing Page!!!
     @GetMapping(value = "/index")
     public String newUser(Model model) {
         model.addAttribute("userreg", new User());
         return "index";
     }
 
-@PostMapping(value = "/index")
-public String createUser(@ModelAttribute("userreg") @Valid User user, BindingResult bindingResult) {
-    if (service.isUserExists(user.getUsername())) {
-        bindingResult.rejectValue("username", "error.user", "User with this name already exists!");
-        return "index";
-    } else if (bindingResult.hasErrors()) {
-        return "/index";
+    @PostMapping(value = "/index")
+    public String createUser(@ModelAttribute("userreg") @Valid User user, BindingResult bindingResult) {
+        if (service.isUserExists(user.getUsername())) {
+            bindingResult.rejectValue("username", "error.user", "User with this name already exists!");
+            return "index";
+        } else if (bindingResult.hasErrors()) {
+            return "/index";
+        }
+        service.createUser(user);
+        return "redirect:user";
     }
-    service.createUser(user);
-    return "redirect:user";
-}
 
 
     //    DELETE USER!!!

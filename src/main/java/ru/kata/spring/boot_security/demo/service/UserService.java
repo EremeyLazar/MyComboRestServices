@@ -2,70 +2,104 @@ package ru.kata.spring.boot_security.demo.service;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ru.kata.spring.boot_security.demo.UsersDAO.UsersDao;
+import ru.kata.spring.boot_security.demo.model.Role;
 import ru.kata.spring.boot_security.demo.model.User;
+import ru.kata.spring.boot_security.demo.repositories.RoleRepository;
+import ru.kata.spring.boot_security.demo.repositories.UserRepository;
 
-import java.util.List;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import java.util.*;
 
 @Service
-public class UserService {
+public class UserService implements UserDetailsService {
     // id, name, password, yob, country, roll
 
-
+    @PersistenceContext
+    private EntityManager em;
     @Autowired
-    private UsersDao usersDao;
-
-    private final PasswordEncoder passwordEncoder;
-
+    UserRepository userRepository;
     @Autowired
-    public UserService(PasswordEncoder passwordEncoder) {
-        this.passwordEncoder = passwordEncoder;
+    RoleRepository roleRepository;
+    @Autowired
+    PasswordEncoder passwordEncoder;
+
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        User user = userRepository.findByUsername(username);
+
+        if (user == null) {
+            throw new UsernameNotFoundException("User not found");
+        }
+
+        return user;
     }
 
 
     @Transactional
     public void createTheUser() {
-        User user = new User("Anthonio", "23432", 2000, "Russia");
-        user.setRole("ROLE_USER");
-        usersDao.save(user);
+        User user = new User("Ashas", "1qa", 2000, "Russia");
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+
+        Role role = new Role(1L);
+
+        Set<Role> roles = Set.of(new Role(2L));
+
+        user.setRoles(roles);
+
+        user.setRoles(Collections.singleton(new Role(1L, "ROLE_READONLY")));
+        userRepository.save(user);
     }
 
     public List<User> getAll() {
-        List<User> resultList = usersDao.getAll();
-        return resultList;
+        return userRepository.findAll();
     }
 
     @Transactional
     public void createUser(User user) {
-        String passwordCoded = passwordEncoder.encode(user.getPassword());
-        user.setPassword(passwordCoded);
-        user.setRole("ROLE_USER");
-        usersDao.createUser(user);
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        user.setRoles(Collections.singleton(new Role(1L, "ROLE_USER")));
+        user.setRoles(Collections.singleton(new Role(1L, "ROLE_READONLY")));
+        userRepository.save(user);
     }
 
     @Transactional
-    public void createAdmin () {
+    public void createAdmin() {
         User admin = new User("admin", "admin", 2000, "admin");
-        String passwordCoded = passwordEncoder.encode(admin.getPassword());
-        admin.setPassword(passwordCoded);
-        admin.setRole("ROLE_ADMIN");
-        usersDao.createUser(admin);
+        admin.setPassword(passwordEncoder.encode(admin.getPassword()));
+        admin.setRoles(Collections.singleton(new Role(2L)));
+        userRepository.save(admin);
     }
 
     @Transactional
     public void deleteUser(int id) {
-        usersDao.deleteUser(id);
+        if (userRepository.findById(id).isPresent()) {
+            userRepository.deleteById(id);
+        } else {throw new IllegalArgumentException("user with this ID does not exists");}
     }
 
-    @Transactional
-    public void update(User updatedUser, int id) {
-        usersDao.update(updatedUser, id);
+        @Transactional
+        public void update(User updatedUser, int id) {
+        User needsUpdate = em.find(User.class, id);
+        needsUpdate.setUsername(updatedUser.getUsername());
+        needsUpdate.setPassword(updatedUser.getPassword());
+        needsUpdate.setYob(updatedUser.getYob());
+        needsUpdate.setCountry(updatedUser.getCountry());
+        needsUpdate.setRoles(updatedUser.getRoles());
+        em.persist(needsUpdate);
     }
 
     public User getOne(int id) {
-        return usersDao.getOne(id);
+        if (userRepository.findById(id).isPresent()) {
+            return em.find(User.class, id);
+        } else {throw new IllegalArgumentException("user with this ID does not exists");}
     }
+
+
 }

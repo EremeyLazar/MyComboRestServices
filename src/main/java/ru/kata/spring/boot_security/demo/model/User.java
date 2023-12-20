@@ -1,17 +1,22 @@
 package ru.kata.spring.boot_security.demo.model;
 
-import javax.persistence.*;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
+import javax.persistence.*;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
 
 
 @Entity
-@Table (name = "users")
-public class User {
-    // id, name, password, yob, country, roll
+@Table(name = "users")
+public class User implements UserDetails {
+    // id, name, password, yob, country, rolls
 
     @Id
-    @Column (name = "id")
-    @GeneratedValue (strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     @Column(name = "username", nullable = false, length = 21)
@@ -26,9 +31,16 @@ public class User {
     @Column(name = "country")
     private String country;
 
-    @Column(name = "role")
-    private String role;
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "user_roles",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id"))
+    private Set<Role> roles = new HashSet<>();
 
+    public void addRole(Role role) {
+        roles.add(role);
+        role.getUsers().add(this); // Установка обратного отношения
+    }
 
 
     public User() {
@@ -53,13 +65,40 @@ public class User {
         return username;
     }
 
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
+    }
+
     public void setUsername(String username) {
         this.username = username;
     }
 
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return getRoles();
+    }
+
+
     public String getPassword() {
         return password;
     }
+
 
     public void setPassword(String password) {
         this.password = password;
@@ -90,14 +129,15 @@ public class User {
                 " name: " + username + " | " +
                 " password: " + pass + " | " +
                 " year of bith - " + yob + " | " +
-                " country - " + country + " | " + " role - " + role ;
+                " country - " + country + " | " + "access - " + roles.toString();
     }
 
-    public void setRole(String roles) {
-        this.role = roles;
+
+    public Set<Role> getRoles() {
+        return roles;
     }
 
-    public String getRole() {
-        return role;
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
     }
 }

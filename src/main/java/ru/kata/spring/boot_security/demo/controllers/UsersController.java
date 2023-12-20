@@ -65,7 +65,7 @@ public class UsersController {
     @PostMapping(value = "/index")
     public String createUser(@ModelAttribute("userreg") @Valid User user, BindingResult bindingResult) {
         if (service.isUserExists(user.getUsername())) {
-            bindingResult.rejectValue("username", "error.user", "User with this name already exists!");
+            bindingResult.rejectValue("username", "error.user", "User with that name already exists!");
             return "index";
         } else if (bindingResult.hasErrors()) {
             return "/index";

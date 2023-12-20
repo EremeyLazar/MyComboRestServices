@@ -47,6 +47,9 @@ public class UserService implements UserDetailsService {
 
     @Transactional
     public void createTheUser() {
+        em.createNativeQuery("INSERT INTO role (id, name) VALUES (1, 'ROLE_USER')").executeUpdate();
+        em.createNativeQuery("INSERT INTO role (id, name) VALUES (2, 'ROLE_ADMIN')").executeUpdate();
+        em.createNativeQuery("INSERT INTO role (id, name) VALUES (3, 'ROLE_READONLY')").executeUpdate();
         User user = new User("Ashas", "1qa", 2000, "Russia");
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         user.setRoles(new Role(1L));

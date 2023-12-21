@@ -26,12 +26,12 @@
 
 <body>
 <hr>
-<h2>Create new user:</h2>
+<h2>Create new admin:</h2>
 <hr>
 <br/><br/>
 
-<!--CREATE NEW USER FORM>-->
-<form th:method="POST" th:action="@{/admin/newuser}" th:object="${userreg}">
+<!--CREATE NEW ADMIN FORM>-->
+<form th:method="POST" th:action="@{/admin/newadmin}" th:object="${adminreg}">
     <label for="username">Enter username</label>
     <input type="text" th:field="*{username}" id="username"/>
     <div th:if="${#fields.hasErrors('username')}" th:errors="*{username}">Name error</div>
@@ -59,7 +59,7 @@
 
 <!--BACK TO ALLUSERINFO:-->
 <input type="button" value="All user INFO:"
-       onclick="window.location.href = 'http://localhost:8080/admin' "/>
+       onclick="window.location.href = 'http://localhost:8080/admin/allusersinfo' "/>
 <br/><br/><br/>
 <hr>
 

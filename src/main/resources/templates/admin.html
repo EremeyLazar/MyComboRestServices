@@ -33,7 +33,7 @@
 
 <!--UPDATE USER FORM:-->
 <p2>Enter user's ID to UPDATE user info:</p2>
-<form action="update" method="get">
+<form action="admin/update" method="get">
     <input type="int" name="id"
            placeholder="Enter ID"/>
     <input type="submit"/>
@@ -41,7 +41,7 @@
 <br/><br/>
 <!--DELETE A USER FORM:-->
 <p2>Enter user's ID to REMOVE user:</p2>
-<form action="deleteuser" method="get">
+<form action="admin/deleteuser" method="get">
     <input type="int" name="id"
            placeholder="Enter ID"/>
     <input type="submit"/>
@@ -51,9 +51,19 @@
 
 <br/><br/>
 
+<!--CREATE USER!-->
+<input type="button" value="Register a new USER."
+       onclick="window.location.href = '/admin/newuser' "/>
+<br/><br/>
+
+<!--CREATE ADMIN!-->
+<input type="button" value="Register a new ADMIN."
+       onclick="window.location.href = '/admin/newadmin' "/>
+<br/><br/>
+
 <!--USER!-->
-<input type="button" value="Back to USER page !."
-       onclick="window.location.href = '/user' "/>
+<input type="button" value="USER page !."
+       onclick="window.location.href = '/user/' "/>
 <br/><br/>
 
 

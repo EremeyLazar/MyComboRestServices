@@ -45,17 +45,6 @@ public class UserService implements UserDetailsService {
         return user != null;
     }
 
-    @Transactional
-    public void createTheUser() {
-        em.createNativeQuery("INSERT INTO role (id, name) VALUES (1, 'ROLE_USER')").executeUpdate();
-        em.createNativeQuery("INSERT INTO role (id, name) VALUES (2, 'ROLE_ADMIN')").executeUpdate();
-        em.createNativeQuery("INSERT INTO role (id, name) VALUES (3, 'ROLE_READONLY')").executeUpdate();
-        User user = new User("Ashas", "1qa", 2000, "Russia");
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
-        user.setRoles(new Role(1L));
-        userRepository.save(user);
-    }
-
     public List<User> getAll() {
         return userRepository.findAll();
     }
@@ -63,16 +52,27 @@ public class UserService implements UserDetailsService {
     @Transactional
     public void createUser(User user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        user.setRoles(new Role(1L));
-        user.setRoles(new Role(3L));
+        user.setRoles(new Role(1));
+        user.setRoles(new Role(3));
         userRepository.save(user);
     }
 
     @Transactional
-    public void createAdmin() {
+    public void createAdmin(User admin) {
+        admin.setPassword(passwordEncoder.encode(admin.getPassword()));
+        admin.setRoles(new Role(2));
+        userRepository.save(admin);
+    }
+
+    @Transactional
+    public void createTheAdmin() {
+        em.createNativeQuery("INSERT INTO role (id, name) VALUES (1, 'ROLE_USER')").executeUpdate();
+        em.createNativeQuery("INSERT INTO role (id, name) VALUES (2, 'ROLE_ADMIN')").executeUpdate();
+        em.createNativeQuery("INSERT INTO role (id, name) VALUES (3, 'ROLE_READONLY')").executeUpdate();
+
         User admin = new User("admin", "admin", 2000, "admin");
         admin.setPassword(passwordEncoder.encode(admin.getPassword()));
-        admin.setRoles(new Role(2L));
+        admin.setRoles(new Role(2));
         userRepository.save(admin);
     }
 

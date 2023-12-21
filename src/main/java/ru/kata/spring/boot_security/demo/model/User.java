@@ -42,12 +42,6 @@ public class User implements UserDetails {
     @JoinTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles = new HashSet<>();
 
-    public void addRole(Role role) {
-        roles.add(role);
-        role.getUsers().add(this);
-    }
-
-
     public User() {
     }
 
@@ -56,6 +50,11 @@ public class User implements UserDetails {
         this.password = password;
         this.yob = yob;
         this.country = country;
+    }
+
+    public void addRole(Role role) {
+        roles.add(role);
+        role.getUsers().add(this);
     }
 
     public int getId() {
@@ -69,6 +68,43 @@ public class User implements UserDetails {
     public String getUsername() {
         return username;
     }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+    public int getYob() {
+        return yob;
+    }
+
+    public void setYob(int yob) {
+        this.yob = yob;
+    }
+
+    public String getCountry() {
+        return country;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
+    }
+
+    public Set<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Role role) {
+        roles.add(role);
+    }
+
+
 
     @Override
     public boolean isAccountNonExpired() {
@@ -90,55 +126,16 @@ public class User implements UserDetails {
         return true;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return getRoles();
     }
 
-
-    public String getPassword() {
-        return password;
-    }
-
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public int getYob() {
-        return yob;
-    }
-
-    public void setYob(int yob) {
-        this.yob = yob;
-    }
-
-    public String getCountry() {
-        return country;
-    }
-
-    public void setCountry(String country) {
-        this.country = country;
-    }
-
     @Override
     public String toString() {
-        StringBuffer pass = new StringBuffer(password);
-        pass.setLength(8);
+        StringBuffer passCut = new StringBuffer(password);
+        passCut.setLength(8);
 
-        return "User: " + "id= " + id + " | " + " name: " + username + " | " + " password: " + pass + " | " + " year of bith - " + yob + " | " + " country - " + country + " | " + "access - " + roles.toString();
-    }
-
-
-    public Set<Role> getRoles() {
-        return roles;
-    }
-
-    public void setRoles(Role role) {
-        roles.add(role);
+        return "User: " + "id= " + id + " | " + " name: " + username + " | " + " password: " + passCut + " | " + " year of bith - " + yob + " | " + " country - " + country + " | " + "access - " + roles.toString();
     }
 }

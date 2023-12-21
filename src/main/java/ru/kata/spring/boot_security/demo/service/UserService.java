@@ -13,21 +13,17 @@ import ru.kata.spring.boot_security.demo.model.User;
 import ru.kata.spring.boot_security.demo.repositories.RoleRepository;
 import ru.kata.spring.boot_security.demo.repositories.UserRepository;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import java.util.List;
 
 @Service
 public class UserService implements UserDetailsService {
 
-    @PersistenceContext
-    private EntityManager em;
     @Autowired
-    UserRepository userRepository;
+    private UserRepository userRepository;
     @Autowired
-    RoleRepository roleRepository;
+    private RoleRepository roleRepository;
     @Autowired
-    PasswordEncoder passwordEncoder;
+    private PasswordEncoder passwordEncoder;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -64,15 +60,18 @@ public class UserService implements UserDetailsService {
         userRepository.save(admin);
     }
 
+
     @Transactional
     public void createTheAdmin() {
-        em.createNativeQuery("INSERT INTO role (id, name) VALUES (1, 'ROLE_USER')").executeUpdate();
-        em.createNativeQuery("INSERT INTO role (id, name) VALUES (2, 'ROLE_ADMIN')").executeUpdate();
-        em.createNativeQuery("INSERT INTO role (id, name) VALUES (3, 'ROLE_READONLY')").executeUpdate();
+        Role roleUser = new Role(1, "ROLE_USER");
+        Role roleAdmin = new Role(2, "ROLE_ADMIN");
+        Role roleReadonly = new Role(3, "ROLE_READONLY");
+
+        roleRepository.saveAll(List.of(roleUser, roleAdmin, roleReadonly));
 
         User admin = new User("admin", "admin", 2000, "admin");
         admin.setPassword(passwordEncoder.encode(admin.getPassword()));
-        admin.setRoles(new Role(2));
+        admin.setRoles(roleAdmin);
         userRepository.save(admin);
     }
 
@@ -85,23 +84,25 @@ public class UserService implements UserDetailsService {
         }
     }
 
+
     @Transactional
     public void update(User updatedUser, int id) {
-        User needsUpdate = em.find(User.class, id);
-        needsUpdate.setUsername(updatedUser.getUsername());
-        needsUpdate.setPassword(updatedUser.getPassword());
-        needsUpdate.setYob(updatedUser.getYob());
-        needsUpdate.setCountry(updatedUser.getCountry());
-        em.persist(needsUpdate);
+        userRepository.findById(id).ifPresentOrElse(
+                user -> {
+                    user.setUsername(updatedUser.getUsername());
+                    user.setPassword(updatedUser.getPassword());
+                    user.setYob(updatedUser.getYob());
+                    user.setCountry(updatedUser.getCountry());
+                    userRepository.save(user);
+                },
+                () -> {
+                    throw new IllegalArgumentException("User with this ID does not exist");
+                }
+        );
     }
 
     public User getOne(int id) {
-        if (userRepository.findById(id).isPresent()) {
-            return em.find(User.class, id);
-        } else {
-            throw new IllegalArgumentException("user with this ID does not exists");
-        }
+        return userRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("User with this ID does not exist"));
     }
-
-
 }

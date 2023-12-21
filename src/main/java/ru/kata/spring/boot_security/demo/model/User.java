@@ -81,6 +81,7 @@ public class User implements UserDetails {
     public void setPassword(String password) {
         this.password = password;
     }
+
     public int getYob() {
         return yob;
     }
@@ -106,6 +107,10 @@ public class User implements UserDetails {
     }
 
 
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return getRoles();
+    }
 
     @Override
     public boolean isAccountNonExpired() {
@@ -127,10 +132,6 @@ public class User implements UserDetails {
         return true;
     }
 
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return getRoles();
-    }
 
     @Override
     public String toString() {

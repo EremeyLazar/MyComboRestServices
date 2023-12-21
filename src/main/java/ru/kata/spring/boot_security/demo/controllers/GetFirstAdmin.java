@@ -10,6 +10,7 @@ public class GetFirstAdmin {
 
     @Autowired
     private UserService service;
+
     @GetMapping("/getadmin")
     public String getAdmin() {
         service.createTheAdmin();

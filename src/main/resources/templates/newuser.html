@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:form="http://www.w3.org/1999/xhtml">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>NEW USER</title>
+
+    <style>
+        hr {
+            border: none;
+            background-color: dodgerblue;
+            color: dodgerblue;
+            height: 2px;
+        }
+    </style>
+
+    <style>
+        .error {
+            color: red;
+        }
+    </style>
+
+</head>
+
+
+<body>
+<hr>
+<h2>Create new user:</h2>
+<hr>
+<br/><br/>
+
+<!--CREATE NEW USER FORM>-->
+<form th:method="POST" th:action="@{/admin/newuser}" th:object="${userreg}">
+    <label for="username">Enter username</label>
+    <input type="text" th:field="*{username}" id="username"/>
+    <div th:if="${#fields.hasErrors('username')}" th:errors="*{username}">Name error</div>
+    <br/><br/>
+    <label for="password">Enter your password</label>
+    <input type="password" th:field="*{password}" id="password"/>
+    <div th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Name error</div>
+    <br/><br/>
+    <label for="yob">Year of birth</label>
+    <input type="number" th:field="*{yob}" id="yob"/>
+    <div th:if="${#fields.hasErrors('yob')}" th:errors="*{yob}">Name error</div>
+    <br/><br/>
+    <label for="country">Enter country</label>
+    <input type="text" th:field="*{country}" id="country"/>
+    <div th:if="${#fields.hasErrors('country')}" th:errors="*{country}">Name error</div>
+    <br/><br/>
+
+    <br/>
+    <input type="submit" th:value="create">
+    <div th:if="${#fields.hasErrors('username')}" th:errors="*{username}" class="error"></div>
+</form>
+<br/><br/>
+<hr>
+<br/><br/>
+
+<!--BACK TO ALLUSERINFO:-->
+<input type="button" value="All user INFO:"
+       onclick="window.location.href = 'http://localhost:8080/admin' "/>
+<br/><br/><br/>
+<hr>
+
+</body>
+</html>

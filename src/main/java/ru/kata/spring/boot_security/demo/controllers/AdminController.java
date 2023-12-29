@@ -33,7 +33,7 @@ public class AdminController {
     @GetMapping(value = "/newuser")
     public String newUser(Model model) {
         model.addAttribute("userreg", new User());
-        return "index";
+        return "newuser";
     }
 
     @PostMapping(value = "/newuser")

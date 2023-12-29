@@ -138,6 +138,6 @@ public class User implements UserDetails {
         StringBuffer passCut = new StringBuffer(password);
         passCut.setLength(8);
 
-        return "User: " + "id= " + id + " | " + " name: " + username + " | " + " password: " + passCut + " | " + " year of bith - " + yob + " | " + " country - " + country + " | " + "access - " + roles.toString();
+        return "User: " + "# " + id + " | " + " name: " + username + " | " + " password: " + passCut + " | " + " year of bith - " + yob + " | " + " country - " + country + " | " + "access - " + roles.toString();
     }
 }

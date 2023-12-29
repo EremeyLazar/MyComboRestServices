@@ -16,5 +16,4 @@ public class GetFirstAdmin {
         service.createTheAdmin();
         return "getadmin";
     }
-
 }

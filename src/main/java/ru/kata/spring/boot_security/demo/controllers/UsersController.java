@@ -20,11 +20,12 @@ public class UsersController {
     private UserService service;
 
     @GetMapping("")
-    public String user(Model model, Principal principal) {
+    public String user(Model model) {
         User user = service.getCurrentUser();
         Set<Role> userRoles = user.getRoles();
-        model.addAttribute("sayname", principal.getName());
+        model.addAttribute("sayname", user.getUsername());
         model.addAttribute("userRoles", userRoles);
+        model.addAttribute("user", user);
         return "index";
     }
 

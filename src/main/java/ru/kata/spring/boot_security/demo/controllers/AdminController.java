@@ -30,7 +30,7 @@ public class AdminController {
     }
 
     //NEW USER!!!
-        @GetMapping(value = "/newuser")
+    @GetMapping(value = "/newuser")
     public String newUser(Model model) {
         model.addAttribute("userreg", new User());
         model.addAttribute("allRoles", service.getAllRoles()); // Предполагаем, что у вас есть метод getAllRoles()
@@ -52,8 +52,6 @@ public class AdminController {
 
         return "redirect:/admin";
     }
-
-
 
 
     //    DELETE USER!!!

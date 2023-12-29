@@ -2,6 +2,8 @@ package ru.kata.spring.boot_security.demo.service;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -80,13 +82,20 @@ public class UserService implements UserDetailsService {
         return roleRepository.findAll();
     }
 
+    public User getCurrentUser() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication == null || !authentication.isAuthenticated()) {
+            return null;
+        }
+        return (User) authentication.getPrincipal();
+    }
+
     @Transactional
     public void createTheAdmin() {
         Role roleUser = new Role(1, "ROLE_USER");
         Role roleAdmin = new Role(2, "ROLE_ADMIN");
-        Role roleReadonly = new Role(3, "ROLE_READONLY");
 
-        roleRepository.saveAll(List.of(roleUser, roleAdmin, roleReadonly));
+        roleRepository.saveAll(List.of(roleUser, roleAdmin));
 
         User admin = new User("admin", "admin", 2000, "admin");
         admin.setPassword(passwordEncoder.encode(admin.getPassword()));

@@ -49,6 +49,15 @@
     <div th:if="${#fields.hasErrors('country')}" th:errors="*{country}">Name error</div>
     <br/><br/>
 
+    <!-- Checks and radios for user roles -->
+    <fieldset>
+        <legend>Select roles:</legend>
+        <div th:each="role : ${allRoles}" class="form-check">
+            <input type="checkbox" th:field="*{roles}" th:value="${role.id}" id="${'role_' + role.id}"/>
+            <label th:for="${'role_' + role.id}" th:text="${role.name}"></label>
+        </div>
+    </fieldset>
+
     <br/>
     <input type="submit" th:value="create">
     <div th:if="${#fields.hasErrors('username')}" th:errors="*{username}" class="error"></div>

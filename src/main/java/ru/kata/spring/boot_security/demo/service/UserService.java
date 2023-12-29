@@ -80,27 +80,19 @@ public class UserService implements UserDetailsService {
         return roleRepository.findAll();
     }
 
-//    @Transactional
-//    public void createAdmin(User admin) {
-//        admin.setPassword(passwordEncoder.encode(admin.getPassword()));
-//        admin.setRoles(new Role(2));
-//        userRepository.save(admin);
-//    }
+    @Transactional
+    public void createTheAdmin() {
+        Role roleUser = new Role(1, "ROLE_USER");
+        Role roleAdmin = new Role(2, "ROLE_ADMIN");
+        Role roleReadonly = new Role(3, "ROLE_READONLY");
 
+        roleRepository.saveAll(List.of(roleUser, roleAdmin, roleReadonly));
 
-//    @Transactional
-//    public void createTheAdmin() {
-//        Role roleUser = new Role(1, "ROLE_USER");
-//        Role roleAdmin = new Role(2, "ROLE_ADMIN");
-//        Role roleReadonly = new Role(3, "ROLE_READONLY");
-//
-//        roleRepository.saveAll(List.of(roleUser, roleAdmin, roleReadonly));
-//
-//        User admin = new User("admin", "admin", 2000, "admin");
-//        admin.setPassword(passwordEncoder.encode(admin.getPassword()));
-//        admin.setRoles(roleAdmin);
-//        userRepository.save(admin);
-//    }
+        User admin = new User("admin", "admin", 2000, "admin");
+        admin.setPassword(passwordEncoder.encode(admin.getPassword()));
+        admin.setRoles(Set.of(new Role(2)));
+        userRepository.save(admin);
+    }
 
     @Transactional
     public void deleteUser(int id) {

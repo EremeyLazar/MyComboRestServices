@@ -26,7 +26,7 @@ public class UsersController {
         model.addAttribute("sayname", user.getUsername());
         model.addAttribute("userRoles", userRoles);
         model.addAttribute("user", user);
-        return "index";
+        return "user";
     }
 
     @GetMapping("/readonly")

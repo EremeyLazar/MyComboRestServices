@@ -51,14 +51,6 @@ public class UserService implements UserDetailsService {
         return userRepository.findAll();
     }
 
-//    @Transactional
-//    public void createUser(User user) {
-//        user.setPassword(passwordEncoder.encode(user.getPassword()));
-//        user.setRoles(new Role(1));
-//        user.setRoles(new Role(3));
-//        userRepository.save(user);
-//    }
-
     public Role getRoleById(int roleId) {
         return roleRepository.findById(roleId).orElse(null);
     }

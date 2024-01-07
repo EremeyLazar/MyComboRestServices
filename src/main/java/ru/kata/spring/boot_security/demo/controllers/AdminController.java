@@ -6,6 +6,7 @@ import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import ru.kata.spring.boot_security.demo.model.Role;
 import ru.kata.spring.boot_security.demo.model.User;
 import ru.kata.spring.boot_security.demo.service.UserService;
 
@@ -13,6 +14,7 @@ import javax.validation.Valid;
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 @Controller
 @RequestMapping("/admin")
@@ -22,18 +24,23 @@ public class AdminController {
     private UserService service;
 
     @GetMapping("")
-    public String admin(Model model, Principal principal) {
-        model.addAttribute("sayhitoadmin", principal.getName());
+    public String admin(Model model) {
+        User user = service.getCurrentUser();
+        Set<Role> userRoles = user.getRoles();
+        model.addAttribute("sayhitoadmin", user.getUsername());
+        model.addAttribute("userRole", userRoles);
+
         List<User> resultList = service.getAll();
         model.addAttribute("userlist", resultList);
-        return "admin";
+        return "adminnew";
     }
 
     //NEW USER!!!
     @GetMapping(value = "/newuser")
     public String newUser(Model model) {
-        model.addAttribute("userreg", new User());
-        model.addAttribute("allRoles", service.getAllRoles()); // Предполагаем, что у вас есть метод getAllRoles()
+        User user = service.getCurrentUser();
+        model.addAttribute("userreg", user.getUsername());
+        model.addAttribute("allRoles", service.getAllRoles());
         return "newuser";
     }
 
@@ -73,13 +80,13 @@ public class AdminController {
     @GetMapping(value = "/update")
     public String updateUser(ModelMap model, @RequestParam("id") int id) {
         model.addAttribute("upuser", service.getOne(id));
-        return "update";
+        return "edit";
     }
 
     @PostMapping(value = "/update")
     public String update(@ModelAttribute("upuser") @Valid User updatedUser, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
-            return "/admin/update";
+            return "/admin/edit";
         }
         service.update(updatedUser, updatedUser.getId());
         return "redirect:/admin";

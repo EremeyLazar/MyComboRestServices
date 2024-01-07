@@ -16,9 +16,9 @@
     <div class="row">
         <div class="col">
             <br>
-            <span th:text="${sayname}"></span> with roles
-            <span th:if="${userRoles}">
-                <span th:each="role : ${userRoles}">
+            <span th:text="${sayhitoadmin}"></span> with roles
+            <span th:if="${userRole}">
+                <span th:each="role : ${userRole}">
                     <span th:text="${' ' + role.name + ', '}"></span>
                 </span>
             </span>
@@ -38,7 +38,10 @@
 <!--MIDDLEMIDDLEMIDDLEMIDDLEMIDDLEMIDDLEMIDDLEMIDDLEMIDDLEMIDDLE-->
 
 <div class="row">
-    <div class="col-2 d-flex align-items-center justify-content-center"><br>USER</div>
+    <div class="col-2 d-flex flex-column align-items-start justify-content-start">
+        <br>
+        <a href="/user">   USER</a>
+          ADMIN</div>
     <div class="col-10" style="background-color: lightgray;">
         <h3>User information page.</h3>
         <h6>About user:</h6>
@@ -54,13 +57,15 @@
             </tr>
             </thead>
             <tbody>
-            <tr>
+            <!-- Итерация по списку пользователей -->
+            <tr th:each="user : ${userlist}">
                 <td th:text="${user.id}"></td>
                 <td th:text="${user.username}"></td>
                 <td th:text="${user.yob}"></td>
                 <td th:text="${user.country}"></td>
                 <td>
-                <span th:each="role : ${user.roles}">
+                    <!-- Итерация по списку ролей каждого пользователя -->
+                    <span th:each="role : ${user.roles}">
                     <span th:text="${role.name}"></span>
                     <br/>
                 </span>
@@ -68,6 +73,7 @@
             </tr>
             </tbody>
         </table>
+
     </div>
 
 

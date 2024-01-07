@@ -1,74 +1,74 @@
-<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>All Users</title>
+<!--<!DOCTYPE html>-->
+<!--<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">-->
+<!--<html lang="en">-->
+<!--<head>-->
+<!--    <meta charset="UTF-8">-->
+<!--    <title>All Users</title>-->
 
-    <style>
-        hr {
-            border: none;
-            background-color: dodgerblue;
-            color: dodgerblue;
-            height: 2px;
-        }
-    </style>
+<!--    <style>-->
+<!--        hr {-->
+<!--            border: none;-->
+<!--            background-color: dodgerblue;-->
+<!--            color: dodgerblue;-->
+<!--            height: 2px;-->
+<!--        }-->
+<!--    </style>-->
 
-</head>
-<body>
-<hr>
-<h2><span th:text="${sayhitoadmin}"></span>, welcome!!!</h2>
-<h2>ADMIN PAGE.</h2>
-<h2>All Users INFO:</h2>
-<hr>
-<br/><br/>
+<!--</head>-->
+<!--<body>-->
+<!--<hr>-->
+<!--<h2><span th:text="${sayhitoadmin}"></span>, welcome!!!</h2>-->
+<!--<h2>ADMIN PAGE.</h2>-->
+<!--<h2>All Users INFO:</h2>-->
+<!--<hr>-->
+<!--<br/><br/>-->
 
-<!--LIST OF ALL USERS:-->
-<div th:each="user : ${userlist}">
-    <a th:text="${user.toString()}">userid</a>
-</div>
-<br/><br/>
-<hr>
-<br/><br/>
+<!--&lt;!&ndash;LIST OF ALL USERS:&ndash;&gt;-->
+<!--<div th:each="user : ${userlist}">-->
+<!--    <a th:text="${user.toString()}">userid</a>-->
+<!--</div>-->
+<!--<br/><br/>-->
+<!--<hr>-->
+<!--<br/><br/>-->
 
-<!--UPDATE USER FORM:-->
-<p2>Enter user's ID to UPDATE user info:</p2>
-<form action="admin/update" method="get">
-    <input type="int" name="id"
-           placeholder="Enter ID"/>
-    <input type="submit"/>
-</form>
-<br/><br/>
-<!--DELETE A USER FORM:-->
-<p2>Enter user's ID to REMOVE user:</p2>
-<form action="admin/deleteuser" method="get">
-    <input type="number" name="id"
-           placeholder="Enter ID"/>
-    <input type="submit"/>
-</form>
-<br/><br/>
-<hr>
+<!--&lt;!&ndash;UPDATE USER FORM:&ndash;&gt;-->
+<!--<p2>Enter user's ID to UPDATE user info:</p2>-->
+<!--<form action="admin/update" method="get">-->
+<!--    <input type="int" name="id"-->
+<!--           placeholder="Enter ID"/>-->
+<!--    <input type="submit"/>-->
+<!--</form>-->
+<!--<br/><br/>-->
+<!--&lt;!&ndash;DELETE A USER FORM:&ndash;&gt;-->
+<!--<p2>Enter user's ID to REMOVE user:</p2>-->
+<!--<form action="admin/deleteuser" method="get">-->
+<!--    <input type="number" name="id"-->
+<!--           placeholder="Enter ID"/>-->
+<!--    <input type="submit"/>-->
+<!--</form>-->
+<!--<br/><br/>-->
+<!--<hr>-->
 
-<br/><br/>
+<!--<br/><br/>-->
 
-<!--CREATE USER!-->
-<input type="button" value="Register a new USER."
-       onclick="window.location.href = '/admin/newuser' "/>
-<br/><br/>
-
-
-<!--USER!-->
-<input type="button" value="USER page !."
-       onclick="window.location.href = '/user/' "/>
-<br/><br/>
+<!--&lt;!&ndash;CREATE USER!&ndash;&gt;-->
+<!--<input type="button" value="Register a new USER."-->
+<!--       onclick="window.location.href = '/admin/newuser' "/>-->
+<!--<br/><br/>-->
 
 
-<!--LOGOUT!-->
-<input type="button" value="LogOUT !."
-       onclick="window.location.href = '/logout' "/>
-<br/><br/><br/>
+<!--&lt;!&ndash;USER!&ndash;&gt;-->
+<!--<input type="button" value="USER page !."-->
+<!--       onclick="window.location.href = '/user/' "/>-->
+<!--<br/><br/>-->
 
-<hr>
 
-</body>
-</html>
+<!--&lt;!&ndash;LOGOUT!&ndash;&gt;-->
+<!--<input type="button" value="LogOUT !."-->
+<!--       onclick="window.location.href = '/logout' "/>-->
+<!--<br/><br/><br/>-->
+
+<!--<hr>-->
+
+<!--</body>-->
+<!--</html>-->

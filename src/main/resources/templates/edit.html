@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:form="http://www.w3.org/1999/xhtml">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>UPDATE USER</title>
+
+    <style>
+        /* Стили для всплывающего окна */
+        #popup {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            padding: 20px;
+            border: 1px solid #ccc;
+            background-color: #fff;
+            z-index: 1000;
+        }
+    </style>
+
+</head>
+
+<body>
+<hr>
+<h2>Update user's info:</h2>
+<hr>
+<br/><br/>
+
+<!--UPDATING USER FORM-->
+
+<form th:method="POST" th:action="@{/admin/update}" th:object="${upuser}">
+    <label for="id">ID:</label>
+    <input type="number" th:field="*{id}" id="id" readonly/>
+    <br/><br/>
+
+    <label for="username">Change username</label>
+    <input type="text" th:field="*{username}" id="username"/>
+    <div th:if="${#fields.hasErrors('username')}" th:errors="*{username}">Name error</div>
+    <br/><br/>
+
+    <label for="password">Enter password</label>
+    <input type="text" th:field="*{password}" id="password" readonly/>
+
+    <br/><br/>
+
+    <label for="country">year of birth</label>
+    <input type="number" th:field="*{yob}" id="yob" readonly/>
+    <br/><br/>
+
+    <label for="country">Change user's country</label>
+    <input type="text" th:field="*{country}" id="country"/>
+    <div th:if="${#fields.hasErrors('country')}" th:errors="*{country}">Name error</div>
+    <br/><br/>
+
+    <br/><br/>
+
+    <hr>
+    <br/>
+    <input type="submit" th:value="Update">
+</form>
+
+<!-- Скрипты для управления всплывающим окном -->
+<script>
+    // Открываем всплывающее окно при загрузке страницы
+    window.onload = function() {
+        openPopup();
+    };
+
+    function openPopup() {
+        var popup = document.getElementById('popup');
+        popup.style.display = 'block';
+        window.open('', 'popupWindow', 'width=400,height=400,scrollbars=no');
+        document.forms[0].target = 'popupWindow';
+    }
+</script>
+
+</body>
+</html>

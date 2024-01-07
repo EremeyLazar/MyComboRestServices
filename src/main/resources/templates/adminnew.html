@@ -54,6 +54,7 @@
                 <th scope="col">Year of Birth</th>
                 <th scope="col">Country of residence</th>
                 <th scope="col">Roles</th>
+                <th scope="col">Actions</th> <!-- Добавлен новый столбец для кнопки Delete -->
             </tr>
             </thead>
             <tbody>
@@ -69,6 +70,14 @@
                     <span th:text="${role.name}"></span>
                     <br/>
                 </span>
+                </td>
+                <td>
+                    <!-- Кнопка Delete с параметром пользователя (ID, например) -->
+                    <form th:action="@{/admin/delete}" method="post">
+                        <input type="hidden" name="userId" th:value="${user.id}" />
+<!--                        <button type="submit">Delete</button>-->
+                        <button type="submit" class="btn btn-primary">Delete</button>
+                    </form>
                 </td>
             </tr>
             </tbody>

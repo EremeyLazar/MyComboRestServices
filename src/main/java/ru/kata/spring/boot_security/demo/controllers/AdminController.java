@@ -60,19 +60,10 @@ public class AdminController {
     }
 
 
-    //    DELETE USER!!!
-    @RequestMapping(value = "/deleteuser")
-    public String deleteUser(@RequestParam("id") int id) {
-        service.deleteUser(id);
-        return "redirect:deleted";
-    }
-
-    @GetMapping(value = "/deleted")
-    public String deleted(ModelMap model) {
-        List<String> messages = new ArrayList<>();
-        messages.add("Requested user has been removed!!!");
-        model.addAttribute("messages", messages);
-        return "deleted";
+    @PostMapping("/delete")
+    public String deleteUser(@RequestParam("userId") int userId) {
+         service.deleteUser(userId);
+        return "redirect:/admin";
     }
 
     //    UPDATE USER!!!

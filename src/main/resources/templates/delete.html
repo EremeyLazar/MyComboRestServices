@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Bootstrap demo</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+</head>
+<body>
+
+<h3>Delete user:</h3>
+
+<div class="container text-center">
+    <div class="row">
+        <div class="col"></div>
+        <div class="col">
+            <div class="row">
+                <div class="col-12" style="background-color: lightgray;">
+                    <div class="mb-3 text-center">
+
+
+                    <!--UPDATING USER FORM-->
+
+                    <form th:method="POST" th:action="@{/admin/delete}" th:object="${deluser}">
+                        <label for="id" class="form-label fw-bold">ID:</label>
+                        <input type="number" th:field="*{id}" id="id" readonly class="form-control form-control-sm"/>
+                        <br/><br/>
+
+                        <label for="username" class="form-label fw-bold">Change username</label>
+                        <input type="text" th:field="*{username}" id="username" class="form-control form-control-sm"/>
+                        <div th:if="${#fields.hasErrors('username')}" th:errors="*{username}">Name error</div>
+                        <br/><br/>
+
+                        <label for="password" class="form-label fw-bold">Enter password</label>
+                        <input type="text" th:field="*{password}" id="password" readonly class="form-control form-control-sm"/>
+
+                        <br/><br/>
+
+                        <label for="country" class="form-label fw-bold">year of birth</label>
+                        <input type="number" th:field="*{yob}" id="yob" readonly class="form-control form-control-sm"/>
+                        <br/><br/>
+
+                        <label for="country" class="form-label fw-bold">Change user's country</label>
+                        <input type="text" th:field="*{country}" id="country" class="form-control form-control-sm"/>
+                        <div th:if="${#fields.hasErrors('country')}" th:errors="*{country}">Name error</div>
+                        <br/><br/>
+
+
+                        <!-- Кнопка Delete -->
+                        <form th:action="@{/admin/delete}" method="post">
+                            <input type="hidden" name="id" th:value="${deluser.id}"/>
+                            <button type="submit" class="btn btn-danger">Delete</button>
+                        </form>
+
+                    </form>
+
+                    <!-- Скрипты для управления всплывающим окном -->
+                    <script>
+                        // Открываем всплывающее окно при загрузке страницы
+                        window.onload = function() {
+                            openPopup();
+                        };
+
+                        function openPopup() {
+                            var popup = document.getElementById('popup');
+                            popup.style.display = 'block';
+                            window.open('', 'popupWindow', 'width=400,height=400,scrollbars=no');
+                            document.forms[0].target = 'popupWindow';
+                        }
+                    </script>
+
+
+
+
+                    </div>
+
+                </div>
+
+
+            </div>
+        </div>
+        <div class="col"></div>
+    </div>
+</div>
+
+<!--MIDDLEMIDDLEMIDDLEMIDDLEMIDDLEMIDDLEMIDDLEMIDDLEMIDDLEMIDDLE-->
+
+
+
+
+<script src=" https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+        crossorigin="anonymous"></script>
+</body>
+</html>

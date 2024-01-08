@@ -58,8 +58,15 @@ public class AdminController {
     }
 
     //      DELETE!!!!
+
+    @GetMapping(value = "/delete")
+    public String delete (ModelMap model, @RequestParam("id") int id) {
+        model.addAttribute("deluser", service.getOne(id));
+        return "delete";
+    }
+
     @PostMapping("/delete")
-    public String deleteUser(@RequestParam("userId") int userId) {
+    public String deleteUser(@RequestParam("id") int userId) {
          service.deleteUser(userId);
         return "redirect:/admin";
     }

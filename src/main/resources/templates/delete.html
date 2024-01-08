@@ -52,11 +52,22 @@
                             <br/><br/>
 
 
-                            <!-- Кнопка Delete -->
+                            <!-- Кнопка Delete и Close-->
                             <form th:action="@{/admin/delete}" method="post">
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-secondary" onclick="closePage()">Close</button>
+                                    &nbsp;&nbsp;&nbsp;
+                                    <button type="submit" class="btn btn-danger">Delete</button>
+                                </div>
                                 <input type="hidden" name="id" th:value="${deluser.id}"/>
-                                <button type="submit" class="btn btn-danger">Delete</button>
                             </form>
+
+                            <script>
+                                function closePage() {
+                                    // Закрыть текущую страницу
+                                    window.close();
+                                }
+                            </script>
 
                         </form>
 

@@ -11,8 +11,6 @@ import ru.kata.spring.boot_security.demo.model.User;
 import ru.kata.spring.boot_security.demo.service.UserService;
 
 import javax.validation.Valid;
-import java.security.Principal;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -32,7 +30,7 @@ public class AdminController {
 
         List<User> resultList = service.getAll();
         model.addAttribute("userlist", resultList);
-        return "adminnew";
+        return "admin";
     }
 
     //NEW USER!!!
@@ -59,7 +57,7 @@ public class AdminController {
         return "redirect:/admin";
     }
 
-
+    //      DELETE!!!!
     @PostMapping("/delete")
     public String deleteUser(@RequestParam("userId") int userId) {
          service.deleteUser(userId);

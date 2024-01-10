@@ -30,17 +30,21 @@ public class AdminController {
 
         List<User> resultList = service.getAll();
         model.addAttribute("userlist", resultList);
+
+        model.addAttribute("userreg", new User());
+        model.addAttribute("allRoles", service.getAllRoles());
+
         return "admin";
     }
 
 
     //NEW USER!!!
-    @GetMapping(value = "/newuser")
-    public String newUser(Model model) {
-        model.addAttribute("userreg", new User());
-        model.addAttribute("allRoles", service.getAllRoles());
-        return "admin";
-    }
+//    @GetMapping(value = "/newuser")
+//    public String newUser(Model model) {
+//        model.addAttribute("userreg", new User());
+//        model.addAttribute("allRoles", service.getAllRoles());
+//        return "admin";
+//    }
 
     @PostMapping(value = "/newuser")
     public String createUser(@ModelAttribute("userreg") @Valid User user,

@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Bootstrap demo</title>
+    <title>Admin panel</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
@@ -58,9 +58,6 @@
                 <button class="nav-link" id="nav-profile-tab" data-bs-toggle="tab" data-bs-target="#nav-profile"
                         type="button" role="tab" aria-controls="nav-profile" aria-selected="false">New User
                 </button>
-                <button class="nav-link" id="nav-contact-tab" data-bs-toggle="tab" data-bs-target="#nav-contact"
-                        type="button" role="tab" aria-controls="nav-contact" aria-selected="false">Контакт
-                </button>
             </div>
         </nav>
         <div class="tab-content" id="nav-tabContent">
@@ -69,7 +66,7 @@
 
             <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
 
-                <h6>All users:</h6>
+                <br><h6>All users:</h6>
 
                 <table class="table table-striped-columns">
                     <thead>
@@ -134,52 +131,69 @@
             <!--            ВТОРАЯ ВКЛАДКА-->
 
             <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
-                <h6>TESTTESTTESTTESTTESTTESTTESTTEST:</h6>
+                <br><h6>Add new user</h6>
+                <div class="container text-center">
+                    <div class="row">
+                        <div class="col"></div>
 
-                CREATE NEW USER FORM>
-                <div class="mb-3 text-center">
-                    <form th:method="POST" th:action="@{/admin/newuser}" th:object="${userreg}">
-                        <label for="username" class="form-label fw-bold">Enter username</label>
-                        <input type="text" th:field="*{username}" id="username" class="form-control form-control-sm"/>
-                        <div th:if="${#fields.hasErrors('username')}" th:errors="*{username}">Name error</div>
-                        <br/><br/>
+                        <!--                                                         Column2-->
+                        <div class="col">
 
-                        <label for="password" class="form-label fw-bold">Enter your password</label>
-                        <input type="password" th:field="*{password}" id="password" class="form-control form-control-sm"/>
-                        <div th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Name error</div>
-                        <br/><br/>
+                            <form th:method="POST" th:action="@{/admin/newuser}" th:object="${userreg}">
+                                <label for="username" class="form-label fw-bold">Enter username</label>
+                                <input type="text" th:field="*{username}" id="username"
+                                       class="form-control form-control-sm"/>
+                                <div th:if="${#fields.hasErrors('username')}" th:errors="*{username}">Name error</div>
+                                <br/><br/>
 
-                        <label for="yob" class="form-label fw-bold">Year of birth</label>
-                        <input type="number" th:field="*{yob}" id="yob"/>
-                        <div th:if="${#fields.hasErrors('yob')}" th:errors="*{yob}">Name error</div>
-                        <br/><br/>
+                                <label for="password" class="form-label fw-bold">Enter your password</label>
+                                <input type="password" th:field="*{password}" id="password"
+                                       class="form-control form-control-sm"/>
+                                <div th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Name error</div>
+                                <br/><br/>
 
-                        <label for="country" class="form-label fw-bold">Enter country</label>
-                        <input type="text" th:field="*{country}" id="country" class="form-control form-control-sm"/>
-                        <div th:if="${#fields.hasErrors('country')}" th:errors="*{country}">Name error</div>
-                        <br/><br/>
+                                <label for="yob" class="form-label fw-bold">Year of birth</label>
+                                <input type="number" th:field="*{yob}" id="yob" class="form-control form-control-sm"/>
+                                <div th:if="${#fields.hasErrors('yob')}" th:errors="*{yob}">Name error</div>
+                                <br/><br/>
 
-                        <!-- Checks and radios for user roles -->
-                        <fieldset>
-                            <legend>Select roles:</legend>
-                            <div class="form-check">
+                                <label for="country" class="form-label fw-bold">Enter country</label>
+                                <input type="text" th:field="*{country}" id="country"
+                                       class="form-control form-control-sm"/>
+                                <div th:if="${#fields.hasErrors('country')}" th:errors="*{country}">Name error</div>
+                                <br/><br/>
+
+                                <!-- Checks for user roles -->
+                                <fieldset>
+                                    <legend class="form-label fw-bold">Select roles:</legend>
+                                    <div class="form-check">
         <span th:each="role : ${allRoles}">
             <input type="checkbox" th:field="*{roles}" th:value="${role.id}" id="${'role_' + role.id}"/>
             <label th:for="${'role_' + role.id}" th:text="${role.name}"></label>
         </span>
-                            </div>
-                        </fieldset>
+                                    </div>
+                                </fieldset>
 
-                        <br/>
-                        <button type="submit" class="btn btn-success">Add new user</button>
-                        <div th:if="${#fields.hasErrors('username')}" th:errors="*{username}" class="error"></div>
-                    </form>
+                                <br/>
+                                <button type="submit" class="btn btn-success">Add new user</button>
+                                <div th:if="${#fields.hasErrors('username')}" th:errors="*{username}"
+                                     class="error"></div>
+                            </form>
+
+
+                        </div>
+
+                        <!--                                                     Column3-->
+                        <div class="col"></div>
+                    </div>
+                </div>
+
+                <!--                CREATE NEW USER FORM>-->
+                <div class="mb-3 text-center">
+
                 </div>
 
             </div>
-
-<!--                                ТРЕТЬЯ ВКЛАДКА!!!!!!!!!!!!!-->
-            <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">...</div>
         </div>
 
 

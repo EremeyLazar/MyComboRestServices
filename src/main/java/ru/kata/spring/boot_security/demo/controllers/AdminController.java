@@ -14,6 +14,8 @@ import javax.validation.Valid;
 import java.util.List;
 import java.util.Set;
 
+
+//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!     FOR FIRST ADMIN - http://localhost:8080/getadmin     !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 @Controller
 @RequestMapping("/admin")
 public class AdminController {
@@ -36,15 +38,6 @@ public class AdminController {
 
         return "admin";
     }
-
-
-    //NEW USER!!!
-//    @GetMapping(value = "/newuser")
-//    public String newUser(Model model) {
-//        model.addAttribute("userreg", new User());
-//        model.addAttribute("allRoles", service.getAllRoles());
-//        return "admin";
-//    }
 
     @PostMapping(value = "/newuser")
     public String createUser(@ModelAttribute("userreg") @Valid User user,

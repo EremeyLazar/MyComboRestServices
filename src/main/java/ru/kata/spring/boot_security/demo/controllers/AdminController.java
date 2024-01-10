@@ -33,12 +33,13 @@ public class AdminController {
         return "admin";
     }
 
+
     //NEW USER!!!
     @GetMapping(value = "/newuser")
     public String newUser(Model model) {
         model.addAttribute("userreg", new User());
         model.addAttribute("allRoles", service.getAllRoles());
-        return "newuser";
+        return "admin";
     }
 
     @PostMapping(value = "/newuser")
@@ -47,9 +48,9 @@ public class AdminController {
                              @RequestParam(value = "selectedRoles", required = false) List<Integer> selectedRoleIds) {
         if (service.isUserExists(user.getUsername())) {
             bindingResult.rejectValue("username", "error.user", "User with that name already exists!");
-            return "newuser";
+            return "admin";
         } else if (bindingResult.hasErrors()) {
-            return "newuser";
+            return "admin";
         }
 
         service.createUser(user, selectedRoleIds);

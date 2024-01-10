@@ -39,6 +39,7 @@ public class AdminController {
         return "admin";
     }
 
+//        NEW USER
     @PostMapping(value = "/newuser")
     public String createUser(@ModelAttribute("userreg") @Valid User user,
                              BindingResult bindingResult,

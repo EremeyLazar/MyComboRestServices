@@ -9,7 +9,6 @@ import ru.kata.spring.boot_security.demo.model.Role;
 import ru.kata.spring.boot_security.demo.model.User;
 import ru.kata.spring.boot_security.demo.service.UserService;
 
-import java.security.Principal;
 import java.util.Set;
 
 @Controller
@@ -29,9 +28,4 @@ public class UsersController {
         return "user";
     }
 
-    @GetMapping("/readonly")
-    public String readonly(Model model, Principal principal) {
-        model.addAttribute("saynamereadonly", principal.getName());
-        return "readonly";
-    }
 }

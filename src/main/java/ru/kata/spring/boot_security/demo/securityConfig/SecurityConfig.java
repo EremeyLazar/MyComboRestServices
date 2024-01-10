@@ -30,7 +30,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and().formLogin()
                 .successHandler(new CustomLoginSuccessHandler())
                 .permitAll()
-                .and().logout().logoutUrl("/logout").logoutSuccessUrl("/index");
+                .and().logout();
     }
 
     @Bean

@@ -5,6 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import ru.kata.spring.boot_security.demo.service.UserService;
 
+//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!     FOR FIRST ADMIN - http://localhost:8080/getadmin     !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 @Controller
 public class GetFirstAdmin {
 

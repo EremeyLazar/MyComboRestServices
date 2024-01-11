@@ -14,8 +14,6 @@ import javax.validation.Valid;
 import java.util.List;
 import java.util.Set;
 
-
-//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!     FOR FIRST ADMIN - http://localhost:8080/getadmin     !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 @Controller
 @RequestMapping("/admin")
 public class AdminController {
@@ -39,7 +37,6 @@ public class AdminController {
         return "admin";
     }
 
-//        NEW USER
     @PostMapping(value = "/newuser")
     public String createUser(@ModelAttribute("userreg") @Valid User user,
                              BindingResult bindingResult,
@@ -56,7 +53,6 @@ public class AdminController {
         return "redirect:/admin";
     }
 
-    //      DELETE USER!!!!
     @GetMapping(value = "/delete")
     public String delete(ModelMap model, @RequestParam("id") int id) {
         model.addAttribute("deluser", service.getOne(id));
@@ -69,7 +65,6 @@ public class AdminController {
         return "redirect:/admin";
     }
 
-    //    UPDATE USER!!!
     @GetMapping(value = "/update")
     public String updateUser(ModelMap model, @RequestParam("id") int id) {
         model.addAttribute("upuser", service.getOne(id));

@@ -102,10 +102,6 @@ public class User implements UserDetails {
         return roles;
     }
 
-//    public void setRoles(Role role) {
-//        roles.add(role);
-//    }
-
     public void setRoles(Set<Role> roles) {
         this.roles = roles;
     }

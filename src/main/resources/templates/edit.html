@@ -20,9 +20,6 @@
                 <div class="col-12" style="background-color: lightgray;">
                     <div class="mb-3 text-center">
 
-
-                        <!--UPDATING USER FORM-->
-
                         <form th:method="POST" th:action="@{/admin/update}" th:object="${upuser}">
                             <label for="id" class="form-label fw-bold">ID:</label>
                             <input type="number" th:field="*{id}" id="id" readonly
@@ -55,7 +52,6 @@
                             <button type="submit" class="btn btn-success" th:value="Update">Edit user</button>
                         </form>
 
-                        <!-- управления всплывающим окном -->
                         <script>
                             window.onload = function () {
                                 openPopup();

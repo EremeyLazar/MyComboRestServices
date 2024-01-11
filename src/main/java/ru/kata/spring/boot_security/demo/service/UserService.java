@@ -46,7 +46,6 @@ public class UserService implements UserDetailsService {
         return user != null;
     }
 
-
     public List<User> getAll() {
         return userRepository.findAll();
     }
@@ -83,24 +82,11 @@ public class UserService implements UserDetailsService {
     }
 
     @Transactional
-    public void createTheAdmin() {
-        Role roleUser = new Role(1, "ROLE_USER");
-        Role roleAdmin = new Role(2, "ROLE_ADMIN");
-
-        roleRepository.saveAll(List.of(roleUser, roleAdmin));
-
-        User admin = new User("admin", "admin", 2000, "admin");
-        admin.setPassword(passwordEncoder.encode(admin.getPassword()));
-        admin.setRoles(Set.of(new Role(2)));
-        userRepository.save(admin);
-    }
-
-    @Transactional
     public void deleteUser(int id) {
         if (userRepository.findById(id).isPresent()) {
             userRepository.deleteById(id);
         } else {
-            throw new IllegalArgumentException("user with this ID does not exists");
+            throw new IllegalArgumentException("user does not exists anyway");
         }
     }
 
@@ -110,8 +96,6 @@ public class UserService implements UserDetailsService {
         userRepository.findById(id).ifPresentOrElse(
                 user -> {
                     user.setUsername(updatedUser.getUsername());
-                    user.setPassword(updatedUser.getPassword());
-                    user.setYob(updatedUser.getYob());
                     user.setCountry(updatedUser.getCountry());
                     userRepository.save(user);
                 },

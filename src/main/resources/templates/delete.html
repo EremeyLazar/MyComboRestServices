@@ -20,9 +20,6 @@
                 <div class="col-12" style="background-color: lightgray;">
                     <div class="mb-3 text-center">
 
-
-                        <!--UPDATING USER FORM-->
-
                         <form th:method="POST" th:action="@{/admin/delete}" th:object="${deluser}">
                             <label for="id" class="form-label fw-bold">ID:</label>
                             <input type="number" th:field="*{id}" id="id" readonly
@@ -51,8 +48,6 @@
                             <div th:if="${#fields.hasErrors('country')}" th:errors="*{country}">Name error</div>
                             <br/><br/>
 
-
-                            <!-- Кнопка Delete и Close-->
                             <form th:action="@{/admin/delete}" method="post">
                                 <div class="btn-group">
                                     <button type="button" class="btn btn-secondary" onclick="closePage()">Close</button>
@@ -70,7 +65,6 @@
 
                         </form>
 
-                        <!-- управления всплывающим окном -->
                         <script>
                             window.onload = function () {
                                 openPopup();

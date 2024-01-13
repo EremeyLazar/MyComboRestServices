@@ -19,7 +19,7 @@ public class UsersController {
     private UserService service;
 
     @GetMapping("")
-    public String user(Model model) {
+    public String userInfoPage (Model model) {
         User user = service.getCurrentUser();
         Set<Role> userRoles = user.getRoles();
         model.addAttribute("sayname", user.getUsername());

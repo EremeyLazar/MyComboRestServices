@@ -16,24 +16,21 @@ import java.util.Set;
 
 @Controller
 @RequestMapping("/admin")
-public class AdminController {
+public class AuthController {
 
     @Autowired
     private UserService service;
 
     @GetMapping("")
-    public String admin(Model model) {
+    public String adminPanelPage (Model model) {
         User user = service.getCurrentUser();
         Set<Role> userRoles = user.getRoles();
         model.addAttribute("sayhitoadmin", user.getUsername());
         model.addAttribute("userRole", userRoles);
-
         List<User> resultList = service.getAll();
         model.addAttribute("userlist", resultList);
-
         model.addAttribute("userreg", new User());
         model.addAttribute("allRoles", service.getAllRoles());
-
         return "admin";
     }
 
@@ -47,32 +44,30 @@ public class AdminController {
         } else if (bindingResult.hasErrors()) {
             return "admin";
         }
-
         service.createUser(user, selectedRoleIds);
-
         return "redirect:/admin";
     }
 
     @GetMapping(value = "/delete")
-    public String delete(ModelMap model, @RequestParam("id") int id) {
+    public String deleteUserGetMethod (ModelMap model, @RequestParam("id") int id) {
         model.addAttribute("deluser", service.getOne(id));
         return "delete";
     }
 
     @PostMapping("/delete")
-    public String deleteUser(@RequestParam("id") int userId) {
+    public String deleteUserPostMethod (@RequestParam("id") int userId) {
         service.deleteUser(userId);
         return "redirect:/admin";
     }
 
     @GetMapping(value = "/update")
-    public String updateUser(ModelMap model, @RequestParam("id") int id) {
+    public String updateUserGetMethod (ModelMap model, @RequestParam("id") int id) {
         model.addAttribute("upuser", service.getOne(id));
         return "edit";
     }
 
     @PostMapping(value = "/update")
-    public String update(@ModelAttribute("upuser") @Valid User updatedUser, BindingResult bindingResult) {
+    public String updatePostMethod (@ModelAttribute("upuser") @Valid User updatedUser, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return "/admin/edit";
         }

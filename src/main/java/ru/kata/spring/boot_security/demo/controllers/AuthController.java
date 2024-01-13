@@ -8,7 +8,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import ru.kata.spring.boot_security.demo.model.Role;
 import ru.kata.spring.boot_security.demo.model.User;
-import ru.kata.spring.boot_security.demo.service.UserService;
+import ru.kata.spring.boot_security.demo.service.AuthService;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -19,18 +19,18 @@ import java.util.Set;
 public class AuthController {
 
     @Autowired
-    private UserService service;
+    private AuthService authService;
 
     @GetMapping("")
     public String adminPanelPage (Model model) {
-        User user = service.getCurrentUser();
+        User user = authService.getCurrentUser();
         Set<Role> userRoles = user.getRoles();
         model.addAttribute("sayhitoadmin", user.getUsername());
         model.addAttribute("userRole", userRoles);
-        List<User> resultList = service.getAll();
+        List<User> resultList = authService.getAll();
         model.addAttribute("userlist", resultList);
         model.addAttribute("userreg", new User());
-        model.addAttribute("allRoles", service.getAllRoles());
+        model.addAttribute("allRoles", authService.getAllRoles());
         return "admin";
     }
 
@@ -38,31 +38,31 @@ public class AuthController {
     public String createUser(@ModelAttribute("userreg") @Valid User user,
                              BindingResult bindingResult,
                              @RequestParam(value = "selectedRoles", required = false) List<Integer> selectedRoleIds) {
-        if (service.isUserExists(user.getUsername())) {
+        if (authService.isUserExists(user.getUsername())) {
             bindingResult.rejectValue("username", "error.user", "User with that name already exists!");
             return "admin";
         } else if (bindingResult.hasErrors()) {
             return "admin";
         }
-        service.createUser(user, selectedRoleIds);
+        authService.createUser(user, selectedRoleIds);
         return "redirect:/admin";
     }
 
     @GetMapping(value = "/delete")
     public String deleteUserGetMethod (ModelMap model, @RequestParam("id") int id) {
-        model.addAttribute("deluser", service.getOne(id));
+        model.addAttribute("deluser", authService.getOne(id));
         return "delete";
     }
 
     @PostMapping("/delete")
     public String deleteUserPostMethod (@RequestParam("id") int userId) {
-        service.deleteUser(userId);
+        authService.deleteUser(userId);
         return "redirect:/admin";
     }
 
     @GetMapping(value = "/update")
     public String updateUserGetMethod (ModelMap model, @RequestParam("id") int id) {
-        model.addAttribute("upuser", service.getOne(id));
+        model.addAttribute("upuser", authService.getOne(id));
         return "edit";
     }
 
@@ -71,7 +71,7 @@ public class AuthController {
         if (bindingResult.hasErrors()) {
             return "/admin/edit";
         }
-        service.update(updatedUser, updatedUser.getId());
+        authService.update(updatedUser, updatedUser.getId());
         return "redirect:/admin";
     }
 

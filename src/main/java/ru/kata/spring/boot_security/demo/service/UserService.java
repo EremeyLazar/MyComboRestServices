@@ -25,10 +25,7 @@ public class UserService implements UserDetailsService {
 
     @Autowired
     private UserRepository userRepository;
-    @Autowired
-    private RoleRepository roleRepository;
-    @Autowired
-    private PasswordEncoder passwordEncoder;
+
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -41,72 +38,11 @@ public class UserService implements UserDetailsService {
         return user;
     }
 
-    public boolean isUserExists(String username) {
-        User user = userRepository.findByUsername(username);
-        return user != null;
-    }
-
-    public List<User> getAll() {
-        return userRepository.findAll();
-    }
-
-    public Role getRoleById(int roleId) {
-        return roleRepository.findById(roleId).orElse(null);
-    }
-
-    @Transactional
-    public void createUser(User user, List<Integer> roleIds) {
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
-
-        if (roleIds != null) {
-            Set<Role> roles = roleIds.stream()
-                    .map(roleId -> getRoleById(roleId))
-                    .filter(Objects::nonNull)
-                    .collect(Collectors.toSet());
-            user.setRoles(roles);
-        }
-
-        userRepository.save(user);
-    }
-
-    public List<Role> getAllRoles() {
-        return roleRepository.findAll();
-    }
-
     public User getCurrentUser() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication == null || !authentication.isAuthenticated()) {
             return null;
         }
         return (User) authentication.getPrincipal();
-    }
-
-    @Transactional
-    public void deleteUser(int id) {
-        if (userRepository.findById(id).isPresent()) {
-            userRepository.deleteById(id);
-        } else {
-            throw new IllegalArgumentException("user does not exists anyway");
-        }
-    }
-
-
-    @Transactional
-    public void update(User updatedUser, int id) {
-        userRepository.findById(id).ifPresentOrElse(
-                user -> {
-                    user.setUsername(updatedUser.getUsername());
-                    user.setCountry(updatedUser.getCountry());
-                    userRepository.save(user);
-                },
-                () -> {
-                    throw new IllegalArgumentException("User with this ID does not exist");
-                }
-        );
-    }
-
-    public User getOne(int id) {
-        return userRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("User with this ID does not exist"));
     }
 }

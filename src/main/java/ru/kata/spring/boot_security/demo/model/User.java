@@ -53,11 +53,6 @@ public class User implements UserDetails {
         this.country = country;
     }
 
-    public void addRole(Role role) {
-        roles.add(role);
-        role.getUsers().add(this);
-    }
-
     public int getId() {
         return id;
     }

@@ -33,20 +33,43 @@ public class AuthController {
         model.addAttribute("allRoles", authService.getAllRoles());
         return "admin";
     }
-
-    @PostMapping(value = "/newuser")
+    @PostMapping("")
     public String createUser(@ModelAttribute("userreg") @Valid User user,
                              BindingResult bindingResult,
-                             @RequestParam(value = "selectedRoles", required = false) List<Integer> selectedRoleIds) {
+                             @RequestParam(value = "selectedRoles", required = false) List<Integer> selectedRoleIds,
+                             Model model) {
         if (authService.isUserExists(user.getUsername())) {
             bindingResult.rejectValue("username", "error.user", "User with that name already exists!");
+            model.addAttribute("activeTab", "newUser");
+            model.addAttribute("userlist", authService.getAll());
+            model.addAttribute("allRoles", authService.getAllRoles());
             return "admin";
         } else if (bindingResult.hasErrors()) {
+            model.addAttribute("activeTab", "newUser");
+            model.addAttribute("userlist", authService.getAll());
+            model.addAttribute("allRoles", authService.getAllRoles());
             return "admin";
         }
         authService.createUser(user, selectedRoleIds);
         return "redirect:/admin";
     }
+
+
+
+
+//    @PostMapping(value = "")
+//    public String createUser(@ModelAttribute("userreg") @Valid User user,
+//                             BindingResult bindingResult,
+//                             @RequestParam(value = "selectedRoles", required = false) List<Integer> selectedRoleIds) {
+//        if (authService.isUserExists(user.getUsername())) {
+//            bindingResult.rejectValue("username", "error.user", "User with that name already exists!");
+//            return "admin";
+//        } else if (bindingResult.hasErrors()) {
+//            return "admin";
+//        }
+//        authService.createUser(user, selectedRoleIds);
+//        return "redirect:/admin";
+//    }
 
     @GetMapping(value = "/delete")
     public String deleteUserGetMethod (ModelMap model, @RequestParam("id") int id) {
@@ -69,7 +92,7 @@ public class AuthController {
     @PostMapping(value = "/update")
     public String updatePostMethod (@ModelAttribute("upuser") @Valid User updatedUser, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
-            return "/admin/edit";
+            return "/edit";
         }
         authService.update(updatedUser, updatedUser.getId());
         return "redirect:/admin";

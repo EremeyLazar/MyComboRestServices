@@ -27,16 +27,15 @@ public class AuthController {
         model.addAttribute("nameWelcomeLine", user.getUsername());
         model.addAttribute("roleWelcomeLine", userRoles);
         List<User> resultList = authService.getAll();
-        model.addAttribute("userlist", resultList);
-        model.addAttribute("newUser", new User());
+        model.addAttribute("userList", resultList);
+        model.addAttribute("userToCreate", new User());
         model.addAttribute("allRoles", authService.getAllRoles());
         return "admin";
     }
 
     @PostMapping(value = "")
-    public String createUser(@ModelAttribute("newUser") @Valid User user,
-                             @RequestParam(value = "selectedRoles", required = false) List<Integer> selectedRoleIds) {
-        authService.createUser(user, selectedRoleIds);
+    public String createUser(@ModelAttribute("userToCreate") @Valid User user) {
+        authService.createUser(user);
         return "redirect:/admin";
     }
 

@@ -15,10 +15,8 @@ import ru.kata.spring.boot_security.demo.model.User;
 import ru.kata.spring.boot_security.demo.repositories.RoleRepository;
 import ru.kata.spring.boot_security.demo.repositories.UserRepository;
 
+import java.util.Collections;
 import java.util.List;
-import java.util.Objects;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -47,23 +45,11 @@ public class AuthService implements UserDetailsService {
         return userRepository.findAll();
     }
 
-    @Transactional(readOnly = true)
-    public Role getRoleById(int roleId) {
-        return roleRepository.findById(roleId).orElse(null);
-    }
-
-
-    public void createUser(User user, List<Integer> roleIds) {
+    public void createUser(User user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-
-        if (roleIds != null) {
-            Set<Role> roles = roleIds.stream()
-                    .map(this::getRoleById)
-                    .filter(Objects::nonNull)
-                    .collect(Collectors.toSet());
-            user.setRoles(roles);
+        if (user.getRoles().size() == 0) {
+            user.setRoles(Collections.singleton(new Role(1)));
         }
-
         userRepository.save(user);
     }
 
@@ -80,7 +66,6 @@ public class AuthService implements UserDetailsService {
         }
         return (User) authentication.getPrincipal();
     }
-
 
     public void deleteUser(int id) {
         if (userRepository.findById(id).isPresent()) {

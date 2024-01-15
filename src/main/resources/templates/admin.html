@@ -62,7 +62,7 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr th:each="user : ${userlist}">
+                    <tr th:each="user : ${userList}">
                         <td th:text="${user.id}"></td>
                         <td th:text="${user.username}"></td>
                         <td th:text="${user.yob}"></td>
@@ -98,7 +98,7 @@
                     <div class="row">
                         <div class="col"></div>
                         <div class="col">
-                            <form class="needs-validation was-validated" th:action="@{/admin}" th:object="${newUser}"
+                            <form class="needs-validation was-validated" th:action="@{/admin}" th:object="${userToCreate}"
                                   method="post" novalidate>
                                 <div class="form-group">
                                     <label for="username" class="form-label fw-bold">Username</label>

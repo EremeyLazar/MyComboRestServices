@@ -12,9 +12,9 @@
     <div class="row">
         <div class="col">
             <br>
-            <span th:text="${sayhitoadmin}"></span> with roles
-            <span th:if="${userRole}">
-                <span th:each="role : ${userRole}">
+            <span th:text="${nameWelcomeLine}"></span> with roles
+            <span th:if="${roleWelcomeLine}">
+                <span th:each="role : ${roleWelcomeLine}">
                     <span th:text="${' ' + role.name + ', '}"></span>
                 </span>
             </span>
@@ -98,7 +98,7 @@
                     <div class="row">
                         <div class="col"></div>
                         <div class="col">
-                            <form class="needs-validation was-validated" th:action="@{/admin}" th:object="${userreg}"
+                            <form class="needs-validation was-validated" th:action="@{/admin}" th:object="${newUser}"
                                   method="post" novalidate>
                                 <div class="form-group">
                                     <label for="username" class="form-label fw-bold">Username</label>

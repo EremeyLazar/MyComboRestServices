@@ -25,51 +25,21 @@ public class AuthController {
     public String adminPanelPage (Model model) {
         User user = authService.getCurrentUser();
         Set<Role> userRoles = user.getRoles();
-        model.addAttribute("sayhitoadmin", user.getUsername());
-        model.addAttribute("userRole", userRoles);
+        model.addAttribute("nameWelcomeLine", user.getUsername());
+        model.addAttribute("roleWelcomeLine", userRoles);
         List<User> resultList = authService.getAll();
         model.addAttribute("userlist", resultList);
-        model.addAttribute("userreg", new User());
+        model.addAttribute("newUser", new User());
         model.addAttribute("allRoles", authService.getAllRoles());
         return "admin";
     }
-    @PostMapping("")
-    public String createUser(@ModelAttribute("userreg") @Valid User user,
-                             BindingResult bindingResult,
-                             @RequestParam(value = "selectedRoles", required = false) List<Integer> selectedRoleIds,
-                             Model model) {
-        if (authService.isUserExists(user.getUsername())) {
-            bindingResult.rejectValue("username", "error.user", "User with that name already exists!");
-            model.addAttribute("activeTab", "newUser");
-            model.addAttribute("userlist", authService.getAll());
-            model.addAttribute("allRoles", authService.getAllRoles());
-            return "admin";
-        } else if (bindingResult.hasErrors()) {
-            model.addAttribute("activeTab", "newUser");
-            model.addAttribute("userlist", authService.getAll());
-            model.addAttribute("allRoles", authService.getAllRoles());
-            return "admin";
-        }
+
+    @PostMapping(value = "")
+    public String createUser(@ModelAttribute("newUser") @Valid User user,
+                             @RequestParam(value = "selectedRoles", required = false) List<Integer> selectedRoleIds) {
         authService.createUser(user, selectedRoleIds);
         return "redirect:/admin";
     }
-
-
-
-
-//    @PostMapping(value = "")
-//    public String createUser(@ModelAttribute("userreg") @Valid User user,
-//                             BindingResult bindingResult,
-//                             @RequestParam(value = "selectedRoles", required = false) List<Integer> selectedRoleIds) {
-//        if (authService.isUserExists(user.getUsername())) {
-//            bindingResult.rejectValue("username", "error.user", "User with that name already exists!");
-//            return "admin";
-//        } else if (bindingResult.hasErrors()) {
-//            return "admin";
-//        }
-//        authService.createUser(user, selectedRoleIds);
-//        return "redirect:/admin";
-//    }
 
     @GetMapping(value = "/delete")
     public String deleteUserGetMethod (ModelMap model, @RequestParam("id") int id) {

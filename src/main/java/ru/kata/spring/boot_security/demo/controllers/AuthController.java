@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import ru.kata.spring.boot_security.demo.model.Role;
 import ru.kata.spring.boot_security.demo.model.User;
@@ -22,7 +21,7 @@ public class AuthController {
     private AuthService authService;
 
     @GetMapping("")
-    public String adminPanelPage (Model model) {
+    public String adminPanelPage(Model model) {
         User user = authService.getCurrentUser();
         Set<Role> userRoles = user.getRoles();
         model.addAttribute("nameWelcomeLine", user.getUsername());
@@ -42,28 +41,25 @@ public class AuthController {
     }
 
     @GetMapping(value = "/delete")
-    public String deleteUserGetMethod (ModelMap model, @RequestParam("id") int id) {
+    public String deleteUser(ModelMap model, @RequestParam("id") int id) {
         model.addAttribute("deluser", authService.getOne(id));
         return "delete";
     }
 
     @PostMapping("/delete")
-    public String deleteUserPostMethod (@RequestParam("id") int userId) {
+    public String deleteUser(@RequestParam("id") int userId) {
         authService.deleteUser(userId);
         return "redirect:/admin";
     }
 
     @GetMapping(value = "/update")
-    public String updateUserGetMethod (ModelMap model, @RequestParam("id") int id) {
+    public String updateUser(ModelMap model, @RequestParam("id") int id) {
         model.addAttribute("upuser", authService.getOne(id));
         return "edit";
     }
 
     @PostMapping(value = "/update")
-    public String updatePostMethod (@ModelAttribute("upuser") @Valid User updatedUser, BindingResult bindingResult) {
-        if (bindingResult.hasErrors()) {
-            return "/edit";
-        }
+    public String updateUser(@ModelAttribute("upuser") @Valid User updatedUser) {
         authService.update(updatedUser, updatedUser.getId());
         return "redirect:/admin";
     }

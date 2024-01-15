@@ -43,12 +43,6 @@ public class AuthService implements UserDetailsService {
     }
 
     @Transactional(readOnly = true)
-    public boolean isUserExists(String username) {
-        User user = userRepository.findByUsername(username);
-        return user != null;
-    }
-
-    @Transactional(readOnly = true)
     public List<User> getAll() {
         return userRepository.findAll();
     }
@@ -64,7 +58,7 @@ public class AuthService implements UserDetailsService {
 
         if (roleIds != null) {
             Set<Role> roles = roleIds.stream()
-                    .map(roleId -> getRoleById(roleId))
+                    .map(this::getRoleById)
                     .filter(Objects::nonNull)
                     .collect(Collectors.toSet());
             user.setRoles(roles);

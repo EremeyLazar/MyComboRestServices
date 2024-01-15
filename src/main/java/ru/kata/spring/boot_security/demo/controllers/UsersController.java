@@ -22,7 +22,7 @@ public class UsersController {
     public String userInfoPage (Model model) {
         User user = service.getCurrentUser();
         Set<Role> userRoles = user.getRoles();
-        model.addAttribute("sayname", user.getUsername());
+        model.addAttribute("userNameWelcomeLine", user.getUsername());
         model.addAttribute("userRoles", userRoles);
         model.addAttribute("user", user);
         return "user";

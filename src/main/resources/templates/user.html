@@ -14,7 +14,7 @@
     <div class="row">
         <div class="col">
             <br>
-            <span th:text="${sayname}"></span> with roles
+            <span th:text="${userNameWelcomeLine}"></span> with roles
             <span th:if="${userRoles}">
                 <span th:each="role : ${userRoles}">
                     <span th:text="${' ' + role.name + ', '}"></span>

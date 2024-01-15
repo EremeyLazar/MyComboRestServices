@@ -22,20 +22,15 @@ public class User implements UserDetails {
     private int id;
 
     @Column(name = "username", nullable = false, length = 21)
-    @NotEmpty(message = "should not be empty")
     private String username;
 
     @Column(name = "password")
-    @NotEmpty(message = "...you will need password to enter")
     private String password;
 
     @Column(name = "yob")
-    @Min(value = 1923, message = "real age pls...")
-    @Max(value = 2022, message = "real age pls...")
     private int yob;
 
     @Column(name = "country")
-    @NotEmpty(message = "should not be empty")
     private String country;
 
     @ManyToMany(fetch = FetchType.LAZY)

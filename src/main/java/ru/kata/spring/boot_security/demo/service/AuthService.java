@@ -94,4 +94,8 @@ public class AuthService implements UserDetailsService {
         return userRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("User with this ID does not exist"));
     }
+
+    public User findByUsername(String username) {
+        return userRepository.findByUsername(username);
+    }
 }

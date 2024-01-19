@@ -19,8 +19,7 @@ public class AuthController {
 
     @GetMapping("")
     public String adminPanelPage(Model model) {
-        User user = authService.getCurrentUser();
-        model.addAttribute("user", user);
+        model.addAttribute("user", authService.getCurrentUser());
         model.addAttribute("userList", authService.getAll());
         model.addAttribute("userToCreate", new User());
         model.addAttribute("allRoles", authService.getAllRoles());

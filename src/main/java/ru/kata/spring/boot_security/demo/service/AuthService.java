@@ -32,11 +32,9 @@ public class AuthService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = userRepository.findByUsername(username);
-
         if (user == null) {
             throw new UsernameNotFoundException("User not found");
         }
-
         return user;
     }
 
@@ -67,7 +65,7 @@ public class AuthService implements UserDetailsService {
         return (User) authentication.getPrincipal();
     }
 
-    public void deleteUser(int id) {
+    public void deleteUser(int id) {//todo: Integer.. пора отойти по всему коду от примитивов
         if (userRepository.findById(id).isPresent()) {
             userRepository.deleteById(id);
         } else {

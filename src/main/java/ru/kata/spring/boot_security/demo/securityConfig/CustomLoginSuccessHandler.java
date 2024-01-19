@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.util.Collection;
 
 public class CustomLoginSuccessHandler implements AuthenticationSuccessHandler {
+
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
                                         Authentication authentication) throws IOException {

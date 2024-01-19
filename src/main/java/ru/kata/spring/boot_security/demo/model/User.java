@@ -32,7 +32,7 @@ public class User implements UserDetails {
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
-    private Set<Role> roles = new HashSet<>();
+    private Set<Role> roles = new HashSet<>();//todo: поля так не инициализируются
 
 
     public User() {
@@ -118,6 +118,7 @@ public class User implements UserDetails {
         return true;
     }
 
+    //todo: не достает переопределения equals/hashCode
 
     @Override
     public String toString() {

@@ -16,12 +16,12 @@
         <div class="col-11 text-white">
             <span class="h5">
                 <th:block
-                        th:text="${nameWelcomeLine}">
+                        th:text="${user.getUsername()}">
                 </th:block>
             </span>
             <span class="font-weight-light">
                 <th:block
-                        th:text="'with roles: '+ ${roleWelcomeLine}">
+                        th:text="'with roles: '+ ${user.getRoles()}">
                 </th:block>
             </span>
         </div>
@@ -29,7 +29,7 @@
             <a class="btn-link text-secondary" type="submit" href="/logout">Logout</a>
         </div>
     </div>
-</div> <!--Шапка с Email, Ролями и кнопкой Logout -->
+</div>
 <br>
 <div class="d-flex align-items-start">
     <div class="col-2 m-0 p-0"> <!-- NAV BAR синенькие вкладки слева ADMIN и USER  -->
@@ -90,152 +90,21 @@
                                         </td>
 
 
-                                        <td> <!-- Кнопка Edit. Открывает модальное окно modalEdit{id}  -->
-                                            <button type="button" class="btn btn-success" data-bs-toggle="modal"
-                                                    th:data-bs-target="${'#modalEdit'+user.getId()}">Edit
-                                            </button>
+                                        <td>
+                                            <form th:action="@{/admin/update}" method="get" target="_blank">
+                                                <input type="hidden" name="id" th:value="${user.id}"/>
+                                                <button type="submit" class="btn btn-primary">Edit
+                                                </button>
+                                            </form>
                                         </td>
-                                        <td> <!-- Кнопка Delete. Открывает модальное окно modalDelete{id}  -->
-                                            <button type="button" class="btn btn-danger" data-bs-toggle="modal"
-                                                    th:data-bs-target="${'#modalDelete'+user.getId()}">Delete
-                                            </button>
+                                        <td>
+                                            <form th:action="@{/admin/delete}" method="get" target="_blank">
+                                                <input type="hidden" name="id" th:value="${user.id}"/>
+                                                <button type="submit" class="btn btn-danger">
+                                                    Delete
+                                                </button>
+                                            </form>
                                         </td>
-                                        <div class="modal fade" th:id="${'modalEdit'+user.getId()}">
-                                            <!-- Наполнение кнопки Edit, описание модального окна -->
-                                            <div class="modal-dialog modal-dialog-centered">
-                                                <div class="modal-content">
-<!--                                                    th:method="POST" th:action="@{/admin/update}" th:object="${editUser}">-->
-                                                    <form th:method="PATCH"
-                                                        th:action="@{admin/edit/{id} (id=${user.id})}"
-                                                        th:object="${user}">
-
-
-                                                        <div class="modal-header"> <!-- Шапка модального окна -->
-                                                            <h5 class="modal-title"
-                                                                id="modalVerticallyCenteredLabel1">
-                                                                Edit user</h5>
-                                                            <button type="button" class="btn-close"
-                                                                    data-bs-dismiss="modal" aria-label="Close"></button>
-                                                        </div>
-                                                        <div class="modal-body text-center font-weight-bold">
-                                                            <div class="row">
-                                                                <div class="col-3"></div>
-                                                                <div class="h6 col-6">
-                                                                    <label for="id" class="form-label fw-bold">ID:</label>
-                                                                    <input type="number" th:field="*{id}" id="id" readonly
-                                                                           class="form-control form-control-sm"/>
-                                                                    <br/><br/>
-
-                                                                    <label for="username" class="form-label fw-bold">Change username</label>
-                                                                    <input type="text" th:field="*{username}" id="username"
-                                                                           class="form-control form-control-sm"/>
-                                                                    <br/><br/>
-
-                                                                    <label for="password" class="form-label fw-bold">Enter password</label>
-                                                                    <input type="text" th:field="*{password}" id="password" readonly
-                                                                           class="form-control form-control-sm"/>
-
-                                                                    <br/><br/>
-
-                                                                    <label for="yob" class="form-label fw-bold">year of birth</label>
-                                                                    <input type="number" th:field="*{yob}" id="yob" readonly
-                                                                           class="form-control form-control-sm"/>
-                                                                    <br/><br/>
-
-                                                                    <label for="country" class="form-label fw-bold">Change user's country</label>
-                                                                    <input type="text" th:field="*{country}" id="country" class="form-control form-control-sm"/>
-                                                                    <br/><br/>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="modal-footer">
-                                                            <!-- Кнопки отмена и подтверждения формы -->
-                                                            <button type="button" class="btn btn-secondary"
-                                                                    data-bs-dismiss="modal">Close
-                                                            </button>
-                                                            <button type="submit" class="btn btn-primary" th:value="Update">Edit
-                                                            </button>
-                                                        </div>
-                                                    </form>
-                                                </div>
-
-                                            </div>
-                                        </div>
-                                        <div class="modal fade" th:id="${'modalDelete'+user.getId()}">
-                                            <!-- Наполнение кнопки Delete, описание модального окна -->
-                                            <div class="modal-dialog modal-dialog-centered">
-                                                <div class="modal-content">
-                                                    <form id="formDelete" th:method="POST"
-                                                          th:action="@{/admin/delete}" th:object="${user}">
-                                                        <div class="modal-header"> <!-- Шапка модального окна -->
-                                                            <h5 class="modal-title"
-                                                                id="modalVerticallyCenteredLabel2">
-                                                                Delete user</h5>
-                                                            <button type="button" class="btn-close"
-                                                                    data-bs-dismiss="modal" aria-label="Close"></button>
-                                                        </div>
-                                                        <div class="modal-body text-center font-weight-bold">
-                                                            <div class="row">
-                                                                <div class="col-3"></div>
-                                                                <div class="h6 col-6">
-                                                                    <label for="delId" class="form-label fw-bold">ID:</label>
-                                                                    <input type="number" th:field="*{id}" id="delId" readonly
-                                                                           class="form-control form-control-sm"/>
-                                                                    <br/><br/>
-
-                                                                    <label for="delUsername" class="form-label fw-bold">Change username</label>
-                                                                    <input type="text" th:field="*{username}" id="delUsername"
-                                                                           class="form-control form-control-sm"/>
-                                                                    <br/><br/>
-
-                                                                    <label for="delPassword" class="form-label fw-bold">Enter password</label>
-                                                                    <input type="text" th:field="*{password}" id="delPassword" readonly
-                                                                           class="form-control form-control-sm"/>
-
-                                                                    <br/><br/>
-
-                                                                    <label for="delYob" class="form-label fw-bold">year of birth</label>
-                                                                    <input type="number" th:field="*{yob}" id="delYob" readonly
-                                                                           class="form-control form-control-sm"/>
-                                                                    <br/><br/>
-
-                                                                    <label for="delCountry" class="form-label fw-bold">Change user's country</label>
-                                                                    <input type="text" th:field="*{country}" id="delCountry" class="form-control form-control-sm"/>
-                                                                    <br>
-                                                                    <label for="userRolesDelete">Roles</label>
-                                                                    <select th:name="roles" class="form-control"
-                                                                            id="userRolesDelete"
-                                                                            size="2" disabled>
-                                                                        <option th:each="role:${user.getRoles()}"
-                                                                                th:text="${role.toString()}">
-                                                                        </option>
-                                                                    </select>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="modal-footer">
-                                                            <!-- Кнопки отмена и подтверждения формы -->
-<!--                                                            <button type="button" class="btn btn-secondary"-->
-<!--                                                                    data-bs-dismiss="modal">Close-->
-<!--                                                            </button>-->
-<!--                                                            <button type="submit" class="btn btn-danger">Delete-->
-<!--                                                            </button>-->
-                                                            <form th:action="@{/admin/delete}" method="post">
-                                                                <div class="btn-group">
-                                                                    <button type="button" class="btn btn-secondary" onclick="closePage()">Close</button>
-                                                                    &nbsp;&nbsp;&nbsp;
-                                                                    <button type="submit" class="btn btn-danger">Delete</button>
-                                                                </div>
-                                                                <input type="hidden" name="id" th:value="${user.id}"/>
-                                                            </form>
-
-
-                                                        </div>
-                                                    </form>
-                                                </div>
-
-                                            </div>
-                                        </div>
                                     </tr>
                                     </tbody>
                                 </table>
@@ -259,7 +128,8 @@
                                             <div class="h6 col-4">
                                                 <div class="form-group">
                                                     <label for="newUsername" class="form-label fw-bold">Username</label>
-                                                    <input type="text" id="newUsername" th:field="*{username}" required minlength="3"
+                                                    <input type="text" id="newUsername" th:field="*{username}" required
+                                                           minlength="3"
                                                            class="form-control form-control-sm"/>
                                                     <div class="invalid-feedback">
                                                         This field should not be empty. Minimum of 3 symbols.
@@ -267,9 +137,11 @@
                                                 </div>
                                                 <br/><br/>
                                                 <div class="form-group">
-                                                    <label for="newPassword" class="form-label fw-bold">Enter your password
+                                                    <label for="newPassword" class="form-label fw-bold">Enter your
+                                                        password
                                                         (unchangeable)</label>
-                                                    <input type="password" th:field="*{password}" id="newPassword" required minlength="3"
+                                                    <input type="password" th:field="*{password}" id="newPassword"
+                                                           required minlength="3"
                                                            class="form-control form-control-sm"/>
                                                     <div class="invalid-feedback">
                                                         This field should not be empty. Minimum of 3 symbols.
@@ -277,8 +149,10 @@
                                                 </div>
                                                 <br/><br/>
                                                 <div class="form-group">
-                                                    <label for="newYob" class="form-label fw-bold">Year of birth (unchangeable)</label>
-                                                    <input type="number" th:field="*{yob}" id="newYob" pattern="\d+" required min="1923"
+                                                    <label for="newYob" class="form-label fw-bold">Year of birth
+                                                        (unchangeable)</label>
+                                                    <input type="number" th:field="*{yob}" id="newYob" pattern="\d+"
+                                                           required min="1923"
                                                            max="2023"
                                                            class="form-control form-control-sm"/>
                                                     <div class="invalid-feedback">
@@ -287,8 +161,10 @@
                                                 </div>
                                                 <br/><br/>
                                                 <div class="form-group">
-                                                    <label for="newCountry" class="form-label fw-bold">Enter country</label>
-                                                    <input type="text" th:field="*{country}" id="newCountry" required minlength="3"
+                                                    <label for="newCountry" class="form-label fw-bold">Enter
+                                                        country</label>
+                                                    <input type="text" th:field="*{country}" id="newCountry" required
+                                                           minlength="3"
                                                            class="form-control form-control-sm"/>
                                                     <div class="invalid-feedback">
                                                         Please enter a valid country.

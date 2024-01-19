@@ -32,19 +32,19 @@
 </div>
 <br>
 <div class="d-flex align-items-start">
-    <div class="col-2 m-0 p-0"> <!-- NAV BAR синенькие вкладки слева ADMIN и USER  -->
+    <div class="col-2 m-0 p-0">
         <div class="nav flex-column nav-pills me-3" id="Left-menu" role="tablist" aria-orientation="vertical">
             <a class="nav-link active" id="Admin-pills-tab" data-bs-toggle="pill" href="#Admin-pills"
-               role="tab" aria-controls="Admin-pills-home" aria-selected="true">Admin</a>   <!-- админ  -->
+               role="tab" aria-controls="Admin-pills-home" aria-selected="true">Admin</a>
             <a class="nav-link" id="User-pills-tab" data-bs-toggle="pill" href="#User-pills"
-               role="tab" aria-controls="User-pills-home" aria-selected="false">User</a>    <!-- юзер  -->
+               role="tab" aria-controls="User-pills-home" aria-selected="false">User</a>
         </div>
     </div>
-    <div class="col-10 m-0 "> <!-- Контент справа  -->
-        <div class="tab-content container-fluid" id="Left-menuContent"> <!-- вкладки с контентом  -->
+    <div class="col-10 m-0 ">
+        <div class="tab-content container-fluid" id="Left-menuContent">
 
             <div class="tab-pane fade show active" id="Admin-pills"
-                 role="tabpanel" aria-labelledby="Admin-pills-tab"> <!-- Вкладка Админа  -->
+                 role="tabpanel" aria-labelledby="Admin-pills-tab">
                 <div class="h1">Admin panel</div>
                 <br>
                 <nav class="nav nav-tabs" id="nav-tab" role="tablist">
@@ -88,8 +88,6 @@
                     <br/>
                 </span>
                                         </td>
-
-
                                         <td>
                                             <form th:action="@{/admin/update}" method="get" target="_blank">
                                                 <input type="hidden" name="id" th:value="${user.id}"/>
@@ -183,7 +181,6 @@
                                                 </fieldset>
                                                 <br>
                                                 <div>
-                                                    <!-- Кнопка подтверждения формы -->
                                                     <button type="submit" class="btn btn-success">Add new user
                                                     </button>
                                                 </div>
@@ -200,11 +197,11 @@
                  role="tabpanel" aria-labelledby="User-pills-tab"> <!-- Вкладка Юзера  -->
                 <div class="h1">User information-page</div>
                 <br>
-                <div class="card"> <!-- Таблица справа  -->
+                <div class="card">
                     <div class="card-header h5">
                         About User
-                    </div> <!-- Название таблицы справа  -->
-                    <div class="card-body"> <!-- Наполнение таблицы справа  -->
+                    </div>
+                    <div class="card-body">
                         <table class="table table-striped">
                             <thead>
                             <tr>

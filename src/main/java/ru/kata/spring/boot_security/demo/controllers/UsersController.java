@@ -16,7 +16,7 @@ public class UsersController {
     private UserService service;
 
     @GetMapping("")
-    public String userInfoPage (Model model) {
+    public String userInfoPage(Model model) {
         User user = service.getCurrentUser();
         model.addAttribute("user", user);
         return "user-panel";

@@ -98,9 +98,6 @@
                                         <td>
                                             <form th:action="@{/admin/delete}" method="get" target="_blank">
                                                 <input type="hidden" name="id" th:value="${user.id}"/>
-<!--                                                <button type="submit" class="btn btn-danger">-->
-<!--                                                    Delete-->
-<!--                                                </button>-->
                                                 <button type="button" class="btn btn-danger" data-bs-toggle="modal"
                                                         th:data-bs-target="${'#modalDelete'+user.getId()}">Delete
                                                 </button>
@@ -113,7 +110,7 @@
                                                         <form id="formDelete" th:method="POST"
                                                               th:action="@{admin/delete/ (id=${user.id})}"
                                                               th:object="${user}">
-                                                            <div class="modal-header"> <!-- Шапка модального окна -->
+                                                            <div class="modal-header">
                                                                 <h5 class="modal-title"
                                                                     id="modalVerticallyCenteredLabel2">
                                                                     Delete user</h5>
@@ -121,10 +118,9 @@
                                                                         data-bs-dismiss="modal" aria-label="Close"></button>
                                                             </div>
                                                             <div class="modal-body text-center font-weight-bold">
-                                                                <p>Would you like to delete <strong th:text="${user.getUsername()}" /> with id <strong th:text="${user.getId()}" />?</p>
+                                                                <p>Would you like to delete <strong th:text="${user.getUsername()}"></strong> with id <strong th:text="${user.getId()}"></strong>?</p>
                                                             </div>
                                                             <div class="modal-footer">
-                                                                <!-- Кнопки отмена и подтверждения формы -->
                                                                 <button type="button" class="btn btn-secondary"
                                                                         data-bs-dismiss="modal">Close
                                                                 </button>

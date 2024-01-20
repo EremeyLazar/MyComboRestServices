@@ -32,12 +32,6 @@ public class AuthController {
         return "redirect:/admin";
     }
 
-    @GetMapping(value = "/delete")
-    public String deleteUser(ModelMap model, @RequestParam("id") int id) {
-        model.addAttribute("deluser", authService.getOne(id));
-        return "delete";
-    }
-
     @PostMapping("/delete")
     public String deleteUser(@RequestParam("id") int userId) {
         authService.deleteUser(userId);
@@ -47,7 +41,6 @@ public class AuthController {
     @GetMapping(value = "/update")
     public String updateUser(ModelMap model, @RequestParam("id") int id) {
         model.addAttribute("editUser", authService.getOne(id));
-        model.addAttribute("passwordToDisplay", "password");
         return "edit";
     }
 

@@ -47,6 +47,7 @@ public class AuthController {
     @GetMapping(value = "/update")
     public String updateUser(ModelMap model, @RequestParam("id") int id) {
         model.addAttribute("editUser", authService.getOne(id));
+        model.addAttribute("passwordToDisplay", "password");
         return "edit";
     }
 

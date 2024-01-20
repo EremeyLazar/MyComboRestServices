@@ -102,9 +102,7 @@
                                                         th:data-bs-target="${'#modalDelete'+user.getId()}">Delete
                                                 </button>
                                             </form>
-
                                             <div class="modal fade" th:id="${'modalDelete'+user.getId()}">
-                                                <!-- Наполнение кнопки Delete, описание модального окна -->
                                                 <div class="modal-dialog modal-dialog-centered">
                                                     <div class="modal-content">
                                                         <form id="formDelete" th:method="POST"
@@ -115,10 +113,13 @@
                                                                     id="modalVerticallyCenteredLabel2">
                                                                     Delete user</h5>
                                                                 <button type="button" class="btn-close"
-                                                                        data-bs-dismiss="modal" aria-label="Close"></button>
+                                                                        data-bs-dismiss="modal"
+                                                                        aria-label="Close"></button>
                                                             </div>
                                                             <div class="modal-body text-center font-weight-bold">
-                                                                <p>Would you like to delete <strong th:text="${user.getUsername()}"></strong> with id <strong th:text="${user.getId()}"></strong>?</p>
+                                                                <p>Would you like to delete <strong
+                                                                        th:text="${user.getUsername()}"></strong> with
+                                                                    id <strong th:text="${user.getId()}"></strong>?</p>
                                                             </div>
                                                             <div class="modal-footer">
                                                                 <button type="button" class="btn btn-secondary"
@@ -132,8 +133,6 @@
 
                                                 </div>
                                             </div>
-
-
                                         </td>
                                     </tr>
                                     </tbody>

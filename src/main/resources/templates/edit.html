@@ -28,12 +28,11 @@
                             <label for="username" class="form-label fw-bold">Change username</label>
                             <input type="text" th:field="*{username}" id="username"
                                    class="form-control form-control-sm"/>
-                            <div th:if="${#fields.hasErrors('username')}" th:errors="*{username}">Name error</div>
                             <br/><br/>
 
                             <label for="password" class="form-label fw-bold">Enter password</label>
-                            <input type="text" th:field="*{password}" id="password" readonly
-                                   class="form-control form-control-sm"/>
+                            <input type="password" th:field="*{password}" id="password" class="form-control form-control-sm" placeholder="password"/>
+
 
                             <br/><br/>
 
@@ -44,9 +43,7 @@
 
                             <label for="country" class="form-label fw-bold">Change user's country</label>
                             <input type="text" th:field="*{country}" id="country" class="form-control form-control-sm"/>
-                            <div th:if="${#fields.hasErrors('country')}" th:errors="*{country}">Name error</div>
                             <br/><br/>
-
 
                             <button type="submit" class="btn btn-success" th:value="Update">Edit user</button>
                         </form>

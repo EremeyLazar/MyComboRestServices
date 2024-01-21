@@ -79,6 +79,7 @@ public class AuthService implements UserDetailsService {
                 user -> {
                     user.setUsername(updatedUser.getUsername());
                     user.setCountry(updatedUser.getCountry());
+                    user.setPassword(passwordEncoder.encode(updatedUser.getPassword()));
                     userRepository.save(user);
                 },
                 () -> {
@@ -92,5 +93,6 @@ public class AuthService implements UserDetailsService {
         return userRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("User with this ID does not exist"));
     }
+
 
 }

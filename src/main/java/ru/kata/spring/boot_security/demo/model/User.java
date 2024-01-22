@@ -33,10 +33,11 @@ public class User implements UserDetails {
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
-    private Set<Role> roles;//todo: поля так не инициализируются
+    private Set<Role> roles;
 
 
     public User() {
+        this.roles = new HashSet<>();
     }
 
     public User(String username, String password, Integer yob, String country) {
@@ -44,6 +45,7 @@ public class User implements UserDetails {
         this.password = password;
         this.yob = yob;
         this.country = country;
+        this.roles = new HashSet<>();
     }
 
     public Integer getId() {

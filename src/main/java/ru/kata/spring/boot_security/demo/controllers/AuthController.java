@@ -33,13 +33,13 @@ public class AuthController {
     }
 
     @PostMapping("/delete")
-    public String deleteUser(@RequestParam("id") int userId) {
+    public String deleteUser(@RequestParam("id") Integer userId) {
         authService.deleteUser(userId);
         return "redirect:/admin";
     }
 
     @GetMapping(value = "/update")
-    public String updateUser(ModelMap model, @RequestParam("id") int id) {
+    public String updateUser(ModelMap model, @RequestParam("id") Integer id) {
         model.addAttribute("editUser", authService.getOne(id));
         return "edit";
     }

@@ -6,6 +6,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import javax.persistence.*;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 
@@ -16,7 +17,7 @@ public class User implements UserDetails {
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Integer id;
 
     @Column(name = "username", nullable = false, length = 21)
     private String username;
@@ -25,31 +26,31 @@ public class User implements UserDetails {
     private String password;
 
     @Column(name = "yob")
-    private int yob;
+    private Integer yob;
 
     @Column(name = "country")
     private String country;
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
-    private Set<Role> roles = new HashSet<>();//todo: поля так не инициализируются
+    private Set<Role> roles;//todo: поля так не инициализируются
 
 
     public User() {
     }
 
-    public User(String username, String password, int yob, String country) {
+    public User(String username, String password, Integer yob, String country) {
         this.username = username;
         this.password = password;
         this.yob = yob;
         this.country = country;
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -69,11 +70,11 @@ public class User implements UserDetails {
         this.password = password;
     }
 
-    public int getYob() {
+    public Integer getYob() {
         return yob;
     }
 
-    public void setYob(int yob) {
+    public void setYob(Integer yob) {
         this.yob = yob;
     }
 
@@ -118,7 +119,18 @@ public class User implements UserDetails {
         return true;
     }
 
-    //todo: не достает переопределения equals/hashCode
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return id == user.id && Objects.equals(username, user.username);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, username);
+    }
 
     @Override
     public String toString() {

@@ -65,7 +65,7 @@ public class AuthService implements UserDetailsService {
         return (User) authentication.getPrincipal();
     }
 
-    public void deleteUser(int id) {//todo: Integer.. пора отойти по всему коду от примитивов
+    public void deleteUser(Integer id) {
         if (userRepository.findById(id).isPresent()) {
             userRepository.deleteById(id);
         } else {
@@ -74,7 +74,7 @@ public class AuthService implements UserDetailsService {
     }
 
 
-    public void update(User updatedUser, int id) {
+    public void update(User updatedUser, Integer id) {
         userRepository.findById(id).ifPresentOrElse(
                 user -> {
                     user.setUsername(updatedUser.getUsername());
@@ -89,7 +89,7 @@ public class AuthService implements UserDetailsService {
     }
 
     @Transactional(readOnly = true)
-    public User getOne(int id) {
+    public User getOne(Integer id) {
         return userRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("User with this ID does not exist"));
     }

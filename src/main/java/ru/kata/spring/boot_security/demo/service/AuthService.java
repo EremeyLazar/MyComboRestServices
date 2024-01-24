@@ -90,8 +90,7 @@ public class AuthService implements UserDetailsService {
 
     @Transactional(readOnly = true)
     public User getOne(Integer id) {
-        return userRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("User with this ID does not exist"));
+        return userRepository.findById(id).orElse(null);
     }
 
 

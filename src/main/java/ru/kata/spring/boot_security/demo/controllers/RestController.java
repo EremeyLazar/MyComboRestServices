@@ -1,11 +1,7 @@
 package ru.kata.spring.boot_security.demo.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import ru.kata.spring.boot_security.demo.exception_handling.NoSuchUserException;
-import ru.kata.spring.boot_security.demo.exception_handling.UserIncorrectData;
 import ru.kata.spring.boot_security.demo.model.User;
 import ru.kata.spring.boot_security.demo.service.AuthService;
 
@@ -26,11 +22,7 @@ public class RestController {
 
     @GetMapping("/users/{id}")
     public User getUser (@PathVariable Integer id) {
-        User user = authService.getOne(id);
-        if (user == null) {
-            throw new NoSuchUserException("there is no USER with ID = " + id + " found in DB");
-        }
-        return user;
+        return authService.getOne(id);
     }
 
     @PostMapping("/users")
@@ -43,6 +35,12 @@ public class RestController {
     public User updateUser (@RequestBody User user) {
         authService.createUser(user);
         return user;
+    }
+
+    @DeleteMapping("/users/{id}")
+    public String deleteUser (@PathVariable Integer id) {
+        authService.deleteUser(id);
+        return "The user with id = " + id + " was deleted";
     }
 
 }

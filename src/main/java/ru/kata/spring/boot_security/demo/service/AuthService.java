@@ -10,6 +10,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import ru.kata.spring.boot_security.demo.exception_handling.NoSuchUserException;
 import ru.kata.spring.boot_security.demo.model.Role;
 import ru.kata.spring.boot_security.demo.model.User;
 import ru.kata.spring.boot_security.demo.repositories.RoleRepository;
@@ -69,7 +70,7 @@ public class AuthService implements UserDetailsService {
         if (userRepository.findById(id).isPresent()) {
             userRepository.deleteById(id);
         } else {
-            throw new IllegalArgumentException("user does not exists anyway");
+            throw new IllegalArgumentException("This user does not exist anyway in our DB");
         }
     }
 
@@ -90,8 +91,11 @@ public class AuthService implements UserDetailsService {
 
     @Transactional(readOnly = true)
     public User getOne(Integer id) {
-        return userRepository.findById(id).orElse(null);
+        User user = userRepository.findById(id).orElse(null);
+        if (user == null) {
+            throw new NoSuchUserException("there is no USER with ID = " + id + " found in DB");
+        }
+        return user;
     }
-
 
 }

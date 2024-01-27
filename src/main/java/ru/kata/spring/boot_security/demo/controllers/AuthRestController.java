@@ -12,11 +12,18 @@ import java.util.List;
 
 
 @org.springframework.web.bind.annotation.RestController
-@RequestMapping("/api")
+@RequestMapping("/apiAuth")
 public class AuthRestController {
 
     @Autowired
     private AuthService authService;
+
+    @GetMapping("/getCurrentUser")
+    public ResponseEntity<User> getCurrentUser() {
+        User user = authService.getCurrentUser();
+        System.out.println("!!!!!!!!!!!!!!!" + user.toString());
+        return ResponseEntity.ok(user);
+    }
 
     @GetMapping("/users")
     public List <User> showAllUsers () {
@@ -46,12 +53,4 @@ public class AuthRestController {
         return "The user with id = " + id + " was deleted";
     }
 
-    @GetMapping("/auth")
-    public ResponseEntity<User> getUser(Principal principal) {
-        User user = authService.findUserByUsername(principal.getName());
-        if (user == null) {
-            throw new UsernameNotFoundException("No user!");
-        }
-        return ResponseEntity.ok(user);
-    }
 }

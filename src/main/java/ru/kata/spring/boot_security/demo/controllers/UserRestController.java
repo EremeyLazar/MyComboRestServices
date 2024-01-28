@@ -19,12 +19,4 @@ public class UserRestController {
     @Autowired
     private UserService service;
 
-    @GetMapping("/getCurrentUser")
-    public ResponseEntity<User> getUser() {
-        User user = service.getCurrentUser();
-        if (user == null) {
-            throw new UsernameNotFoundException("No such user!");
-        }
-        return ResponseEntity.ok(user);
-    }
 }

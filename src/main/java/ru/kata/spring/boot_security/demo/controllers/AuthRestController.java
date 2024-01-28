@@ -21,7 +21,6 @@ public class AuthRestController {
     @GetMapping("/getCurrentUser")
     public ResponseEntity<User> getCurrentUser() {
         User user = authService.getCurrentUser();
-        System.out.println("!!!!!!!!!!!!!!!" + user.toString());
         return ResponseEntity.ok(user);
     }
 

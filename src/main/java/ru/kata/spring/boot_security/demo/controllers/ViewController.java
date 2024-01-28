@@ -14,6 +14,6 @@ public class ViewController {
 
     @GetMapping("/user")
     public String showOneUser() {
-        return "user_panel";
+        return "user";
     }
 }

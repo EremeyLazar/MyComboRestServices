@@ -1,6 +1,7 @@
 package ru.kata.spring.boot_security.demo.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.*;
@@ -48,9 +49,9 @@ public class AuthRestController {
     }
 
     @DeleteMapping("/users/{id}")
-    public ResponseEntity<String> deleteUser (@PathVariable Integer id) {
+    public ResponseEntity<HttpStatus> deleteUser (@PathVariable Integer id) {
         authService.deleteUser(id);
-        return ResponseEntity.ok("The user with id = " + id + " was deleted");
+        return ResponseEntity.ok(HttpStatus.OK);
     }
 
     @GetMapping("/getUserById/{id}")

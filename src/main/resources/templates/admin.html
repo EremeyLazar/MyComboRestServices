@@ -84,15 +84,21 @@
                                             </div>
                                             <div class="modal-body">
                                                 <!-- Здесь отображаем информацию о пользователе -->
-                                                <p>Are you sure you want to delete user with ID <span id="userIdToDelete"></span>?</p>
+                                                <p>Are you sure you want to delete
+                                                    <span id="userNameToDelete" style="font-weight: bold;"></span>
+                                                    with ID =
+                                                    <span id="userIdToDelete" style="font-weight: bold;"></span>?
+                                                </p>
                                             </div>
                                             <div class="modal-footer">
                                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                                <button type="button" class="btn btn-danger">Delete</button>
+                                                <button type="button" id="confirmDelete" class="btn btn-danger">Delete</button>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
+
+
 
                             </div>
                         </div>

@@ -25,8 +25,9 @@ public class AuthRestController {
     }
 
     @GetMapping("/users")
-    public List <User> showAllUsers () {
-        return authService.getAll();
+    public ResponseEntity <List <User>> showAllUsers () {
+        List <User> userList = authService.getAll();
+        return ResponseEntity.ok(userList);
     }
 
     @GetMapping("/users/{id}")
@@ -35,9 +36,9 @@ public class AuthRestController {
     }
 
     @PostMapping("/users")
-    public User postNewUser (@RequestBody User user) {
+    public ResponseEntity<String> postNewUser (@RequestBody User user) {
         authService.createUser(user);
-        return user;
+        return ResponseEntity.ok("Done successfully with ID = " + user.getId());
     }
 
     @PutMapping("/users")
@@ -47,9 +48,15 @@ public class AuthRestController {
     }
 
     @DeleteMapping("/users/{id}")
-    public String deleteUser (@PathVariable Integer id) {
+    public ResponseEntity<String> deleteUser (@PathVariable Integer id) {
         authService.deleteUser(id);
-        return "The user with id = " + id + " was deleted";
+        return ResponseEntity.ok("The user with id = " + id + " was deleted");
+    }
+
+    @GetMapping("/getUserById/{id}")
+    public ResponseEntity<User> getUserById (@PathVariable Integer id) {
+        User user = authService.getOne(id);
+        return ResponseEntity.ok(user);
     }
 
 }

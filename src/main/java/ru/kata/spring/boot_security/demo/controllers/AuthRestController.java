@@ -3,12 +3,10 @@ package ru.kata.spring.boot_security.demo.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.*;
 import ru.kata.spring.boot_security.demo.model.User;
 import ru.kata.spring.boot_security.demo.service.AuthService;
 
-import java.security.Principal;
 import java.util.List;
 
 
@@ -31,11 +29,6 @@ public class AuthRestController {
         return ResponseEntity.ok(userList);
     }
 
-    @GetMapping("/users/{id}")
-    public User getUser (@PathVariable Integer id) {
-        return authService.getOne(id);
-    }
-
     @PostMapping("/users")
     public ResponseEntity<String> postNewUser (@RequestBody User user) {
         authService.createUser(user);
@@ -43,9 +36,9 @@ public class AuthRestController {
     }
 
     @PutMapping("/users")
-    public User updateUser (@RequestBody User user) {
+    public ResponseEntity<HttpStatus> updateUser (@RequestBody User user) {
         authService.createUser(user);
-        return user;
+        return ResponseEntity.ok(HttpStatus.OK);
     }
 
     @DeleteMapping("/users/{id}")

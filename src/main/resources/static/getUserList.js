@@ -16,11 +16,9 @@ function getTableUser() {
                         <td class="pt-3" >${user.country}</td>
                         <td class="pt-3" >${roles}</td>
                         <td>
-                                        <form th:action="@{/admin/update}" method="get" target="_blank">
-                                                <input type="hidden" name="id" th:value="${user.id}"/>
-                                                <button type="submit" class="btn btn-primary">Edit
-                                                </button>
-                                            </form>
+                                        <button type="button" class="btn btn-info" data-toggle="modal" data-target="#edit" onclick="editModal(${user.id})">
+                            Edit
+                            </button>
                                         </td>
                                         <td>
                                     <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal" onclick="deleteModal(${user.id})">

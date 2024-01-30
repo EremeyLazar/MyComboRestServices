@@ -37,7 +37,7 @@ public class AuthRestController {
 
     @PutMapping("/users")
     public ResponseEntity<HttpStatus> updateUser (@RequestBody User user) {
-        authService.createUser(user);
+        authService.update(user, user.getId());
         return ResponseEntity.ok(HttpStatus.OK);
     }
 

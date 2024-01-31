@@ -1,36 +1,76 @@
-let formEdit = document.forms["formEdit"];
-editUser();
+let formEdit = document.forms["editModal"];
+// editUser();
 
-async function editModal(id) {
-    const modal = new bootstrap.Modal(document.querySelector('#edit'));
-    await openAndFillInTheModal(formEdit, modal, id);
+function editModal(userId) {
+    // Отправляем запрос на получение данных пользователя по его идентификатору
+    fetch(`/apiAuth/getUserById/${userId}`)
+        .then(response => response.json())
+        .then(user => {
+            // Заполняем данные пользователя в модальном окне
+            document.getElementById('Edit_id').value = user.id;
+            document.getElementById('Edit_username').value = user.username;
+            document.getElementById('Edit_password').value = user.password;
+            document.getElementById('Edit_yob').value = user.yob;
+            document.getElementById('Edit_country').value = user.country;
+
+            // Открываем модальное окно
+            $('#edit').modal('show');
+
+            $('#confirmEdit').on('click', function () {
+                editUser();
+            });
+        })
+        .catch(error => {
+            console.error('Error fetching user data:', error);
+        });
 }
 
 function editUser() {
-    formEdit.addEventListener("submit", ev => {
-        ev.preventDefault();
-        let roles = [];
-        for (let i = 0; i < formEdit.roles.options.length; i++) {
-            if (formEdit.roles.options[i].selected) {
-                roles.push(formEdit.roles.options[i].text.replace('ROLE_', ''));
-            }
-        }
-        fetch("apiAuth/user/" + formEdit.id.value, {
+    let formEdit = document.forms["formEdit"];
+
+    formEdit.addEventListener("submit", function (event) {
+        event.preventDefault();
+
+        // Собираем данные из формы
+        let id = formEdit.id.value;
+        let username = formEdit.username.value;
+        let password = formEdit.password.value;
+        let yob = formEdit.yob.value;
+        let country = formEdit.country.value;
+
+        // Отправляем PUT-запрос на сервер для обновления пользователя
+        fetch(`/apiAuth/users`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                id: formEdit.id.value,
-                username: formEdit.username.value,
-                yob: formEdit.yob.value,
-                password: formEdit.password.value,
-                country: formEdit.country.value,
-                roles: roles
+                id: id,
+                username: username,
+                password: password,
+                yob: yob,
+                country: country
             })
-        }).then(() => {
-            $('#closeEdit').click();
-            getTableUser()
-        });
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error! Status: ${response.status}`);
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log("User updated successfully:", data);
+
+                // Закрываем модальное окно
+                $('#edit').modal('hide');
+
+                window.location.href = 'http://localhost:8080/admin';
+
+                // Можете выполнить дополнительные действия после успешного обновления
+            })
+            .catch(error => {
+                console.error('Error during PUT request:', error);
+            });
     });
+
 }

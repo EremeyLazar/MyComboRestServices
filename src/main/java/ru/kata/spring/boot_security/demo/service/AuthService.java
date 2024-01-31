@@ -18,6 +18,7 @@ import ru.kata.spring.boot_security.demo.repositories.UserRepository;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 @Service
 @Transactional
@@ -78,9 +79,11 @@ public class AuthService implements UserDetailsService {
     public void update(User updatedUser, Integer id) {
         userRepository.findById(id).ifPresentOrElse(
                 user -> {
+                    if (!Objects.equals(updatedUser.getPassword(), user.getPassword())) {
+                        user.setPassword(passwordEncoder.encode(updatedUser.getPassword()));
+                    }
                     user.setUsername(updatedUser.getUsername());
                     user.setCountry(updatedUser.getCountry());
-                    user.setPassword(passwordEncoder.encode(updatedUser.getPassword()));
                     userRepository.save(user);
                 },
                 () -> {

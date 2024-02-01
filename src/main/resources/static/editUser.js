@@ -59,12 +59,12 @@ function editUser() {
                 return response.json();
             })
             .then(data => {
-                console.log("User updated successfully:", data);
+                console.log("User updated! Status:", data);
 
                 // Закрываем модальное окно
                 $('#edit').modal('hide');
 
-                window.location.href = 'http://localhost:8080/admin';
+                // window.location.href = 'http://localhost:8080/admin';
 
                 // Можете выполнить дополнительные действия после успешного обновления
             })

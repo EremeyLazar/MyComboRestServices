@@ -2,7 +2,6 @@
 
 let form = document.forms["create"];
 createNewUser()
-
 function createNewUser() {
     form.addEventListener("submit", ev => {
         ev.preventDefault();
@@ -25,15 +24,20 @@ function createNewUser() {
                 country: form.country.value,
                 roles: roles
             })
-        }).then(() => {
-            form.reset();
-            $('#home-tab').click();
-            getTableUser();
-            window.location.href = 'http://localhost:8080/admin';
-        });
+        })
+            .then(response => response.text())  // Преобразовать ответ в текст
+            .then(data => {
+                console.log('Response from server:', data); // Вывести текст ответа в консоль
+                form.reset();
+                $('#home-tab').click();
+                getTableUser();
+                // window.location.href = 'http://localhost:8080/admin';
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
     });
 }
-
 
 
 

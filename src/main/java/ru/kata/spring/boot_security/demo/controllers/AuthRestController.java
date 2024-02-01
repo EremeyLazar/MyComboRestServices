@@ -31,7 +31,6 @@ public class AuthRestController {
 
     @PostMapping("/users")
     public ResponseEntity<String> postNewUser (@RequestBody User user) {
-        System.out.println("----------------------->>>>>>>>>>>>>>"+user.toString());
         authService.createUser(user);
         return ResponseEntity.ok("Done successfully with ID = " + user.getId());
     }

@@ -35,7 +35,7 @@ function deleteModal(userId) {
         });
 }
 function deleteUser(userId) {
-    fetch("/apiAuth/users/" + userId, {
+    fetch(`/apiAuth/users/${userId}`, {
         method: 'DELETE',
         headers: {
             'Content-Type': 'application/json'
@@ -48,10 +48,10 @@ function deleteUser(userId) {
             return response.json();
         })
         .then(data => {
-            console.log("Response from server:", data);
+            console.log("User has been deleted! Status:", data);
             $('#closeDelete').click();
             getTableUser();
-            window.location.href = 'http://localhost:8080/admin'; // Перенаправление на страницу admin после удаления
+            // window.location.href = 'http://localhost:8080/admin'; // Перенаправление на страницу admin после удаления
         })
         .catch(error => {
             console.error('Error during DELETE request:', error.message);

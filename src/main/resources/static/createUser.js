@@ -2,6 +2,7 @@
 
 let form = document.forms["create"];
 createNewUser()
+
 function createNewUser() {
     form.addEventListener("submit", ev => {
         ev.preventDefault();
@@ -25,9 +26,9 @@ function createNewUser() {
                 roles: roles
             })
         })
-            .then(response => response.text())  // Преобразовать ответ в текст
+            .then(response => response.text())
             .then(data => {
-                console.log('Response from server:', data); // Вывести текст ответа в консоль
+                console.log('Response from server:', data);
                 form.reset();
                 $('#home-tab').click();
                 getTableUser();

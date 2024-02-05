@@ -15,42 +15,30 @@ import java.util.List;
 public class AuthRestController {
 
     @Autowired
-    private AuthService authService;
-
-    @GetMapping("/getCurrentUser")
-    public ResponseEntity<User> getCurrentUser() {
-        User user = authService.getCurrentUser();
-        return ResponseEntity.ok(user);
-    }
+    private AuthService service;
 
     @GetMapping("/users")
-    public ResponseEntity <List <User>> showAllUsers () {
-        List <User> userList = authService.getAll();
+    public ResponseEntity<List<User>> showAllUsers() {
+        List<User> userList = service.getAll();
         return ResponseEntity.ok(userList);
     }
 
     @PostMapping("/users")
-    public ResponseEntity<String> postNewUser (@RequestBody User user) {
-        authService.createUser(user);
+    public ResponseEntity<String> postNewUser(@RequestBody User user) {
+        service.createUser(user);
         return ResponseEntity.ok("Done successfully with ID = " + user.getId());
     }
 
     @PutMapping("/users")
-    public ResponseEntity<HttpStatus> updateUser (@RequestBody User user) {
-        authService.update(user, user.getId());
+    public ResponseEntity<HttpStatus> updateUser(@RequestBody User user) {
+        service.update(user, user.getId());
         return ResponseEntity.ok(HttpStatus.OK);
     }
 
     @DeleteMapping("/users/{id}")
-    public ResponseEntity<HttpStatus> deleteUser (@PathVariable Integer id) {
-        authService.deleteUser(id);
+    public ResponseEntity<HttpStatus> deleteUser(@PathVariable Integer id) {
+        service.deleteUser(id);
         return ResponseEntity.ok(HttpStatus.OK);
-    }
-
-    @GetMapping("/getUserById/{id}")
-    public ResponseEntity<User> getUserById (@PathVariable Integer id) {
-        User user = authService.getOne(id);
-        return ResponseEntity.ok(user);
     }
 
 }

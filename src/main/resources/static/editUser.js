@@ -1,21 +1,15 @@
 let formEdit = document.forms["editModal"];
-// editUser();
 
 function editModal(userId) {
-    // Отправляем запрос на получение данных пользователя по его идентификатору
-    fetch(`/apiAuth/getUserById/${userId}`)
+    fetch(`/apiUser/getUserById/${userId}`)
         .then(response => response.json())
         .then(user => {
-            // Заполняем данные пользователя в модальном окне
             document.getElementById('Edit_id').value = user.id;
             document.getElementById('Edit_username').value = user.username;
             document.getElementById('Edit_password').value = user.password;
             document.getElementById('Edit_yob').value = user.yob;
             document.getElementById('Edit_country').value = user.country;
-
-            // Открываем модальное окно
             $('#edit').modal('show');
-
             $('#confirmEdit').on('click', function () {
                 editUser();
             });
@@ -27,18 +21,13 @@ function editModal(userId) {
 
 function editUser() {
     let formEdit = document.forms["formEdit"];
-
     formEdit.addEventListener("submit", function (event) {
         event.preventDefault();
-
-        // Собираем данные из формы
         let id = formEdit.id.value;
         let username = formEdit.username.value;
         let password = formEdit.password.value;
         let yob = formEdit.yob.value;
         let country = formEdit.country.value;
-
-        // Отправляем PUT-запрос на сервер для обновления пользователя
         fetch(`/apiAuth/users`, {
             method: 'PUT',
             headers: {
@@ -60,17 +49,12 @@ function editUser() {
             })
             .then(data => {
                 console.log("User updated! Status:", data);
-
-                // Закрываем модальное окно
                 $('#edit').modal('hide');
-
+                getTableUser();
                 // window.location.href = 'http://localhost:8080/admin';
-
-                // Можете выполнить дополнительные действия после успешного обновления
             })
             .catch(error => {
                 console.error('Error during PUT request:', error);
             });
     });
-
 }

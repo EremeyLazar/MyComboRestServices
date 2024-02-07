@@ -15,4 +15,9 @@ public class ViewController {
     public String showTheUser() {
         return "user";
     }
+
+    @GetMapping("/topwords")
+    public String topWords() {
+        return "topwords";
+    }
 }

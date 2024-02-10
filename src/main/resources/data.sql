@@ -4,3 +4,4 @@ INSERT IGNORE INTO users (id, username, password, yob, country) VALUES (1, 'admi
 INSERT IGNORE INTO user_roles (user_id, role_id) VALUES (1, 1);
 INSERT IGNORE INTO user_roles (user_id, role_id) VALUES (1, 2);
 INSERT IGNORE INTO game (id, running, random, try_number, game_rate, total_rate, user_id) VALUES (1, true, 44, 1, 3, 3, 1);
+INSERT IGNORE INTO game_messages (game_id, messages) VALUES (1, 'no message');

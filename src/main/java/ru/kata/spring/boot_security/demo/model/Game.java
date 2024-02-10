@@ -6,6 +6,8 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "game")
@@ -15,11 +17,14 @@ public class Game {
     @Id
     private int id;
     boolean running;
-    private byte random;
+    private int random;
 
     private byte tryNumber;
     private byte gameRate;
     private byte totalRate;
+
+    @ElementCollection
+    private List <String> messages;
 
     @OneToOne
     @JoinColumn(name = "user_id")
@@ -28,7 +33,7 @@ public class Game {
     public Game() {
     }
 
-    public Game(int id, boolean running, byte random, byte tryNumber, byte gameRate, byte totalRate, User user) {
+    public Game(int id, boolean running, int random, byte tryNumber, byte gameRate, byte totalRate, List<String> messages, User user) {
         this.id = id;
         this.running = running;
         this.random = random;
@@ -36,6 +41,18 @@ public class Game {
         this.gameRate = gameRate;
         this.totalRate = totalRate;
         this.user = user;
+        this.messages = messages;
+    }
+
+    public List<String> getMessages() {
+        return messages;
+    }
+
+    public void setMessages(String messages) {
+        if (this.messages == null) {
+            this.messages = new ArrayList<>();
+        }
+        this.messages.add(messages);
     }
 
     public User getUser() {
@@ -62,11 +79,11 @@ public class Game {
         this.running = running;
     }
 
-    public byte getRandom() {
+    public int getRandom() {
         return random;
     }
 
-    public void setRandom(byte random) {
+    public void setRandom(int random) {
         this.random = random;
     }
 
@@ -103,6 +120,7 @@ public class Game {
                 ", tryNumber=" + tryNumber +
                 ", gameRate=" + gameRate +
                 ", totalRate=" + totalRate +
+                ", messages=" + messages +
                 '}';
     }
 }

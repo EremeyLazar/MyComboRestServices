@@ -23,6 +23,6 @@ public class ViewController {
 
     @GetMapping("/guess")
     public String guess() {
-        return "guess";
+        return "game";
     }
 }

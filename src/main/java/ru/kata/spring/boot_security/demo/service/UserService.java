@@ -13,6 +13,8 @@ import ru.kata.spring.boot_security.demo.exception_handling.NoSuchUserException;
 import ru.kata.spring.boot_security.demo.model.User;
 import ru.kata.spring.boot_security.demo.repositories.UserRepository;
 
+import java.util.List;
+
 @Service
 public class UserService implements UserDetailsService {
 

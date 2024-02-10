@@ -32,7 +32,7 @@ function createNewUser() {
                 form.reset();
                 $('#home-tab').click();
                 getTableUser();
-                // window.location.href = 'http://localhost:8080/admin';
+                window.location.href = 'http://localhost:8080/admin';
             })
             .catch(error => {
                 console.error('Error:', error);

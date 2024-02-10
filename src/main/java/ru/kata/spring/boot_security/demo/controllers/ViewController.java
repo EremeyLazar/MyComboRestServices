@@ -20,4 +20,9 @@ public class ViewController {
     public String topWords() {
         return "topwords";
     }
+
+    @GetMapping("/guess")
+    public String guess() {
+        return "guess";
+    }
 }

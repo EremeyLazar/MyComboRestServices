@@ -20,6 +20,7 @@ public class UserRestController {
     @GetMapping("/getCurrentUser")
     public ResponseEntity<User> getCurrentUser() {
         User user = service.getCurrentUser();
+        System.out.println("CURRENT USER! "+user);
         return ResponseEntity.ok(user);
     }
 

@@ -1,10 +1,9 @@
 package ru.kata.spring.boot_security.demo.controllers;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import ru.kata.spring.boot_security.demo.model.Game;
 import ru.kata.spring.boot_security.demo.model.TopWords;
 import ru.kata.spring.boot_security.demo.service.UsersFunctions;
 
@@ -15,11 +14,12 @@ import java.util.Map;
 @RequestMapping("/apiFunc")
 public class UsersFunctionsRestController {
 
+    private int number;
+
     @PostMapping("/processWords")
     public ResponseEntity<Map<String, Integer>> processWords(@RequestBody TopWords topWords) {
-        UsersFunctions wordsReader = new UsersFunctions();
-        Map<String, Integer> result = wordsReader.processWords(topWords.getWord(), topWords.getLimit());
+        UsersFunctions funcService = new UsersFunctions();
+        Map<String, Integer> result = funcService.processWords(topWords.getWord(), topWords.getLimit());
         return ResponseEntity.ok(result);
     }
-
 }

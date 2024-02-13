@@ -8,6 +8,7 @@ import ru.kata.spring.boot_security.demo.model.User;
 import ru.kata.spring.boot_security.demo.repositories.GameRepository;
 import ru.kata.spring.boot_security.demo.repositories.UserRepository;
 
+import java.util.List;
 import java.util.Random;
 
 @Service
@@ -17,23 +18,26 @@ public class GameService {
     @Autowired
     private GameRepository gameRepository;
 
-    UserService userService = new UserService();
+    @Autowired
+    UserService userService;
 
 
     public void init (byte answer) {
         System.out.println("INIT ПОЛУЧИЛ " +  answer);
         Random randomGenerator = new Random();
         User currentUser = userService.getCurrentUser();
-        Game game = gameRepository.findById(currentUser.getId()).orElse(null);
+        Game game = gameRepository.findById(currentUser.getId()).orElse(new Game());
+        System.out.println("game is "+game);
 
 
         if (game == null ) {
-            game.getMessages().clear();
+            System.out.println("if inside");
             game.setRunning(true);
             game.setRandom(randomGenerator.nextInt(100));
             game.setTryNumber((byte) 1);
             game.setGameRate((byte)0);
             game.setMessages(currentUser.getUsername()+ ", число загадано! Начинаем...");
+            gameRepository.save(game);
             System.out.println("WE START.....................");
         }
         engine(game, answer);
@@ -55,10 +59,12 @@ public class GameService {
             close(game);
         }
         game.setTryNumber((byte) (game.getTryNumber() + 1));
+        gameRepository.save(game);
     }
 
     public void close (Game game) {
         game.setRunning(false);
+        gameRepository.save(game);
     }
 
     public void finish (Game game) {
@@ -92,10 +98,19 @@ public class GameService {
         game.setTotalRate((byte) ((game.getTotalRate() + game.getGameRate())/2));
         game.setMessages("Ваш общий рейтинг составляет: " + game.getTotalRate() + " баллов!!!");
         game.setMessages("Чтобы продолжить игру, пошлите любую цифру!");
+        gameRepository.save(game);
+
 
         close(game);
 
     }
 
+public List<String> findWord (int id) {
+        List <String> word = gameRepository.findMessagesById(id);
+        return word;
+}
+
 
 }
+
+// some comments

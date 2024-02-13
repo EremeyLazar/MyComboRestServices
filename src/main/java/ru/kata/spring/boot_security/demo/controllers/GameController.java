@@ -30,7 +30,7 @@ public class GameController {
     @GetMapping("/say")
     public ResponseEntity <List<String>> sayWord () {
         User user = userService.getCurrentUser();
-        List<String> word = user.getGame().getMessages().stream().limit(5).collect(Collectors.toList());
+        List<String> word = service.findWord(user.getId());
         System.out.println(word);
         return ResponseEntity.ok(word);
     }

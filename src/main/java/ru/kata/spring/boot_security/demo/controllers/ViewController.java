@@ -21,7 +21,7 @@ public class ViewController {
         return "topwords";
     }
 
-    @GetMapping("/guess")
+    @GetMapping("/game")
     public String guess() {
         return "game";
     }

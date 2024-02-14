@@ -8,18 +8,26 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
+import ru.kata.spring.boot_security.demo.controllers.GameController;
 import ru.kata.spring.boot_security.demo.exception_handling.NoSuchUserException;
+import ru.kata.spring.boot_security.demo.model.Game;
+import ru.kata.spring.boot_security.demo.model.Role;
 import ru.kata.spring.boot_security.demo.model.User;
+import ru.kata.spring.boot_security.demo.repositories.GameRepository;
 import ru.kata.spring.boot_security.demo.repositories.UserRepository;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
+import java.util.Set;
 
 @Service
 public class UserService implements UserDetailsService {
 
     @Autowired
     private UserRepository userRepository;
+
+    private List<String> allWords = new ArrayList<>(5);
 
 
     @Override
@@ -32,19 +40,78 @@ public class UserService implements UserDetailsService {
     }
 
     public User getCurrentUser() {
+        System.out.println("GET CURRENT USER START");
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication == null || !authentication.isAuthenticated()) {
             return null;
         }
-        return (User) authentication.getPrincipal();
+        User user = (User) authentication.getPrincipal();
+        System.out.println("CURRENT USER IS - " + user.toString());
+        return user;
     }
 
-    @Transactional(readOnly = true)
+
     public User getOne(Integer id) {
         User user = userRepository.findById(id).orElse(null);
         if (user == null) {
             throw new NoSuchUserException("there is no USER with ID = " + id + " found in DB");
         }
         return user;
+    }
+
+
+    //GAME SECTION // GAME SECTION // GAME SECTION // GAME SECTION // GAME SECTION // GAME SECTION // GAME SECTION //
+
+
+    public void init(byte answer) {
+
+        System.out.println("INIT ПОЛУЧИЛ " + answer);
+        Random randomGenerator = new Random();
+        User currentUser = getCurrentUser();
+        System.out.println("&??????????????????????");
+        System.out.println("user is " + currentUser.toString());
+        Game game = currentUser.getGame();
+        Set<Role> roles = currentUser.getRoles();
+        System.out.println("game is " + game);
+        System.out.println("role is " + roles);
+
+        if (game == null) {
+            System.out.println("if inside");
+            game.setRunning(true);
+            game.setRandom(randomGenerator.nextInt(100));
+            game.setTryNumber((byte) 1);
+            game.setGameRate((byte) 0);
+            System.out.println(currentUser.getUsername() + ", число загадано! Начинаем...");
+            GameController gameController = new GameController();
+            passWord(currentUser.getUsername() + ", число загадано! Начинаем...");
+            System.out.println("WE START.....................");
+        }
+        engine(game, answer);
+    }
+
+    public void engine(Game game, byte answer) {
+        GameController gameController = new GameController();
+        passWord("Попытка № " + game.getTryNumber());
+
+        try {
+            if (answer < game.getRandom()) {
+                passWord("Не угадали, ВАШЕ число МЕНЬШЕ загаданного!!");
+            } else if (answer > game.getRandom()) {
+                passWord("Не угадали, ВАШЕ число БОЛЬШЕ загаданного!!");
+            } else if (answer == game.getRandom()) {
+            passWord("УСПЕХ!!!");
+            }
+        } catch (java.util.InputMismatchException exception) {
+//            game.setMessages("Загадано число, а не слово... Вай меееее....");
+//            close(game);
+        }
+        game.setTryNumber((byte) (game.getTryNumber() + 1));
+
+    }
+
+
+    public List <String> passWord (String word) {
+        allWords.add(word);
+        return allWords;
     }
 }

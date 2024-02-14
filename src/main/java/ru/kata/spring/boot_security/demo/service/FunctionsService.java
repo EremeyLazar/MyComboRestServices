@@ -13,7 +13,6 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class FunctionsService {
-    UsersFunctionsRestController controller = new UsersFunctionsRestController();
 
     public Map<String, Integer> processWords(String initialText, int limit) {
 

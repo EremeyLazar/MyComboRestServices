@@ -7,9 +7,11 @@ import ru.kata.spring.boot_security.demo.model.Game;
 import ru.kata.spring.boot_security.demo.model.User;
 
 import java.util.List;
+import java.util.Optional;
 
 
 @Repository
-public interface GameRepository extends JpaRepository <Game, Integer> {
-    List<String> findMessagesById(int gameId);
+public interface GameRepository extends JpaRepository<Game, Integer> {
+    Optional<Game> findById(int gameId);
 }
+

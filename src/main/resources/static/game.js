@@ -1,8 +1,8 @@
+var isSubscribed = false;
+
 function subscribe() {
     // Получение числа из поля ввода
     var number = document.getElementById('numberInput').value;
-
-    console.log(number)
 
     // AJAX-запрос на ваш контроллер
     var xhr = new XMLHttpRequest();
@@ -12,9 +12,13 @@ function subscribe() {
         if (xhr.status >= 200 && xhr.status < 300) {
             // Обработка успешного ответа
             console.log('Ответ от сервера:', xhr.responseText);
+
+            // Запуск метода обновления сообщений
+            isSubscribed = true;
+            delayedUpdateMessages();
         } else {
             // Обработка ошибок
-            console.error('Ошибка:', xhr.statusText);
+            console.error('Ошибка:', xhr.status, xhr.statusText, xhr.responseText);
         }
     };
 
@@ -22,38 +26,37 @@ function subscribe() {
         console.error('Произошла ошибка при выполнении запроса.');
     };
 
-    xhr.send();}
-
-const interval = 30000;
-
-setInterval(getMessages, interval);
-
-function getMessages() {
-    fetch("/apiGame/say")
-        .then(res => res.json())
-        .then(messages => {
-            updateMessagesContainer(messages);
-        })
-        .catch(error => console.error('Error fetching messages:', error));
+    xhr.send();
 }
-function updateMessagesContainer(messages) {
-    const messagesContainer = document.getElementById('messagesContainer');
-    messagesContainer.innerHTML = ''; // Очистить контейнер перед обновлением
+function delayedUpdateMessages() {
+    setTimeout(function() {
+        if (!isSubscribed) {
+            return;
+        }
 
-    // Проверить, является ли messages массивом и не пустым
-    if (Array.isArray(messages) && messages.length > 0) {
-        // Если это массив, обрабатываем каждый элемент
-        messages.forEach(message => {
-            const messageElement = document.createElement('div');
-            messageElement.textContent = message;
-            messagesContainer.appendChild(messageElement);
-        });
-    } else if (typeof messages === 'string' && messages.trim() !== '') {
-        // Если это не массив, и строка не пуста, обрабатываем как одиночное сообщение
-        const messageElement = document.createElement('div');
-        messageElement.textContent = messages;
-        messagesContainer.appendChild(messageElement);
-    } else {
-        console.warn('Пустой массив сообщений.');
-    }
+        fetch('apiGame/say')
+            .then(response => response.json())
+            .then(data => {
+                var messageList = document.getElementById("messageList");
+
+                // Очистить текущий список сообщений
+                messageList.innerHTML = '';
+
+                // Добавить каждое сообщение в новую строку списка
+                data.forEach(message => {
+                    var listItem = document.createElement("li");
+                    listItem.textContent = message;
+
+                    console.log(listItem);
+
+                    messageList.appendChild(listItem);
+                });
+            })
+            .catch(error => {
+                console.error('Error fetching data:', error);
+            });
+    }, 2000); // Запустить код через 2 секунды (2000 миллисекунд)
 }
+
+// Вызвать функцию для запуска после 2-х секунд
+delayedUpdateMessages();

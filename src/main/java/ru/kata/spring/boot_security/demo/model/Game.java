@@ -23,8 +23,8 @@ public class Game {
     private byte gameRate;
     private byte totalRate;
 
-    @ElementCollection
-    private List <String> messages;
+//    @ElementCollection
+//    private List <String> messages;
 
     @OneToOne
     @JoinColumn(name = "user_id")
@@ -41,19 +41,19 @@ public class Game {
         this.gameRate = gameRate;
         this.totalRate = totalRate;
         this.user = user;
-        this.messages = messages;
+//        this.messages = messages;
     }
 
-    public List<String> getMessages() {
-        return messages;
-    }
-
-    public void setMessages(String messages) {
-        if (this.messages == null) {
-            this.messages = new ArrayList<>();
-        }
-        this.messages.add(messages);
-    }
+//    public List<String> getMessages() {
+//        return messages;
+//    }
+//
+//    public void setMessages(String messages) {
+//        if (this.messages == null) {
+//            this.messages = new ArrayList<>();
+//        }
+//        this.messages.add(messages);
+//    }
 
     public User getUser() {
         return user;
@@ -120,7 +120,7 @@ public class Game {
                 ", tryNumber=" + tryNumber +
                 ", gameRate=" + gameRate +
                 ", totalRate=" + totalRate +
-                ", messages=" + messages +
+//                ", messages=" + messages +
                 '}';
     }
 }

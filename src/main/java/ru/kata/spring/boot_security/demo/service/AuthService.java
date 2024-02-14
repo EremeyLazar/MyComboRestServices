@@ -8,6 +8,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import ru.kata.spring.boot_security.demo.model.Game;
 import ru.kata.spring.boot_security.demo.model.Role;
 import ru.kata.spring.boot_security.demo.model.User;
 import ru.kata.spring.boot_security.demo.repositories.UserRepository;
@@ -38,12 +39,13 @@ public class AuthService implements UserDetailsService {
     public List<User> getAll() {
         return userRepository.findAll();
     }
-
+// (int id, boolean running, int random, byte tryNumber, byte gameRate, byte totalRate, User user)
     public void createUser(User user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         if (user.getRoles().size() == 0) {
             user.setRoles(Collections.singleton(new Role(1)));
         }
+//        user.setGame(new Game());
         userRepository.save(user);
     }
 
@@ -54,7 +56,6 @@ public class AuthService implements UserDetailsService {
             throw new IllegalArgumentException("This user does not exist anyway in our DB");
         }
     }
-
 
     public void update(User updatedUser, Integer id) {
         userRepository.findById(id).ifPresentOrElse(

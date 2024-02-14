@@ -15,7 +15,7 @@ function subscribe() {
 
             // Запуск метода обновления сообщений
             isSubscribed = true;
-            delayedUpdateMessages();
+            updateMessages();
         } else {
             // Обработка ошибок
             console.error('Ошибка:', xhr.status, xhr.statusText, xhr.responseText);
@@ -28,35 +28,26 @@ function subscribe() {
 
     xhr.send();
 }
-function delayedUpdateMessages() {
-    setTimeout(function() {
-        if (!isSubscribed) {
-            return;
-        }
+function updateMessages() {
+    fetch('apiGame/say')
+        .then(response => response.json())
+        .then(data => {
+            var messageList = document.getElementById("messageList");
 
-        fetch('apiGame/say')
-            .then(response => response.json())
-            .then(data => {
-                var messageList = document.getElementById("messageList");
+            // Очистить текущий список сообщений
+            messageList.innerHTML = '';
 
-                // Очистить текущий список сообщений
-                messageList.innerHTML = '';
+            // Добавить каждое сообщение в новую строку списка
+            data.forEach(message => {
+                var listItem = document.createElement("li");
+                listItem.textContent = message;
 
-                // Добавить каждое сообщение в новую строку списка
-                data.forEach(message => {
-                    var listItem = document.createElement("li");
-                    listItem.textContent = message;
+                console.log(listItem);
 
-                    console.log(listItem);
-
-                    messageList.appendChild(listItem);
-                });
-            })
-            .catch(error => {
-                console.error('Error fetching data:', error);
+                messageList.appendChild(listItem);
             });
-    }, 2000); // Запустить код через 2 секунды (2000 миллисекунд)
+        })
+        .catch(error => {
+            console.error('Error fetching data:', error);
+        });
 }
-
-// Вызвать функцию для запуска после 2-х секунд
-delayedUpdateMessages();

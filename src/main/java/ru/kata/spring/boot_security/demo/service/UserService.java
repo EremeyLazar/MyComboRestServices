@@ -16,10 +16,8 @@ import ru.kata.spring.boot_security.demo.model.User;
 import ru.kata.spring.boot_security.demo.repositories.GameRepository;
 import ru.kata.spring.boot_security.demo.repositories.UserRepository;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
-import java.util.Set;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class UserService implements UserDetailsService {
@@ -27,7 +25,7 @@ public class UserService implements UserDetailsService {
     @Autowired
     private UserRepository userRepository;
 
-    private List<String> allWords = new ArrayList<>(5);
+    private ArrayList<String> allWords = new ArrayList<>();
 
 
     @Override
@@ -64,54 +62,52 @@ public class UserService implements UserDetailsService {
 
 
     public void init(byte answer) {
-
-        System.out.println("INIT ПОЛУЧИЛ " + answer);
         Random randomGenerator = new Random();
         User currentUser = getCurrentUser();
-        System.out.println("&??????????????????????");
-        System.out.println("user is " + currentUser.toString());
         Game game = currentUser.getGame();
-        Set<Role> roles = currentUser.getRoles();
-        System.out.println("game is " + game);
-        System.out.println("role is " + roles);
 
-        if (game == null) {
+        if (currentUser.getGame() == null) {
+            currentUser.setGame(new Game());
             System.out.println("if inside");
             game.setRunning(true);
             game.setRandom(randomGenerator.nextInt(100));
             game.setTryNumber((byte) 1);
             game.setGameRate((byte) 0);
-            System.out.println(currentUser.getUsername() + ", число загадано! Начинаем...");
-            GameController gameController = new GameController();
-            passWord(currentUser.getUsername() + ", число загадано! Начинаем...");
-            System.out.println("WE START.....................");
+            sayWord(currentUser.getUsername() + ", число загадано! Начинаем...");
         }
         engine(game, answer);
     }
 
     public void engine(Game game, byte answer) {
-        GameController gameController = new GameController();
-        passWord("Попытка № " + game.getTryNumber());
 
         try {
             if (answer < game.getRandom()) {
-                passWord("Не угадали, ВАШЕ число МЕНЬШЕ загаданного!!");
+                sayWord("Не угадали, ВАШЕ число МЕНЬШЕ загаданного!!");
             } else if (answer > game.getRandom()) {
-                passWord("Не угадали, ВАШЕ число БОЛЬШЕ загаданного!!");
+                sayWord("Не угадали, ВАШЕ число БОЛЬШЕ загаданного!!");
             } else if (answer == game.getRandom()) {
-            passWord("УСПЕХ!!!");
+            sayWord("УСПЕХ!!!");
             }
         } catch (java.util.InputMismatchException exception) {
-//            game.setMessages("Загадано число, а не слово... Вай меееее....");
-//            close(game);
+            sayWord("Загадано число, а не слово... Вай меееее....");
         }
         game.setTryNumber((byte) (game.getTryNumber() + 1));
+        sayWord("Попытка № " + game.getTryNumber());
 
     }
 
 
-    public List <String> passWord (String word) {
+
+    public void sayWord (String word) {
         allWords.add(word);
-        return allWords;
     }
+
+    public List <String> passWord () {
+        List<String> reversedList = new ArrayList<>();
+        for (int i = allWords.size() - 1; i >= 0; i--) {
+            reversedList.add(allWords.get(i));
+        }
+        return reversedList.stream().limit(8).collect(Collectors.toList());
+    }
+
 }

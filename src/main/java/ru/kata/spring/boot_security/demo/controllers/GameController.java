@@ -27,9 +27,7 @@ public class GameController {
 
     @GetMapping("/say")
     public ResponseEntity <List <String>> sayWord() {
-        List allWords = userService.passWord("www");
-        System.out.println("sayWord----->>>>"+allWords);
-        allWords.remove("www");
+        List allWords = userService.passWord();
         return ResponseEntity.ok(allWords);
     }
 

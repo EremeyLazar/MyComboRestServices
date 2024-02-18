@@ -19,8 +19,7 @@ public class GameController {
 
 
     @GetMapping("/getNum/{id}")
-    public ResponseEntity<Byte> getUserById(@PathVariable byte id) {
-        System.out.println("КОНТРОЛЛЕР ПОЛУЧИЛ " + id);
+    public ResponseEntity<Integer> getUserById(@PathVariable int id) {
         userService.init(id);
         return ResponseEntity.ok(id);
     }

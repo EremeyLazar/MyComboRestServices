@@ -1,40 +1,39 @@
 package ru.kata.spring.boot_security.demo.model;
 
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
 
 @Entity
 @Table(name = "game")
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+//@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Game {
 
     @Id
+    @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     boolean running;
-    private int random;
+    private double totalRate;
 
-    private byte tryNumber;
-    private byte gameRate;
-    private byte totalRate;
-
-    @OneToOne
-    @JoinColumn(name = "user_id")
+    @JsonIgnoreProperties({"hibernateLazyInitializer"})
+    @OneToOne(mappedBy = "game", fetch = FetchType.LAZY)
     private User user;
+
 
     public Game() {
     }
 
-    public Game(int id, boolean running, int random, byte tryNumber, byte gameRate, byte totalRate, User user) {
+    public Game(int id) {
+        this.id = id;
+    }
+
+    public Game(boolean running, double totalRate) {
         this.id = id;
         this.running = running;
-        this.random = random;
-        this.tryNumber = tryNumber;
-        this.gameRate = gameRate;
         this.totalRate = totalRate;
-        this.user = user;
+//        this.user = user;
 
     }
 
@@ -62,35 +61,11 @@ public class Game {
         this.running = running;
     }
 
-    public int getRandom() {
-        return random;
-    }
-
-    public void setRandom(int random) {
-        this.random = random;
-    }
-
-    public byte getTryNumber() {
-        return tryNumber;
-    }
-
-    public void setTryNumber(byte tryNumber) {
-        this.tryNumber = tryNumber;
-    }
-
-    public byte getGameRate() {
-        return gameRate;
-    }
-
-    public void setGameRate(byte gameRate) {
-        this.gameRate = gameRate;
-    }
-
-    public byte getTotalRate() {
+    public double getTotalRate() {
         return totalRate;
     }
 
-    public void setTotalRate(byte totalRate) {
+    public void setTotalRate(double totalRate) {
         this.totalRate = totalRate;
     }
 
@@ -99,9 +74,6 @@ public class Game {
         return "Game{" +
                 "id=" + id +
                 ", running=" + running +
-                ", random=" + random +
-                ", tryNumber=" + tryNumber +
-                ", gameRate=" + gameRate +
                 ", totalRate=" + totalRate +
                 '}';
     }

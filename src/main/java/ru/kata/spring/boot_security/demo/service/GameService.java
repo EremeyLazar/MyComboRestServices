@@ -8,18 +8,13 @@
 //import org.springframework.transaction.annotation.Transactional;
 //import ru.kata.spring.boot_security.demo.model.Game;
 //import ru.kata.spring.boot_security.demo.model.User;
-//import ru.kata.spring.boot_security.demo.repositories.GameRepository;
 //import ru.kata.spring.boot_security.demo.repositories.UserRepository;
 //
-//import java.util.List;
 //import java.util.Random;
 //
 //@Service
 //@Transactional
 //public class GameService implements UserDetailsService {
-//
-//    @Autowired
-//    private GameRepository gameRepository;
 //
 //    @Autowired
 //    private UserService userService;

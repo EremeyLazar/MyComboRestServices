@@ -39,13 +39,14 @@ public class AuthService implements UserDetailsService {
     public List<User> getAll() {
         return userRepository.findAll();
     }
-// (int id, boolean running, int random, byte tryNumber, byte gameRate, byte totalRate, User user)
+
+
     public void createUser(User user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         if (user.getRoles().size() == 0) {
             user.setRoles(Collections.singleton(new Role(1)));
         }
-//        user.setGame(new Game());
+        user.setGame(new Game(false, 0d));
         userRepository.save(user);
     }
 

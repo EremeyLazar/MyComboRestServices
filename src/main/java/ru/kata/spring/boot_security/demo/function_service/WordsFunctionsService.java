@@ -1,6 +1,4 @@
-package ru.kata.spring.boot_security.demo.service;
-
-import ru.kata.spring.boot_security.demo.controllers.UsersFunctionsRestController;
+package ru.kata.spring.boot_security.demo.function_service;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -12,7 +10,7 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public class FunctionsService {
+public class WordsFunctionsService {
 
     public Map<String, Integer> processWords(String initialText, int limit) {
 

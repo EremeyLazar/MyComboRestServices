@@ -2,19 +2,11 @@ package ru.kata.spring.boot_security.demo.function_service;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-import ru.kata.spring.boot_security.demo.exception_handling.NoSuchUserException;
 import ru.kata.spring.boot_security.demo.model.Game;
 import ru.kata.spring.boot_security.demo.model.User;
-import ru.kata.spring.boot_security.demo.repositories.UserRepository;
 import ru.kata.spring.boot_security.demo.service.AuthService;
-import ru.kata.spring.boot_security.demo.service.UserService;
+import ru.kata.spring.boot_security.demo.service.GameService;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
@@ -23,10 +15,12 @@ import java.util.Random;
 import java.util.stream.Collectors;
 
 
+@Service
 public class GameFunctionService {
 
-    private AuthService authService = new AuthService();
 
+    @Autowired
+    private GameService gameService;
 
     private ArrayList<String> allWords = new ArrayList<>();
 
@@ -40,7 +34,7 @@ public class GameFunctionService {
 
     public void init(int answer) {
         Random randomGenerator = new Random();
-        User currentUser = authService.getCurrentUser();
+        User currentUser = gameService.getCurrentUser();
 
         if (!currentUser.getGame().isRunning()) {
             allWords.clear();
@@ -130,7 +124,7 @@ public class GameFunctionService {
 
 
     public void save(User user) {
-        authService.update(user, user.getId());
+        gameService.save(user);
     }
 
     public int getRate () {

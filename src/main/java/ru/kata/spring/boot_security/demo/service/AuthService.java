@@ -77,31 +77,6 @@ public class AuthService implements UserDetailsService {
         );
     }
 
-    // from USER // from USER // from USER // from USER // from USER // from USER
-
-
-
-
-    @Transactional(readOnly = true)
-    public User getCurrentUser() {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (authentication == null || !authentication.isAuthenticated()) {
-            return null;
-        }
-        User user = (User) authentication.getPrincipal();
-        return user;
-    }
-
-
-    @Transactional(readOnly = true)
-    public User getOne(Integer id) {
-        User user = userRepository.findById(id).orElse(null);
-        if (user == null) {
-            throw new NoSuchUserException("there is no USER with ID = " + id + " found in DB");
-        }
-        return user;
-    }
-
 
 
 }

@@ -17,13 +17,11 @@ public class GameController {
 
     @Autowired
     private GameFunctionService gameFunctionService;
-//    GameService gameService = new GameService();
 
 
     @GetMapping("/getNum/{id}")
     public ResponseEntity<Integer> getUserById(@PathVariable int id) {
         gameFunctionService.init(id);
-//        gameService.save(new User("savetest", "test", 2000, "test"));
         return ResponseEntity.ok(id);
     }
 

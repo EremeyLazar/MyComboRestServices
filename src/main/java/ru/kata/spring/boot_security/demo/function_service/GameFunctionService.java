@@ -60,48 +60,48 @@ public class GameFunctionService {
         }
     }
 
-    public void finish (User user) {
+    public void finish(User user) {
         try {
 
-        Game game = user.getGame();
+            Game game = user.getGame();
 
 
-        if (tryNumber == 1) {
-            sayWord("Поздравляю!");
-            sayWord("Вы получаете 50 (!!!) очков!!!");
-            sayWord("ВАУ!!! 777!!! БИНГО!!! Вы угадали с первой попытки!!!");
-            gameRate = 50;
-        } else if (tryNumber == 2) {
-            sayWord("Поздравляю!");
-            sayWord("Вы получаете 30 (!!!) очков!!!");
-            sayWord("Офигеть!!! Вы угадали со второй попытки!!!");
-            gameRate = 30;
-        } else if (tryNumber == 3) {
-            sayWord("Поздравляю!");
-            sayWord("Вы получаете 20 (!!!) очков!!!");
-            sayWord("Офигеть!!! Вы угадали с третьей попытки!!!");
-            gameRate = 20;
-        } else if (tryNumber < 100) {
-            sayWord("Не останавливайтесь!");
-            sayWord("Вы угадали с " + tryNumber + "-й попытки!!!");
-            sayWord("Это - Удача!!!");
-            gameRate = (byte) ((byte)10 - tryNumber);
-            if (gameRate <=0) {
-                gameRate = (byte) 1;
+            if (tryNumber == 1) {
+                sayWord("Поздравляю!");
+                sayWord("Вы получаете 50 (!!!) очков!!!");
+                sayWord("ВАУ!!! 777!!! БИНГО!!! Вы угадали с первой попытки!!!");
+                gameRate = 50;
+            } else if (tryNumber == 2) {
+                sayWord("Поздравляю!");
+                sayWord("Вы получаете 30 (!!!) очков!!!");
+                sayWord("Офигеть!!! Вы угадали со второй попытки!!!");
+                gameRate = 30;
+            } else if (tryNumber == 3) {
+                sayWord("Поздравляю!");
+                sayWord("Вы получаете 20 (!!!) очков!!!");
+                sayWord("Офигеть!!! Вы угадали с третьей попытки!!!");
+                gameRate = 20;
+            } else if (tryNumber < 100) {
+                sayWord("Не останавливайтесь!");
+                sayWord("Вы угадали с " + tryNumber + "-й попытки!!!");
+                sayWord("Это - Удача!!!");
+                gameRate = (byte) ((byte) 10 - tryNumber);
+                if (gameRate <= 0) {
+                    gameRate = (byte) 1;
+                }
+            } else {
+                sayWord("ERROR!!!");
             }
-        } else {
-            sayWord("ERROR!!!");
-        }
-        game.setRunning(false);
-        user.setGame(game);
-        double totalRate = (game.getTotalRate() + getRate())/2;
-        game.setTotalRate(totalRate);
-        sayWord("Ваш счет за текущую игру составил " + getRate() + ", а общий счет - " + totalRate);
-        random = 0;
-        tryNumber = 0;
-        gameRate = 0;
+            game.setRunning(false);
+            user.setGame(game);
+            double totalRate = (game.getTotalRate() == 0) ? getRate() : (game.getTotalRate() + getRate()) / 2;
+            game.setTotalRate(totalRate);
+            sayWord("Ваш счет за текущую игру составил " + getRate() + ", а общий счет - " + totalRate);
+            random = 0;
+            tryNumber = 0;
+            gameRate = 0;
 
-        save(user);
+            save(user);
 
         } catch (Exception ex) {
             ex.printStackTrace();  // Вывести стек трейс для отладки
@@ -113,11 +113,10 @@ public class GameFunctionService {
                 }
             } else {
                 System.err.println("Exception: " + ex.getMessage());
-            }}
+            }
+        }
 
     }
-
-
 
 
     //TECH //TECH //TECH //TECH //TECH //TECH //TECH //TECH //TECH //TECH //TECH //TECH //TECH //TECH //TECH //TECH
@@ -127,29 +126,36 @@ public class GameFunctionService {
         gameService.save(user);
     }
 
-    public int getRate () {
+    public int getRate() {
         if (tryNumber == 1) {
             return 50;
         } else if (tryNumber == 2) {
             return 30;
         } else if (tryNumber == 3) {
             return 20;
-        } else if (tryNumber > 3 && tryNumber <9) {
+        } else if (tryNumber > 3 && tryNumber < 9) {
             return 10 - tryNumber;
         } else return 1;
     }
 
-    public void sayWord (String word) {
+    public void sayWord(String word) {
         allWords.add(word);
     }
 
-    public List <String> passWord () {
+    public List<String> passWord() {
         List<String> reversedList = new ArrayList<>();
         for (int i = allWords.size() - 1; i >= 0; i--) {
             reversedList.add(allWords.get(i));
         }
         System.out.println(reversedList);
         return reversedList.stream().limit(MAX_SIZE).collect(Collectors.toList());
+    }
+
+    //double totalRate = (game.getTotalRate() + getRate())/2;
+    public double calculateTotalRate(Game game) {
+        if (game.getTotalRate() == 0) {
+            return getRate();
+        } else return (game.getTotalRate() + getRate()) / 2;
     }
 
 }

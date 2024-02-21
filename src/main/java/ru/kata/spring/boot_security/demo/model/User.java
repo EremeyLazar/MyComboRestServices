@@ -1,6 +1,8 @@
 package ru.kata.spring.boot_security.demo.model;
 
-import com.fasterxml.jackson.annotation.*;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -55,8 +57,6 @@ public class User implements UserDetails {
         this.yob = yob;
         this.country = country;
         this.roles = new HashSet<>();
-//        this.game = new Game(false, 0.0d);
-//        this.game.setUser(this); // Установите обратную ссылку в объекте Game
     }
 
 
@@ -159,6 +159,8 @@ public class User implements UserDetails {
         StringBuffer passCut = new StringBuffer(password);
         passCut.setLength(8);
 
-        return "User: " + "# " + id + " | " + " name: " + username + " | " + " password: " + passCut + " | " + " year of bith - " + yob + " | " + " country - " + country + " | " + "access - " + roles.toString() + " | " + "game - " + game.toString();
+        return "User: " + "# " + id + " | " + " name: " + username + " | " + " password: " + passCut + " | " +
+                " year of bith - " + yob + " | " + " country - " + country + " | " + "access - " + roles.toString() +
+                " | " + "game - " + game.toString();
     }
 }

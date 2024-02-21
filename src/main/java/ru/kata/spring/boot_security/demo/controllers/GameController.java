@@ -26,8 +26,8 @@ public class GameController {
     }
 
     @GetMapping("/say")
-    public ResponseEntity <List <String>> sayWord() {
-        List allWords = gameFunctionService.passWord();
+    public ResponseEntity<List<String>> sayWord() {
+        List<String> allWords = gameFunctionService.passWord();
         return ResponseEntity.ok(allWords);
     }
 

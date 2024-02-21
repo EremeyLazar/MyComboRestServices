@@ -39,22 +39,8 @@ public class UserService implements UserDetailsService {
 
 
     public User getOne(Integer id) {
-        User user = userRepository.findById(id).orElse(null);
-        if (user == null) {
-            throw new NoSuchUserException("there is no USER with ID = " + id + " found in DB");
-        }
-        return user;
-    }
-
-    public void update(User updatedUser, Integer id) {
-        userRepository.findById(id).ifPresentOrElse(
-                user -> {
-                    userRepository.save(user);
-                },
-                () -> {
-                    throw new IllegalArgumentException("User with this ID does not exist");
-                }
-        );
+        return userRepository.findById(id)
+                .orElseThrow(() -> new NoSuchUserException("There is no USER with ID = " + id + " found in DB"));
     }
 
 }

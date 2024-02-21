@@ -7,7 +7,6 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "game")
-//@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Game {
 
     @Id
@@ -30,11 +29,8 @@ public class Game {
     }
 
     public Game(boolean running, double totalRate) {
-        this.id = id;
         this.running = running;
         this.totalRate = totalRate;
-//        this.user = user;
-
     }
 
     public User getUser() {

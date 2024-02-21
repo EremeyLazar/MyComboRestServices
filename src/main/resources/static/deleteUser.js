@@ -42,7 +42,6 @@ function deleteUser(userId) {
             console.log("User has been deleted! Status:", data);
             $('#deleteModal').modal('hide');
             getTableUser();
-            // window.location.href = 'http://localhost:8080/admin';
         })
         .catch(error => {
             console.error('Error during DELETE request:', error.message);

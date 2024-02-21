@@ -44,7 +44,7 @@
                 <br>
                 <div class="card">
                     <div class="card-header">
-                        <span class="h5">Guess number game</span>
+                        <span class="h5">"Guess Number" game</span>
                     </div>
 
                     <div class="container">
@@ -53,14 +53,17 @@
 <!--                                Один из трех столбцов-->
                                 <div class="mb-3">
                                     <label for="numberInput" class="form-label">Enter a Number:</label>
-                                    <input type="number" class="form-control" id="numberInput" placeholder="Enter number">
+                                    <input type="text" class="form-control" id="numberInput" placeholder="Enter number" pattern="^\d{1,3}$" oninput="validateNumber(this)">
+                                    <div class="invalid-feedback">
+                                        Please enter a number between 0 and 100.
+                                    </div>
                                 </div>
 
                                 <button type="button" class="btn btn-primary" onclick="subscribe()">Subscribe</button>
                             </div>
                             <div class="col-sm">
 <!--                                Один из трех столбцов-->
-                                Auto Update Messages:
+                                Game info:
                                 <ul id="messageList"></ul>
                             </div>
                         </div>
@@ -81,5 +84,6 @@
         crossorigin="anonymous"></script>
 <script src="/game.js"></script>
 <script src="/getCurrentUser.js"></script>
+<script src="/gameValidation.js"></script>
 </body>
 </html>

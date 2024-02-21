@@ -51,7 +51,6 @@ function editUser() {
                 console.log("User updated! Status:", data);
                 $('#edit').modal('hide');
                 getTableUser();
-                // window.location.href = 'http://localhost:8080/admin';
             })
             .catch(error => {
                 console.error('Error during PUT request:', error);

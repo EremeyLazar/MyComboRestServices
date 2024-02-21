@@ -22,9 +22,8 @@ function subscribe() {
 
 function updateTable(result) {
     var tableBody = document.getElementById("resultTableBody");
-    tableBody.innerHTML = ""; // Clear the existing table body
+    tableBody.innerHTML = "";
 
-    // Iterate over the result and populate the table
     for (var key in result) {
         if (result.hasOwnProperty(key)) {
             var row = tableBody.insertRow();

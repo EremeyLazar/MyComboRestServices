@@ -39,14 +39,21 @@
                 <br>
                 <div class="card">
                     <div class="card-header">
-                        <span class="h5">Most used words function</span>
+                        <span class="h5">Top used words function</span>
                     </div>
 
                     <div class="card">
                         <div class="card-body">
                             <div class="mb-3">
-                                <label for="numberInput" class="form-label">Enter a Number:</label>
-                                <input type="number" class="form-control" id="numberInput" placeholder="Enter number">
+                                <div class="mb-3">
+                                    <label for="numberInput" class="form-label">Enter a Number:</label>
+                                    <input type="number" class="form-control" id="numberInput" placeholder="Enter number">
+                                    <div class="invalid-feedback">
+                                        Please enter a number between 0 and 100.
+                                    </div>
+                                </div>
+
+
                             </div>
                             <div class="mb-3">
                                 <label for="textInput" class="form-label">Enter Text:</label>
@@ -74,6 +81,7 @@
                 </div>
             </div>
         </div>
+        </div>
     </div>
 </div>
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
@@ -83,5 +91,6 @@
         integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
         crossorigin="anonymous"></script>
 <script src="/topWords.js"></script>
+<script src="/wordValidation.js"></script>
 </body>
 </html>

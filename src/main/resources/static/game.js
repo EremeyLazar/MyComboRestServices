@@ -6,18 +6,15 @@ function subscribe() {
 
     // AJAX-запрос на ваш контроллер
     var xhr = new XMLHttpRequest();
-    xhr.open('GET', `/apiGame/getNum/${Number(number)}`, true);  // Явное преобразование в число
+    xhr.open('GET', `/apiGame/getNum/${Number(number)}`, true);
 
     xhr.onload = function() {
         if (xhr.status >= 200 && xhr.status < 300) {
-            // Обработка успешного ответа
             console.log('Ответ от сервера:', xhr.responseText);
 
-            // Запуск метода обновления сообщений
             isSubscribed = true;
             updateMessages();
         } else {
-            // Обработка ошибок
             console.error('Ошибка:', xhr.status, xhr.statusText, xhr.responseText);
         }
     };
@@ -34,10 +31,8 @@ function updateMessages() {
         .then(data => {
             var messageList = document.getElementById("messageList");
 
-            // Очистить текущий список сообщений
             messageList.innerHTML = '';
 
-            // Добавить каждое сообщение в новую строку списка
             data.forEach(message => {
                 var listItem = document.createElement("li");
                 listItem.textContent = message;

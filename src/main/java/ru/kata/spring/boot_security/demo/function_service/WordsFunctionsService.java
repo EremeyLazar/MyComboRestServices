@@ -15,7 +15,7 @@ import java.util.stream.Stream;
 public class WordsFunctionsService {
 
     private static final Set<String> STOP_ENGLISH_WORDS = Set.of("in", "a", "the", "to", "and", "of", "for", "is", "are",
-            "on", "by", "or");
+            "on", "by", "or", "an");
     private static final Set<String> STOP_RUSSIAN_WORDS = Set.of("в", "на", "и", "с", "из", "для");
 
     public Map<String, Integer> processWords(String initialText, int limit) {

@@ -1,16 +1,16 @@
-// Объявление переменной tbody
 const tbody = $('#AllUsers');
 
-// Функция для получения и отображения пользователей
+
 function getTableUser() {
-    tbody.empty();  // Очистка содержимого tbody перед добавлением новых данных
+    tbody.empty();
     fetch("apiAuth/users")
         .then(res => res.json())
         .then(users => {
             console.log(users);
             users.forEach(user => {
                 const roles = user.roles.map(role => role.name.replace('ROLE_', '')).join(', ');
-                const gameInfo = user.game ? `${user.game.totalRate}` : 'No Game';
+                const gameInfo = user.game ? (user.game.totalRate !== 0 ? `${user.game.totalRate}` : 'No Game') : 'No Game';
+
 
                 const usersRow = $(`<tr>
                     <td class="pt-3" id="userID">${user.id}</td>
@@ -40,5 +40,4 @@ function getTableUser() {
         });
 }
 
-// Вызов функции после объявления
 getTableUser();

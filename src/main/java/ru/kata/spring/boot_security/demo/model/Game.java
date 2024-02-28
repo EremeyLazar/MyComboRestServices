@@ -13,8 +13,13 @@ public class Game {
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    boolean running;
+    private boolean running;
     private double totalRate;
+
+    private byte level;
+
+    private int games;
+
 
     @JsonIgnoreProperties({"hibernateLazyInitializer"})
     @OneToOne(mappedBy = "game", fetch = FetchType.LAZY)
@@ -28,9 +33,11 @@ public class Game {
         this.id = id;
     }
 
-    public Game(boolean running, double totalRate) {
+    public Game(boolean running, double totalRate, byte level, int games) {
         this.running = running;
         this.totalRate = totalRate;
+        this.level = level;
+        this.games = games;
     }
 
     public User getUser() {
@@ -65,12 +72,30 @@ public class Game {
         this.totalRate = totalRate;
     }
 
+    public byte getLevel() {
+        return level;
+    }
+
+    public void setLevel(byte level) {
+        this.level = level;
+    }
+
+    public int getGames() {
+        return games;
+    }
+
+    public void setGames(int games) {
+        this.games = games;
+    }
+
     @Override
     public String toString() {
         return "Game{" +
                 "id=" + id +
                 ", running=" + running +
                 ", totalRate=" + totalRate +
+                ", level=" + level +
+                ", games=" + games +
                 '}';
     }
 }

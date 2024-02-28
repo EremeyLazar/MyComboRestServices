@@ -19,6 +19,8 @@ function getTableUser() {
                     <td class="pt-3" >${user.country}</td>
                     <td class="pt-3" >${roles}</td>
                     <td class="pt-3" >${gameInfo}</td>
+                    <td class="pt-3" >${user.game.level}</td>
+                    <td class="pt-3" >${user.game.games}</td>
                     <td>
                         <button type="button" class="btn btn-info" data-toggle="modal" 
                             data-target="#edit" onclick="editModal(${user.id})">

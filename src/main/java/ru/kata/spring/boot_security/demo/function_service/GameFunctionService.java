@@ -34,18 +34,15 @@ public class GameFunctionService {
             setInitialParameters(currentUser);
         }
         tryNumber++;
-        try {
-            if (answer < random) {
-                responseWhenAnswerLessRandom(answer);
-            } else if (answer > random) {
-                responseWhenAnswerMoreRandom(answer);
-            } else {
-                finishGame(currentUser);
-            }
-        } catch (java.util.InputMismatchException exception) {
-            sayWord("Загадано число, а не слово... Вай меееее....");
+        if (answer < random) {
+            responseWhenAnswerLessRandom(answer);
+        } else if (answer > random) {
+            responseWhenAnswerMoreRandom(answer);
+        } else {
+            finishGame(currentUser);
         }
     }
+
 
     public void finishGame(User user) {
         try {
@@ -63,7 +60,7 @@ public class GameFunctionService {
                     if (tryNumber < 100) {
                         sayAnyTry();
                     } else {
-                        sayWord("ERROR!!!");
+                        sayWord("SOMETHING IS WRONG!!!");
                     }
             }
             unsetInitialParameters(user);
@@ -121,13 +118,13 @@ public class GameFunctionService {
     public void unsetInitialParameters(User user) {
         Game game = user.getGame();
         game.setRunning(false);
-        user.setGame(game);
-        double totalRate = (game.getTotalRate() == 0) ? getRate() : (game.getTotalRate() + getRate()) / 2;
+        double totalRate = (game.getTotalRate() == 0) ? getRate() : (double) Math.round((game.getTotalRate() + getRate()) / 2 * 100) / 100;
         game.setTotalRate(totalRate);
         sayWord("Ваш счет за текущую игру составил " + getRate() + ", а общий счет - " + totalRate);
         random = 0;
         tryNumber = 0;
         gameRate = 0;
+        user.setGame(game);
         save(user);
     }
 

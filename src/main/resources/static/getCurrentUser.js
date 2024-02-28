@@ -19,6 +19,8 @@ function getCurrentUser() {
                             <td>${user.country}</td>
                             <td>${user.roles.map(role => role.name.replace('ROLE_', '')).join(', ')}</td>
                             <td>${user.game.totalRate}</td>
+                            <td>${user.game.level}</td>
+                            <td>${user.game.games}</td>
                         </tr>)`;
                 $('#oneUser').append(u);
             } else {

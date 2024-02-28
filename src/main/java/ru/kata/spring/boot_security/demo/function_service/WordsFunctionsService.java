@@ -21,7 +21,8 @@ public class WordsFunctionsService {
 
         try (BufferedReader reader = new BufferedReader(new StringReader(initialText))) {
             return reader.lines()
-                    .flatMap(l -> Stream.of(l.toLowerCase().replaceAll("[^a-zа-я0-9]", " ").split("[\\p{Punct}\\s]+")))
+                    .flatMap(l -> Stream.of(l.toLowerCase().replaceAll("[^a-zа-я0-9]", " ")
+                            .split("[\\p{Punct}\\s]+")))
                     .filter(word -> !word.isEmpty() && !STOP_ENGLISH_WORDS.contains(word) && !STOP_RUSSIAN_WORDS.contains(word))
                     .collect(Collectors.groupingBy(Function.identity(), Collectors.summingInt(e -> 1)))
                     .entrySet().stream()

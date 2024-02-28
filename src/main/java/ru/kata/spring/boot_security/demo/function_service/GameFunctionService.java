@@ -21,8 +21,6 @@ public class GameFunctionService {
     @Autowired
     private GameService gameService;
 
-//    GameCommunicationService communication = new GameCommunicationService();
-
     private ArrayList<String> allWords = new ArrayList<>();
 
     private int random;

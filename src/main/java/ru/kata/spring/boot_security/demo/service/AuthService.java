@@ -46,7 +46,7 @@ public class AuthService implements UserDetailsService {
         if (user.getRoles().size() == 0) {
             user.setRoles(Collections.singleton(new Role(1)));
         }
-        user.setGame(new Game(false, 0d, (byte) 1, 0));
+        user.setGame(new Game(false, 0d, (byte) 0, 0));
         userRepository.save(user);
     }
 

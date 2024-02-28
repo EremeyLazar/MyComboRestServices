@@ -21,11 +21,13 @@ public class GameFunctionService {
     @Autowired
     private GameService gameService;
 
+//    GameCommunicationService communication = new GameCommunicationService();
+
     private ArrayList<String> allWords = new ArrayList<>();
 
     private int random;
     private byte tryNumber;
-    private byte gameRate;
+    private int gameRate;
     private final int MAX_SIZE = 12;
 
     public void init(int answer) {
@@ -45,20 +47,21 @@ public class GameFunctionService {
 
 
     public void finishGame(User user) {
+        byte level = user.getGame().getLevel();
         try {
             switch (tryNumber) {
                 case 1:
-                    sayFirstTry();
+                    sayFirstTry(level);
                     break;
                 case 2:
-                    saySecondTry();
+                    saySecondTry(level);
                     break;
                 case 3:
-                    sayThirdTry();
+                    sayThirdTry(level);
                     break;
                 default:
-                    if (tryNumber < 100) {
-                        sayAnyTry();
+                    if (tryNumber < 200) {
+                        sayAnyTry(level);
                     } else {
                         sayWord("SOMETHING IS WRONG!!!");
                     }
@@ -79,19 +82,6 @@ public class GameFunctionService {
         gameService.save(user);
     }
 
-    public int getRate() {
-        switch (tryNumber) {
-            case 1:
-                return 50;
-            case 2:
-                return 30;
-            case 3:
-                return 20;
-            default:
-                return (tryNumber > 3 && tryNumber < 9) ? 10 - tryNumber : 1;
-        }
-    }
-
 
     public void sayWord(String word) {
         allWords.add(word);
@@ -107,53 +97,60 @@ public class GameFunctionService {
 
     public void setInitialParameters(User user) {
         Random randomGenerator = new Random();
+        int BOUND = getBOUND(user.getGame().getLevel());
         allWords.clear();
-        random = randomGenerator.nextInt(100);
+        random = randomGenerator.nextInt(BOUND);
         System.out.println(random);
         tryNumber = 0;
         gameRate = 0;
         user.getGame().setRunning(true);
+        sayWord("Число загадано от 0 до " + BOUND);
     }
 
     public void unsetInitialParameters(User user) {
         Game game = user.getGame();
+        byte level = game.getLevel();
+        int thisGameRate = getScore(level);
         game.setRunning(false);
-        double totalRate = (game.getTotalRate() == 0) ? getRate() : (double) Math.round((game.getTotalRate() + getRate()) / 2 * 100) / 100;
+        double totalRate = (game.getTotalRate() == 0) ? thisGameRate
+                : (double) Math.round((game.getTotalRate() + thisGameRate) / 2 * 100) / 100;
+        game.setLevel(checkLevel(game.getLevel(), totalRate));
         game.setTotalRate(totalRate);
-        sayWord("Ваш счет за текущую игру составил " + getRate() + ", а общий счет - " + totalRate);
+        sayWord("Ваш счет за текущую игру составил " + thisGameRate + ", а общий счет - " + totalRate);
         random = 0;
         tryNumber = 0;
         gameRate = 0;
+        game.setGames(game.getGames()+1);
         user.setGame(game);
         save(user);
     }
 
-    public void sayFirstTry() {
+    public void sayFirstTry(byte level) {
+        gameRate = getScore(level);
         sayWord("Поздравляю!");
         sayWord("Вы получаете 50 (!!!) очков!!!");
         sayWord("ВАУ!!! 777!!! БИНГО!!! Вы угадали с первой попытки!!!");
-        gameRate = 50;
     }
 
-    public void saySecondTry() {
+    public void saySecondTry(byte level) {
+        gameRate = getScore(level);
         sayWord("Поздравляю!");
-        sayWord("Вы получаете 30 (!!!) очков!!!");
+        sayWord("Вы получаете " + gameRate +" (!!!) очков!!!");
         sayWord("Офигеть!!! Вы угадали со второй попытки!!!");
-        gameRate = 30;
     }
 
-    public void sayThirdTry() {
+    public void sayThirdTry(byte level) {
+        gameRate = getScore(level);
         sayWord("Поздравляю!");
-        sayWord("Вы получаете 20 (!!!) очков!!!");
+        sayWord("Вы получаете " + gameRate +" (!!!) очков!!!");
         sayWord("Офигеть!!! Вы угадали с третьей попытки!!!");
-        gameRate = 20;
     }
 
-    public void sayAnyTry() {
+    public void sayAnyTry(byte level) {
+        gameRate = getScore(level);
         sayWord("Не останавливайтесь!");
         sayWord("Вы угадали с " + tryNumber + "-й попытки!!!");
         sayWord("Это - Удача!!!");
-        gameRate = (byte) Math.max(1, 10 - tryNumber);
     }
 
     public void responseWhenAnswerLessRandom(int answer) {
@@ -165,4 +162,82 @@ public class GameFunctionService {
         sayWord("Число " + answer + " БОЛЬШЕ загаданного!!");
         sayWord("Попытка № " + tryNumber);
     }
+
+   public int getBOUND (byte level) {
+        switch (level) {
+            case 1:
+                return 100;
+            case 2:
+                return 300;
+            case 3:
+                return 1000;
+            default:
+                return 3;
+        }
+   }
+
+   public byte checkLevel (byte level, double totalRate) {
+        if (level ==1 && totalRate > 10 || level == 2 && totalRate >120 || level == 0) {
+            ++level;
+            sayLevelIncrease(level, totalRate);
+            return level;
+        } else return level;
+   }
+
+   public void sayLevelIncrease (byte level, double totalRate) {
+       sayWord("Поздравляем, ваш общий счет составил " + totalRate + " баллов и вы переходите на \n" + level + "-й уровень!!!");
+   }
+
+   public int getScore (byte level) {
+        switch (level) {
+            case 1:
+                return getScoreFirstLevel();
+            case 2:
+                return getScoreSecondLevel();
+            case 3:
+                return getScoreThirdLevel();
+            default: return Math.max(1, 10 - tryNumber);
+        }
+   }
+
+   public int getScoreFirstLevel () {
+        switch (tryNumber) {
+            case 1:
+                return 30;
+            case 2:
+                return 25;
+            case 3:
+                return 15;
+            default:
+                return Math.max(1, 10 - tryNumber);
+        }
+   }
+
+    public int getScoreSecondLevel () {
+        switch (tryNumber) {
+            case 1:
+                return 150;
+            case 2:
+                return 120;
+            case 3:
+                return 100;
+            default:
+                return Math.max(1, (200 - tryNumber)/3);
+        }
+    }
+
+    public int getScoreThirdLevel () {
+        switch (tryNumber) {
+            case 1:
+                return 500;
+            case 2:
+                return 400;
+            case 3:
+                return 300;
+            default:
+                return Math.max(1, (1000 - tryNumber)/3);
+        }
+    }
+
+
 }
